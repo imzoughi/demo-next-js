@@ -123,15 +123,15 @@ export const sortOptions: SortOption[] = [
 
 export const cartLines: CartLine[] = [
   {
-    id: 'fauteuil-dandy',
-    name: 'Fauteuil Dandy',
-    description: 'Coque noire et pieds en chêne',
+    id: 'chaise-dandy',
+    name: 'Chaise Dandy',
+    description: 'Coque noire et pieds en hêtre',
     unitPrice: 250,
     quantity: 1,
-    max: 12,
-    image: '/images/img-01.png',
-    imageAlt: 'Fauteuil Dandy, coque noire et pieds en chêne',
-    href: '/produits/fauteuil-dandy',
+    max: 5,
+    image: '/images/img-20.jpg',
+    imageAlt: 'Chaise Dandy, coque noire et pieds en hêtre, sur fond bleu-vert',
+    href: '/fiche-produit/',
   },
   {
     id: 'vase-graystone',
@@ -142,7 +142,7 @@ export const cartLines: CartLine[] = [
     max: 2,
     image: '/images/img-10.png',
     imageAlt: 'Vase Graystone en grès gris',
-    href: '/produits/vase-graystone',
+    href: '/fiche-produit/',
   },
 ];
 

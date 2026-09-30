@@ -97,7 +97,7 @@ export function TopNav({
           </span>
         </div>
       </div>
-      <nav className={styles.cats} aria-label="Catégories">
+      <nav className={styles.cats} aria-label="Catégories de la boutique">
         <ul className={cx(styles.list, 'av-container')}>{catLinks(cx(styles.cat, 'body-medium'))}</ul>
       </nav>
       <Drawer open={menu} onClose={() => setMenu(false)} side="left" title="Menu" closeLabel="Fermer le menu">

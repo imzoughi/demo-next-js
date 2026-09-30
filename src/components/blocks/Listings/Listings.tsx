@@ -14,6 +14,12 @@ export interface ListingsProps {
   count?: number;
   /** Deux colonnes en mobile (une par défaut). */
   mobileColumns?: 1 | 2;
+  /** Colonnes dès 768 px : 3 pour une série de trois éléments (pas de carte orpheline), 4 sinon (2 de 768 à 1279 px). */
+  columns?: 3 | 4;
+  /** tight : espace réduit au-dessus de la grille, quand une barre de filtres la précède. */
+  spacing?: 'default' | 'tight';
+  /** Charge en priorité l'image de la 1ʳᵉ carte (grille en haut de page). */
+  priorityFirst?: boolean;
   /** Contenu de l'état vide. */
   empty?: EmptyStateProps;
   /** Bouton « Voir la collection » ; false pour le masquer. */
@@ -22,7 +28,7 @@ export interface ListingsProps {
 }
 
 /** Grille de ProductCard : 4 colonnes dès 1280 px, 2 dès 768 px ; états chargement et vide. */
-export function Listings({ products = [], title, loading, count, mobileColumns = 1, empty, action, className }: ListingsProps) {
+export function Listings({ products = [], title, loading, count, mobileColumns = 1, columns = 4, spacing = 'default', priorityFirst, empty, action, className }: ListingsProps) {
   const n = count ?? (products.length || 4);
   let body;
   if (loading) {
@@ -41,16 +47,16 @@ export function Listings({ products = [], title, loading, count, mobileColumns =
   } else {
     body = (
       <ul className={styles.grid}>
-        {products.map((p) => (
+        {products.map((p, i) => (
           <li key={p.id}>
-            <ProductCard {...p} />
+            <ProductCard {...p} priority={priorityFirst && i === 0} />
           </li>
         ))}
       </ul>
     );
   }
   return (
-    <section className={cx(styles.sec, mobileColumns === 2 && styles.m2, className)}>
+    <section className={cx(styles.sec, mobileColumns === 2 && styles.m2, columns === 3 && styles.c3, spacing === 'tight' && styles.tight, className)}>
       <div className={styles.secInner}>
         {title ? <h2 className={cx(styles.secTitle, 'h3')}>{title}</h2> : null}
         {body}

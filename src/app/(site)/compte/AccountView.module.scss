@@ -1,0 +1,84 @@
+// Page compte : mise en page composée avec les composants du kit. Tokens en variables CSS uniquement.
+.page {
+  container-type: inline-size;
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-5);
+  color: var(--color-text-default);
+
+  @container (min-width: 768px) {
+    padding: var(--space-8) var(--space-6);
+  }
+}
+
+.head {
+  margin-bottom: var(--space-7);
+
+  h1,
+  p {
+    margin: 0;
+  }
+
+  p {
+    margin-top: var(--space-3);
+  }
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+
+  @container (min-width: 1280px) {
+    grid-template-columns: 16rem 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.content {
+  min-width: 0;
+
+  h2 {
+    margin: 0 0 var(--space-5);
+  }
+}
+
+.addresses,
+.infos {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @container (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card,
+.info {
+  margin: 0;
+  padding: var(--space-5);
+  border: var(--size-border) solid var(--color-border-strong);
+  background: var(--color-surface-default);
+
+  p,
+  dd,
+  dt {
+    margin: 0;
+  }
+}
+
+.line {
+  display: block;
+}
+
+.card address {
+  font-style: normal;
+}
+
+.info dd {
+  margin-top: var(--space-1);
+}

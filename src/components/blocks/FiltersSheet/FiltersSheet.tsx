@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, type MouseEvent } from 'react';
 import type { FilterGroup, SortOption } from '@/mocks/types';
 import { cx } from '@/lib/cx';
 import { useSafeId } from '@/lib/useSafeId';
@@ -61,9 +61,15 @@ export function FiltersSheet({
     onChange?.({ ...selected, [group]: on ? [...cur, value] : cur.filter((x) => x !== value) });
   }
 
+  /** Le bouton s'inactive après le clic : le focus passe avant sur le 1er groupe du dialogue. */
+  function clear(e: MouseEvent<HTMLElement>) {
+    e.currentTarget.closest<HTMLElement>('[role="dialog"]')?.querySelector<HTMLElement>('fieldset')?.focus();
+    onClear?.();
+  }
+
   const footer = (
     <div className={styles.actions}>
-      <Button type="ghost" disabled={!nActive} onClick={onClear}>
+      <Button type="ghost" disabled={!nActive} onClick={clear}>
         Tout effacer
       </Button>
       <Button disabled={n === 0} onClick={onApply ?? onClose} fullWidth aria-live="polite">

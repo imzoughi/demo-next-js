@@ -16,3 +16,4 @@ export const Default: Story = {};
 export const AtMinimum: Story = { args: { defaultValue: 1 } };
 export const AtMaximum: Story = { args: { defaultValue: 5 } };
 export const Disabled: Story = { args: { disabled: true } };
+export const WithSubject: Story = { args: { label: 'Quantité, Chaise Dandy', subject: 'Chaise Dandy' } };

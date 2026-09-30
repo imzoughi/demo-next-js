@@ -14,6 +14,8 @@ export interface HeroBlocksProps {
   action?: { label: string; href: string; onClick?: MouseEventHandler<HTMLElement> };
   /** Niveau du titre (1 par défaut : titre de la page). */
   headingLevel?: 1 | 2;
+  /** Image principale de la page (chargée en priorité) ; false pour un second bloc plus bas. */
+  priority?: boolean;
   className?: string;
 }
 
@@ -26,6 +28,7 @@ export function HeroBlocks({
   variant = 'dark',
   action = { label: 'Voir la collection', href: '/collection' },
   headingLevel = 1,
+  priority = true,
   className,
 }: HeroBlocksProps) {
   const H = `h${headingLevel}` as 'h1' | 'h2';
@@ -40,7 +43,7 @@ export function HeroBlocks({
           </Button>
         </div>
         <div className={styles.media}>
-          <Image src={image} alt={imageAlt} width={1440} height={960} priority sizes="100vw" />
+          <Image src={image} alt={imageAlt} width={1440} height={960} priority={priority} sizes="100vw" />
         </div>
       </div>
     </section>

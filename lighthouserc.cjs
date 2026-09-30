@@ -10,7 +10,7 @@ module.exports = {
       numberOfRuns: 3,
       ...(stack === "html"
         ? { staticDistDir: "./dist", url: pages }
-        : { startServerCommand: stack === "nextjs" ? "npm run start" : "npm run preview", url: pages.map((u) => "http://localhost:" + (stack === "nextjs" ? 3000 : 4173) + u) }),
+        : { startServerCommand: stack === "nextjs" ? "npm run start" : "npm run preview", url: pages.map((u) => "http://localhost:" + (stack === "nextjs" ? 4000 : 4173) + u + (stack === "nextjs" ? "/" : "")) }),
       settings: { preset: "desktop" },
     },
     assert: {

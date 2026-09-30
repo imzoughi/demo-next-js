@@ -16,12 +16,14 @@ export interface ProductCardProps {
   size?: 'sm' | 'lg';
   /** Squelette au ratio de l'image. */
   loading?: boolean;
+  /** Charge l'image en priorité (1ʳᵉ image visible d'une page, candidate au LCP). */
+  priority?: boolean;
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
 /** Carte produit : toute la carte est un lien vers la fiche ; survol = soulèvement + ombre. */
-export function ProductCard({ name, price = 0, image, imageAlt = '', href = '#', size = 'sm', loading, className, onClick }: ProductCardProps) {
+export function ProductCard({ name, price = 0, image, imageAlt = '', href = '#', size = 'sm', loading, priority, className, onClick }: ProductCardProps) {
   if (loading) {
     return (
       <div className={cx(styles.root, size === 'lg' && styles.lg, className)} aria-hidden="true">
@@ -33,7 +35,7 @@ export function ProductCard({ name, price = 0, image, imageAlt = '', href = '#',
     <a href={href} className={cx(styles.root, size === 'lg' && styles.lg, className)} onClick={onClick}>
       <span className={styles.media}>
         {image ? (
-          <Image className={styles.img} src={image} alt={imageAlt} fill sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" />
+          <Image className={styles.img} src={image} alt={imageAlt} fill priority={priority} sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" />
         ) : null}
       </span>
       <span className={cx(styles.name, 'h4')}>{name}</span>

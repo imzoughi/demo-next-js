@@ -9,7 +9,9 @@ export const metadata: Metadata = { title: "Performance · documentation" };
 type Row = { page: string; score: number; lcpMs: number; cls: number; tbtMs: number; jsKo: number; imagesKo: number; ok: boolean };
 
 export default function Performance() {
-  const rows = readJson<Row[]>("qa/perf.json") ?? [];
+  const raw = readJson<Row[] | { mesures?: Omit<Row, "ok">[] }>("qa/perf.json");
+  const list = Array.isArray(raw) ? raw : (raw?.mesures ?? []);
+  const rows: Row[] = list.map((r) => ({ ok: r.score >= 85, ...r }));
   return (
     <article>
       <h1 className="h2">Performance</h1>

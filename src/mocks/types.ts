@@ -56,6 +56,14 @@ export interface SortOption {
   label: string;
 }
 
+export interface HomeContent {
+  hero: { title: string; text: string; image: string; imageAlt: string; actionLabel: string; actionHref: string };
+  featuresTitle: string;
+  featuredTitle: string;
+  story: { title: string; text: string; image: string; imageAlt: string; actionLabel: string; actionHref: string };
+  newsletter: { title: string; text: string; benefits: string[] };
+}
+
 export interface Category {
   label: string;
   href: string;

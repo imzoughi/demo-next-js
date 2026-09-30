@@ -15,12 +15,14 @@ export interface StepperProps {
   disabled?: boolean;
   /** Nom accessible du groupe (« Quantité, Fauteuil Dandy »). */
   label?: string;
+  /** Complément des libellés des boutons (« Diminuer la quantité de Fauteuil Dandy »). */
+  subject?: string;
   className?: string;
   onChange?: (value: number) => void;
 }
 
 /** Quantité entre min et max : boutons moins et plus de 44 x 44 px, valeur annoncée aux lecteurs d'écran. */
-export function Stepper({ min = 1, max = 99, value, defaultValue, disabled = false, label = 'Quantité', className, onChange }: StepperProps) {
+export function Stepper({ min = 1, max = 99, value, defaultValue, disabled = false, label = 'Quantité', subject, className, onChange }: StepperProps) {
   const [inner, setInner] = useState(defaultValue ?? min);
   const current = value ?? inner;
   const atMin = current <= min;
@@ -40,7 +42,7 @@ export function Stepper({ min = 1, max = 99, value, defaultValue, disabled = fal
         type="button"
         className={styles.btn}
         aria-disabled={off ? true : undefined}
-        aria-label={dir < 0 ? 'Diminuer la quantité' : 'Augmenter la quantité'}
+        aria-label={`${dir < 0 ? 'Diminuer' : 'Augmenter'} la quantité${subject ? ` de ${subject}` : ''}`}
         disabled={disabled ? true : undefined}
         onClick={() => {
           if (!off) set(current + dir);

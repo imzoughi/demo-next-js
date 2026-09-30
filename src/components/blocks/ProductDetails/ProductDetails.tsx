@@ -40,7 +40,7 @@ export function ProductDetails({ product: p, breadcrumb, className, onAdd, onFav
     <section className={cx(styles.sec, styles.root, className)}>
       <div className={cx(styles.secInner, styles.inner)}>
         <div className={styles.media}>
-          <Image src={p.image} alt={p.imageAlt || p.name} width={800} height={1000} priority sizes="(min-width: 768px) 50vw, 100vw" />
+          <Image src={p.image} alt={p.imageAlt || p.name} width={800} height={800} priority sizes="(min-width: 768px) 50vw, 100vw" />
         </div>
         <div className={styles.info}>
           {breadcrumb ? <Breadcrumb items={breadcrumb} /> : null}

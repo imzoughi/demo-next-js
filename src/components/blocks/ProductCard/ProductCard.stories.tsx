@@ -23,4 +23,5 @@ type Story = StoryObj<typeof meta>;
 export const Small: Story = {};
 export const Large: Story = { args: { size: 'lg' } };
 export const LongName: Story = { args: { name: table.name, price: table.price, image: table.image, imageAlt: table.imageAlt } };
+export const Priority: Story = { args: { priority: true } };
 export const Loading: Story = { args: { loading: true } };

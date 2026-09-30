@@ -42,9 +42,9 @@
 
 ## Pages
 <!-- Aucune frame de page dans le Figma pour l’instant : maquettes attendues de l’agence. -->
-- [ ] accueil — frame Figma 114:5362 (desktop) / 114:5761 (mobile), v2
-- [ ] liste-produits — frame Figma 45:684 (desktop) / 109:1661 (mobile), v3
-- [ ] fiche-produit — frame Figma 11:123 (desktop) / 114:6398 (mobile), v2
-- [ ] panier — frame Figma 119:3539 (desktop) / 119:3664 (mobile), v2
-- [ ] paiement — absent du Figma, à composer avec le kit (prompt 10 du pack)
-- [ ] compte — absent du Figma, à composer avec le kit (prompt 10 du pack)
+- [x] accueil — frame Figma 114:5362 (desktop) / 114:5761 (mobile), v2
+- [x] liste-produits — frame Figma 45:684 (desktop) / 109:1661 (mobile), v3
+- [x] fiche-produit — frame Figma 11:123 (desktop) / 114:6398 (mobile), v2
+- [x] panier — frame Figma 119:3539 (desktop) / 119:3664 (mobile), v2
+- [x] paiement — absent du Figma, à composer avec le kit (prompt 10 du pack)
+- [x] compte — absent du Figma, à composer avec le kit (prompt 10 du pack)

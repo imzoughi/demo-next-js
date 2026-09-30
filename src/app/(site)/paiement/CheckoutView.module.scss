@@ -1,0 +1,164 @@
+// Tunnel de paiement : mise en page seule, tous les éléments viennent du kit. Tokens en variables CSS uniquement.
+.root {
+  container-type: inline-size;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-default);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+.title {
+  margin: 0 0 var(--space-5);
+}
+
+.progress {
+  margin-bottom: var(--space-6);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.mobileSummary {
+  display: block;
+}
+
+.aside {
+  display: none;
+}
+
+.panel {
+  background: var(--color-surface-default);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.stepTitle {
+  margin: 0;
+}
+
+.stepTitle:focus {
+  outline: none;
+}
+
+.stepTitle:focus-visible {
+  outline: var(--size-border-strong) solid var(--color-text-default);
+  outline-offset: var(--space-1);
+}
+
+.alert {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  border: var(--size-border) solid var(--color-feedback-error);
+  color: var(--color-feedback-error);
+  background: var(--color-surface-default);
+}
+
+.group {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.group legend {
+  padding: 0;
+  margin-bottom: var(--space-4);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5) var(--space-4);
+}
+
+.note {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: var(--size-border) solid var(--color-border-strong);
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-3);
+}
+
+.confirm {
+  align-items: flex-start;
+}
+
+.order {
+  margin: 0;
+}
+
+.recap {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@container (min-width: 768px) {
+  .inner {
+    padding: var(--space-7) var(--space-6) var(--space-9);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@container (min-width: 1280px) {
+  .inner {
+    padding: var(--space-8) calc(var(--space-8) + var(--space-4)) var(--space-9);
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+    gap: var(--space-6);
+  }
+
+  .mobileSummary {
+    display: none;
+  }
+
+  .aside {
+    display: block;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}

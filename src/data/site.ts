@@ -11,12 +11,12 @@ const groups: Group[] = [
 ];
 
 const pages: Page[] = [
-  { id: "accueil", href: "/accueil/", title: "Accueil", group: "Catalogue", status: "à venir" },
-  { id: "liste-produits", href: "/liste-produits/", title: "Liste produits", group: "Catalogue", status: "à venir" },
-  { id: "fiche-produit", href: "/fiche-produit/", title: "Fiche produit", group: "Catalogue", status: "à venir" },
-  { id: "panier", href: "/panier/", title: "Panier", group: "Tunnel d’achat", status: "à venir" },
-  { id: "paiement", href: "/paiement/", title: "Paiement", group: "Tunnel d’achat", status: "à venir" },
-  { id: "compte", href: "/compte/", title: "Compte", group: "Compte", status: "à venir" },
+  { id: "accueil", href: "/accueil/", title: "Accueil", group: "Catalogue", status: "prête" },
+  { id: "liste-produits", href: "/liste-produits/", title: "Liste produits", group: "Catalogue", status: "prête" },
+  { id: "fiche-produit", href: "/fiche-produit/", title: "Fiche produit", group: "Catalogue", status: "prête" },
+  { id: "panier", href: "/panier/", title: "Panier", group: "Tunnel d’achat", status: "prête" },
+  { id: "paiement", href: "/paiement/", title: "Paiement", group: "Tunnel d’achat", status: "prête" },
+  { id: "compte", href: "/compte/", title: "Compte", group: "Compte", status: "prête" },
 ];
 
 export const site = {

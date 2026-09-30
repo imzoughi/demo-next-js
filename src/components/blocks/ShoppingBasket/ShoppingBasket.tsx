@@ -44,7 +44,7 @@ export function ShoppingBasket({
       <div className={styles.secInner}>
         <div className={styles.panel}>
           <div className={styles.head}>
-            <h1 className="h2">Votre panier</h1>
+            <h1 className="h2" tabIndex={-1}>Votre panier</h1>
             {!empty ? (
               <TextLink tone="brand" href={continueHref} iconLeft="arrow-left" onClick={onContinue}>
                 Continuer mes achats
@@ -61,7 +61,7 @@ export function ShoppingBasket({
                 <span className="body-small">Total</span>
               </div>
               <ul className={styles.list}>
-                {items.map((i) => (
+                {items.map((i, index) => (
                   <CartItem
                     key={i.id}
                     context="page"
@@ -74,6 +74,7 @@ export function ShoppingBasket({
                     image={i.image}
                     imageAlt={i.imageAlt}
                     removing={i.removing}
+                    priority={index === 0}
                     onQuantityChange={(v) => onQuantityChange?.(i.id, v)}
                     onRemove={() => onRemove?.(i.id)}
                     onRemoved={() => onRemoved?.(i.id)}

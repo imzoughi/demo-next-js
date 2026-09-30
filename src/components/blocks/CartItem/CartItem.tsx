@@ -23,6 +23,8 @@ export interface CartItemProps {
   disabled?: boolean;
   /** Retrait en cours : fondu puis fermeture de la hauteur, puis onRemoved. */
   removing?: boolean;
+  /** Image au-dessus de la ligne de flottaison : chargée en priorité. */
+  priority?: boolean;
   className?: string;
   onQuantityChange?: (quantity: number) => void;
   onRemove?: () => void;
@@ -42,6 +44,7 @@ export function CartItem({
   imageAlt = '',
   disabled,
   removing,
+  priority,
   className,
   onQuantityChange,
   onRemove,
@@ -60,7 +63,7 @@ export function CartItem({
   const nameCls = cx(styles.name, drawer ? 'h5' : 'h4');
   const stepper = (
     <div className={styles.qty}>
-      <Stepper label={`Quantité, ${name}`} min={1} max={max} value={quantity} onChange={onQuantityChange} disabled={disabled} />
+      <Stepper label={`Quantité, ${name}`} subject={name} min={1} max={max} value={quantity} onChange={onQuantityChange} disabled={disabled} />
       {quantity >= max ? <p className={cx(styles.stock, 'body-medium')}>Stock maximum atteint</p> : null}
     </div>
   );
@@ -74,7 +77,7 @@ export function CartItem({
   return (
     <li className={cx(styles.root, !drawer && styles.page, removing && styles.isRemoving, className)} onAnimationEnd={onAnimationEnd}>
       <div className={styles.inner}>
-        <Image className={styles.img} src={image} alt={imageAlt} width={240} height={300} />
+        <Image className={styles.img} src={image} alt={imageAlt} width={240} height={300} priority={priority} />
         <div className={styles.info}>
           {href ? (
             <a href={href} className={nameCls}>

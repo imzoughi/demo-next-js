@@ -36,9 +36,11 @@
 }
 
 .media img {
+  display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
   background: var(--color-surface-default);
 }
 
