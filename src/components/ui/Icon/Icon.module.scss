@@ -1,0 +1,44 @@
+// Icon : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+@include kf-pulse-3;
+
+.root {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  color: inherit;
+}
+
+.sm {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
+
+.md {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}
+
+.lg {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+}
+
+// Chargement (catalogue : Button chargement, niveau 3) : rotation, boucle bornée à motion-duration-loop (4,8 s <= 5 s), puis arrêt.
+.spin {
+  animation: icon-spin var(--motion-duration-loop) linear 1 both;
+}
+
+@keyframes icon-spin {
+  to {
+    transform: rotate(2160deg);
+  }
+}
+
+// Mode réduit : la rotation devient trois pulsations d'opacité.
+@include motion-reduce {
+  .spin {
+    animation: pulse-3 var(--motion-duration-loop) var(--motion-ease-standard) 1 both;
+  }
+}

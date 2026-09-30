@@ -1,0 +1,34 @@
+// Badge : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+@include kf-fade-in;
+
+/* ——— Badge ——— */
+.root {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--size-icon-md);
+  height: var(--size-icon-md);
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--color-action-primary);
+  color: var(--color-text-inverse);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 var(--size-border-strong) var(--color-surface-default);
+  pointer-events: none;
+}
+
+.inverse {
+  background: var(--color-action-white);
+  color: var(--color-text-on-white);
+  box-shadow: 0 0 0 var(--size-border-strong) var(--color-surface-inverse);
+}
+
+.value {
+  animation: fade-in var(--motion-duration-fast) var(--motion-ease-standard) both;
+}

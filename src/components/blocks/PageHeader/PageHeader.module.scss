@@ -1,0 +1,76 @@
+// PageHeader : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+@use '../../../styles/mixins' as *;
+
+// Section de page : mise en page selon la largeur de la section (container queries)
+.sec {
+  @include sec-root;
+}
+
+.secInner {
+  @include sec-inner;
+}
+
+.secTitle {
+  @include sec-title;
+}
+
+.secTitleCenter {
+  text-align: center;
+}
+
+/* ——— PageHeader ——— */
+.root {
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  padding-block: var(--space-7);
+  text-align: center;
+}
+
+.title,
+.text {
+  margin: 0;
+}
+
+.text {
+  margin: var(--space-3) auto 0;
+  max-width: var(--size-measure-lg);
+}
+
+.image {
+  background: var(--color-surface-inverse);
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-scrim);
+  z-index: calc(var(--z-base) + 1);
+}
+
+.image .inner {
+  z-index: calc(var(--z-base) + 2);
+  color: var(--color-text-on-image);
+  text-align: left;
+  padding-block: var(--space-9) var(--space-7);
+}
+
+@container (min-width: 768px) {
+  .image .inner {
+    padding-block: calc(var(--space-9) + var(--space-8)) var(--space-8);
+  }
+
+}

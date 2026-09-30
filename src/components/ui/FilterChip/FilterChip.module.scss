@@ -1,0 +1,38 @@
+// FilterChip : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+@include kf-fade-out;
+
+/* ——— FilterChip ——— */
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--size-target-min);
+  padding: 0 var(--space-3) 0 var(--space-4);
+  border: var(--size-border) solid var(--color-border-input);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-default);
+  color: var(--color-text-default);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard), color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.root:hover {
+  background: var(--color-surface-hover);
+}
+
+.root:active {
+  color: var(--color-text-brand);
+}
+
+.root:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  background: var(--color-surface-default);
+}
+
+.root.isLeaving {
+  animation: fade-out var(--motion-duration-fast) var(--motion-ease-exit) both;
+  pointer-events: none;
+}

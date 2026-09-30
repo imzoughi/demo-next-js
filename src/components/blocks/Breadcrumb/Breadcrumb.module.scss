@@ -1,0 +1,75 @@
+// Breadcrumb : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— Breadcrumb ——— */
+.root {
+  color: var(--color-text-brand);
+}
+
+.list {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  margin-right: var(--space-2);
+}
+
+.sep {
+  color: var(--color-text-brand);
+}
+
+.link,
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--size-target-min);
+  color: var(--color-text-brand);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--space-1);
+  transition: text-decoration-color var(--motion-duration-fast) var(--motion-ease-standard), color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.link:hover,
+.back:hover {
+  color: var(--color-text-default);
+  text-decoration-color: currentColor;
+}
+
+.current {
+  color: var(--color-text-default);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: var(--size-measure-sm);
+}
+
+@container (min-width: 768px) {
+  .list {
+    display: flex;
+  }
+
+  .back {
+    display: none;
+  }
+
+}
+
+// Appui : lien souligné, texte de couleur par défaut
+.link,
+.back:active {
+  color: var(--color-text-default);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--size-border-strong);
+  text-underline-offset: var(--space-1);
+}

@@ -1,0 +1,237 @@
+{
+  "fichier": "3OoNGDC710p5mgPCe6IkmN",
+  "nomFichier": "E-Commerce Website Interface Kit - Design System (Completely Free) (Community)",
+  "date": "2026-09-30",
+  "source": "audit/audit-2026-09-30.md",
+  "versionFigma": null,
+  "methodeEmpreinte": "sig1 : signature structurelle courte = nombre de variantes | dimensions du maître | styles et variables utilisés | disposition (AL = auto-layout, ABS = positions absolues). Pas un hachage cryptographique : l'outil d'audit n'exécute pas de code. À la prochaine synchronisation, comparer la chaîne ; toute différence = composant modifié.",
+  "cle": "Identifiant de nœud Figma du maître (clé de publication non disponible en lecture). null = maître introuvable dans les pages visibles.",
+  "pages": [
+    { "id": "0:1", "nom": "📕 Cover" },
+    { "id": "16:594", "nom": "🎨 Style Guide" },
+    { "id": "1:3", "nom": "🖼 Examples", "note": "absente de la liste des pages, lisible par identifiant" }
+  ],
+  "tokens": {
+    "couleurs": {
+      "Dark Primary": "#2A254B",
+      "Primary": "#4E4D93",
+      "Light Grey": "#F9F9F9",
+      "Border Grey": "#EBE8F4",
+      "White": "#FFFFFF",
+      "Border Dark": null
+    },
+    "typographie": {
+      "Headings / H1": "Clash Display Regular 36 / 1.4",
+      "Headings / H2": "Clash Display Regular 32 / 1.4",
+      "Headings / H3": "Clash Display Regular 24 / 1.4",
+      "Headings / H4": "Clash Display Regular 20 / 1.4",
+      "Headings / H5": "Clash Display Regular 16 / 1.4",
+      "Headings / H6": "Clash Display Regular 14 / 1.4",
+      "Body / Small": "Satoshi Regular 14 / 1.5",
+      "Body / Medium": "Satoshi Regular 16 / 1.5",
+      "Body / Large": "Satoshi Regular 18 / 1.5"
+    },
+    "espacements": null,
+    "rayons": null,
+    "ombres": null
+  },
+  "composants": [
+    {
+      "nom": "ButtonMedium",
+      "nomFigma": "Button Medium",
+      "cle": "52:237",
+      "variantes": 40,
+      "proprietes": {
+        "Type": ["White", "Secondary", "Primary", "Opaque", "Ghost"],
+        "State": ["Default", "Hover", "Focus", "Disabled"],
+        "Icon Right": ["False", "True"]
+      },
+      "empreinte": "sig1:40|111x56,131x56|DarkPrimary,White,LightGrey,BodyMedium|AL px32 py16",
+      "ecrans": ["11:123", "114:6708", "45:242", "109:479", "27:1215"]
+    },
+    {
+      "nom": "ButtonSmall",
+      "nomFigma": "Button Small",
+      "cle": "114:2370",
+      "variantes": 40,
+      "proprietes": {
+        "Type": ["White", "Secondary", "Primary", "Opaque", "Ghost"],
+        "State": ["Default", "Hover", "Focus", "Disabled"],
+        "Icon Right": ["False", "True"]
+      },
+      "empreinte": "sig1:40|95x48,119x48|DarkPrimary,White,LightGrey,BodyMedium|AL",
+      "ecrans": []
+    },
+    {
+      "nom": "TextInput",
+      "nomFigma": "Text input",
+      "cle": "52:269",
+      "variantes": 2,
+      "proprietes": {
+        "Property 1": ["Primary", "Opaque"],
+        "Property 2": ["Default", "Defaul"]
+      },
+      "empreinte": "sig1:2|472x56|White,DarkPrimary,Primary,BodyMedium,placeholder-opacity20|AL+ABS(texte)",
+      "ecrans": ["109:1072", "109:1145", "114:6231", "27:1215"]
+    },
+    {
+      "nom": "Stepper",
+      "nomFigma": "Stepper",
+      "cle": "52:275",
+      "variantes": 2,
+      "proprietes": { "Property 1": ["Default", "Variant2"] },
+      "empreinte": "sig1:2|122x46|White,DarkPrimary,BorderGrey,BodyMedium|AL px16 py12 space-between",
+      "ecrans": ["11:123", "114:6708", "114:6977", "27:1215", "119:3383"]
+    },
+    {
+      "nom": "Checkbox",
+      "nomFigma": "Checkbox",
+      "cle": "52:304",
+      "variantes": 2,
+      "proprietes": { "Selected": ["False", "True"] },
+      "empreinte": "sig1:2|91x24,104x24|DarkPrimary,Primary,BorderGrey|AL",
+      "ecrans": ["45:242"]
+    },
+    {
+      "nom": "ProductCard",
+      "nomFigma": "Product Card",
+      "cle": "52:318",
+      "variantes": 4,
+      "proprietes": {
+        "State": ["Default", "Hover"],
+        "Size": ["Small", "Large"]
+      },
+      "empreinte": "sig1:4|305x462,630x462|DarkPrimary,H4,BodyLarge,image|AL",
+      "ecrans": ["45:242", "109:479", "11:123"]
+    },
+    {
+      "nom": "FeatureCard",
+      "nomFigma": "Feature card",
+      "cle": "67:715",
+      "variantes": 1,
+      "proprietes": {},
+      "empreinte": "sig1:1|305x244|DarkPrimary,LightGrey,H4,BodySmall,icon24|AL",
+      "ecrans": ["109:479", "11:123", "114:6708"]
+    },
+    {
+      "nom": "Icon",
+      "nomFigma": "Icons",
+      "cle": "122:4285",
+      "variantes": 16,
+      "proprietes": {
+        "Property 1": ["Delivery", "Checkmark--outline", "Purchase", "Logo--instagram", "Sprout", "Search", "Shopping--cart", "User--avatar", "Menu", "Close", "Caret--down", "Logo--facebook", "Logo--skype", "Logo--twitter", "Logo--pinterest", "Logo--linkedin"]
+      },
+      "empreinte": "sig1:16|24x24|Carbon,DarkPrimary|vector",
+      "ecrans": ["109:479", "11:123", "45:242", "27:1215", "119:3383", "122:2990"]
+    },
+    {
+      "nom": "TopNav",
+      "nomFigma": "Top Nav",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x132,1440x80,1440x134,390x69,390x70,390x124|DarkPrimary,Primary,White,icons16|?",
+      "ecrans": ["109:479", "114:5362", "109:1195", "114:5761", "11:123", "114:6708", "114:6977", "114:6398", "27:1215", "119:3539", "119:3383", "119:3664", "45:242", "45:684", "122:2990", "122:3283", "109:1661"]
+    },
+    {
+      "nom": "Banner",
+      "nomFigma": "Banners",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x41,390x54|DarkPrimary,White,BodySmall|?",
+      "ecrans": ["11:123", "114:6708", "114:6977", "114:6398"]
+    },
+    {
+      "nom": "HeroBlocks",
+      "nomFigma": "Hero Blocks",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x704,390x639,390x502|DarkPrimary,White,H2,BodyLarge,ButtonMedium|?",
+      "ecrans": ["109:479", "114:5362", "109:1195", "114:5761"]
+    },
+    {
+      "nom": "Features",
+      "nomFigma": "Features",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x355,1440x476,1440x598,1440x603|FeatureCard,H3|?",
+      "ecrans": ["109:479", "114:5362", "11:123", "114:6708", "12:405", "119:2767"]
+    },
+    {
+      "nom": "Listings",
+      "nomFigma": "Listings",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x510,1440x634,1440x744,1440x761,390x573..811|ProductCard,H2,ButtonMedium|?",
+      "ecrans": ["109:479", "114:5362", "11:123", "114:6708", "45:484", "45:684", "122:2990", "109:1661"]
+    },
+    {
+      "nom": "EmailSignup",
+      "nomFigma": "Email sign-up",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x444,1440x481,1440x521,390x292..638|TextInput,H2,BodyMedium|?",
+      "ecrans": ["109:479", "114:5362", "11:123", "114:6708", "12:405", "45:684"]
+    },
+    {
+      "nom": "Footer",
+      "nomFigma": "Footer",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x350,1440x380,390x540,390x668|DarkPrimary,White,TextInput(Opaque),Icon|?",
+      "ecrans": ["109:479", "11:123", "27:1215", "45:242", "45:484", "45:684", "119:3383", "122:2990"]
+    },
+    {
+      "nom": "PageHeader",
+      "nomFigma": "Page Headers",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x209,1440x223,1440x246,1440x277,390x146..385|image,H1,White|?",
+      "ecrans": ["45:242", "45:684", "12:405", "119:2767", "122:2990", "109:1661"]
+    },
+    {
+      "nom": "ProductDetails",
+      "nomFigma": "Product Details",
+      "cle": null,
+      "variantes": null,
+      "proprietes": { "Device": ["Desktop"], "Style": ["Image Boxed"] },
+      "empreinte": "sig1:?|1440x758,1440x759,390x1055,390x1070|LightGrey,DarkPrimary,H1,BodyMedium,Stepper,ButtonMedium|ABS",
+      "ecrans": ["11:123", "114:6708", "114:6977", "114:6398"]
+    },
+    {
+      "nom": "ShoppingBasket",
+      "nomFigma": "Shopping basket",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|1440x749,1440x808,390x729,390x724|LightGrey,DarkPrimary,Primary,Stepper,ButtonMedium|?",
+      "ecrans": ["27:1215", "119:3539", "119:3383", "119:3664"]
+    },
+    {
+      "nom": "Filters",
+      "nomFigma": "Filters",
+      "cle": null,
+      "variantes": null,
+      "proprietes": {},
+      "empreinte": "sig1:?|385x1620,1440x64,390x96|Checkbox,H5,BodyMedium|?",
+      "ecrans": ["45:242", "45:484", "122:2990", "122:3283"]
+    }
+  ],
+  "ecrans": {
+    "accueil": { "v1": { "desktop": "109:479", "mobile": "109:1195" }, "v2": { "desktop": "114:5362", "mobile": "114:5761" } },
+    "fiche-produit": { "v1": { "desktop": "114:6708", "mobile": "114:6977" }, "v2": { "desktop": "11:123", "mobile": "114:6398" } },
+    "liste-produits": { "v1": { "desktop": "45:242", "mobile": "122:2990" }, "v2": { "desktop": "45:484", "mobile": "122:3283" }, "v3": { "desktop": "45:684", "mobile": "109:1661" } },
+    "panier": { "v1": { "desktop": "27:1215", "mobile": "119:3383" }, "v2": { "desktop": "119:3539", "mobile": "119:3664" } },
+    "a-propos (hors périmètre)": { "v1": { "desktop": "12:405", "mobile": "119:2520" }, "v2": { "desktop": "119:2767", "mobile": "119:2992" } },
+    "paiement": null,
+    "compte": null,
+    "mini-panier": null
+  }
+}

@@ -1,0 +1,57 @@
+// Listings : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+@use '../../../styles/mixins' as *;
+
+// Section de page : mise en page selon la largeur de la section (container queries)
+.sec {
+  @include sec-root;
+}
+
+.secInner {
+  @include sec-inner;
+}
+
+.secTitle {
+  @include sec-title;
+}
+
+.secTitleCenter {
+  text-align: center;
+}
+
+/* ——— Listings ——— */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.m2 .grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@container (min-width: 768px) {
+  .grid,
+  .m2 .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-7) var(--space-5);
+  }
+
+}
+
+@container (min-width: 1280px) {
+  .grid,
+  .m2 .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-7);
+}

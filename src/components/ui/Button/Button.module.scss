@@ -1,0 +1,103 @@
+// Button : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— Button ——— */
+.root {
+  --av-btn-bg: var(--color-action-primary);
+  --av-btn-bg-hover: var(--color-action-primary-hover);
+  --av-btn-fg: var(--color-text-inverse);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  height: var(--size-button-md);
+  padding: 0 var(--space-6);
+  border: 0;
+  border-radius: var(--radius-none);
+  background: var(--av-btn-bg);
+  color: var(--av-btn-fg);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-instant) var(--motion-ease-standard), color var(--motion-duration-instant) var(--motion-ease-standard), transform var(--motion-duration-instant) var(--motion-ease-standard);
+}
+
+.sm {
+  height: var(--size-button-sm);
+  padding: 0 var(--space-5);
+}
+
+.root:hover {
+  background: var(--av-btn-bg-hover);
+}
+
+.root:active {
+  transform: scale(var(--motion-scale-press));
+}
+
+.secondary {
+  --av-btn-bg: var(--color-action-secondary);
+  --av-btn-bg-hover: var(--color-action-secondary-hover);
+  --av-btn-fg: var(--color-text-default);
+}
+
+.white {
+  --av-btn-bg: var(--color-action-white);
+  --av-btn-bg-hover: var(--color-action-white-hover);
+  --av-btn-fg: var(--color-text-on-white);
+}
+
+.opaque {
+  --av-btn-bg: var(--color-action-opaque);
+  --av-btn-bg-hover: var(--color-action-opaque-hover);
+  --av-btn-fg: var(--color-text-on-opaque);
+}
+
+.ghost {
+  --av-btn-bg: transparent;
+  --av-btn-bg-hover: var(--color-surface-hover);
+  --av-btn-fg: var(--color-text-default);
+}
+
+.full {
+  width: 100%;
+}
+
+@container (max-width: 767px) {
+  .fullMobile {
+    width: 100%;
+  }
+
+}
+
+.root.isDisabled,
+.root:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+}
+
+.root.isDisabled:hover,
+.root:disabled:hover {
+  background: var(--av-btn-bg);
+}
+
+.root.isDisabled:active,
+.root:disabled:active,
+.root.isLoading:active {
+  transform: none;
+}
+
+.root.isLoading {
+  cursor: progress;
+}
+
+.root.isLoading:hover {
+  background: var(--av-btn-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root:active {
+    transform: none;
+  }
+
+}

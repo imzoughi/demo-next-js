@@ -1,0 +1,39 @@
+// Banner : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— Banner ——— */
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-target-min);
+  padding: 0 var(--size-target-min);
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+  z-index: var(--z-banner);
+}
+
+.msg {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2) 0;
+  text-align: center;
+}
+
+.msg svg {
+  flex: none;
+}
+
+.close {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.root a {
+  color: inherit;
+}

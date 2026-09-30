@@ -1,0 +1,56 @@
+// Skeleton : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+@include kf-pulse-3;
+
+/* ——— Skeleton ——— */
+.wrap {
+  display: block;
+  width: 100%;
+}
+
+.skel {
+  display: block;
+  background: var(--color-border-default);
+  border-radius: var(--radius-none);
+  animation: pulse-3 var(--motion-duration-loop) var(--motion-ease-standard) 1 both;
+}
+
+.skelImage {
+  width: 100%;
+}
+
+.skelLine {
+  height: 1em;
+  margin: 0.25em 0;
+  width: 100%;
+}
+
+.skelTitle {
+  width: 70%;
+}
+
+.skelShort {
+  width: 40%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.card .skelImage {
+  margin-bottom: var(--space-2);
+}
+
+.lines {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skel {
+    animation: none;
+  }
+
+}

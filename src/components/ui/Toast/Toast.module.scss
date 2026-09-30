@@ -1,0 +1,136 @@
+// Toast : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+@include kf-fade-in;
+@include kf-fade-out;
+
+/* ——— Toast ——— */
+.region {
+  position: fixed;
+  z-index: var(--z-toast);
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+@container (min-width: 768px) {
+  .region {
+    left: auto;
+    right: var(--space-5);
+    bottom: var(--space-5);
+  }
+
+}
+
+.regionStatic {
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  justify-content: flex-start;
+}
+
+.root {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--size-measure-sm);
+  min-height: var(--size-button-md);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-overlay);
+  border-radius: var(--radius-none);
+  animation: toast-in var(--motion-duration-base) var(--motion-ease-enter) both;
+}
+
+.root.isLeaving {
+  animation: toast-out var(--motion-duration-base) var(--motion-ease-exit) both;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(var(--motion-distance-small)); }
+}
+
+@keyframes toast-out {
+  to { opacity: 0; transform: translateY(var(--motion-distance-small)); }
+}
+
+.success svg {
+  color: var(--color-feedback-success-inverse);
+}
+
+.error {
+  background: var(--color-feedback-error);
+  color: var(--color-text-inverse);
+}
+
+.msg {
+  flex: 1;
+  min-width: 0;
+}
+
+.action {
+  min-height: var(--size-target-min);
+  padding: 0 var(--space-3);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+  text-decoration-thickness: var(--size-border);
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--size-target-min);
+  height: var(--size-target-min);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.action:hover,
+.close:hover {
+  background: var(--color-brand-primary);
+}
+
+.error .action:hover,
+.error .close:hover {
+  background: var(--color-surface-inverse);
+}
+
+.root :where(button):focus-visible {
+  outline: var(--size-focus-ring) solid var(--color-focus-ring-inverse);
+  outline-offset: calc(var(--size-focus-offset) * -1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    animation: fade-in var(--motion-duration-fast) var(--motion-ease-standard) both;
+  }
+
+  .root.isLeaving {
+    animation: fade-out var(--motion-duration-fast) var(--motion-ease-standard) both;
+  }
+
+}
+
+// Appui : fond de survol de marque
+.action:active,
+.close:active {
+  background: var(--color-action-primary-hover);
+}

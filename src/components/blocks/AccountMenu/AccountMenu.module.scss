@@ -1,0 +1,114 @@
+// AccountMenu : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+@use '../../../styles/mixins' as *;
+
+// Section de page : mise en page selon la largeur de la section (container queries)
+.sec {
+  @include sec-root;
+}
+
+.secInner {
+  @include sec-inner;
+}
+
+.secTitle {
+  @include sec-title;
+}
+
+.secTitleCenter {
+  text-align: center;
+}
+
+/* ——— AccountMenu ——— */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--size-border) solid var(--color-border-default);
+}
+
+.list > li {
+  border-bottom: var(--size-border) solid var(--color-border-default);
+}
+
+.link {
+  min-width: var(--size-target-min);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--size-button-md);
+  padding: 0 var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--color-text-default);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard), color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.link:hover {
+  background: var(--color-surface-hover);
+}
+
+.link.isCurrent {
+  font-family: var(--font-display);
+  box-shadow: inset var(--size-border-strong) 0 0 0 var(--color-text-default);
+}
+
+.chev {
+  margin-left: auto;
+  color: var(--color-text-brand);
+}
+
+.logout {
+  color: var(--color-text-brand);
+}
+
+@container (min-width: 768px) {
+  .list {
+    display: flex;
+    gap: var(--space-6);
+    border-top: 0;
+    border-bottom: var(--size-border) solid var(--color-border-default);
+  }
+
+  .list > li {
+    border-bottom: 0;
+  }
+
+  .out {
+    margin-left: auto;
+  }
+
+  .link {
+    min-height: var(--size-button-sm);
+    padding: 0;
+    color: var(--color-text-brand);
+  }
+
+  .link:hover {
+    background: transparent;
+    color: var(--color-text-default);
+  }
+
+  .link.isCurrent {
+    color: var(--color-text-default);
+    box-shadow: inset 0 calc(var(--size-border-strong) * -1) 0 0 var(--color-text-default);
+  }
+
+  .chev,
+  .icon {
+    display: none;
+  }
+
+}
+
+// Appui : lien souligné, texte de couleur par défaut
+.link:active {
+  color: var(--color-text-default);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--size-border-strong);
+  text-underline-offset: var(--space-1);
+}

@@ -1,0 +1,92 @@
+// AuthForm : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— AuthForm ——— */
+.root {
+  max-width: var(--size-content-narrow);
+  width: 100%;
+  color: var(--color-text-default);
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: var(--size-border) solid var(--color-border-strong);
+  margin-bottom: var(--space-6);
+}
+
+.tab {
+  min-height: var(--size-button-sm);
+  border: 0;
+  background: transparent;
+  color: var(--color-text-brand);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 var(--color-text-default);
+  transition: color var(--motion-duration-fast) var(--motion-ease-standard), box-shadow var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.tab:hover {
+  color: var(--color-text-default);
+}
+
+.tab.isActive {
+  color: var(--color-text-default);
+  box-shadow: inset 0 calc(var(--size-border-strong) * -1) 0 0 var(--color-text-default);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.form h2 {
+  margin: 0;
+}
+
+.alert {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  border: var(--size-border) solid var(--color-feedback-error);
+  color: var(--color-feedback-error);
+  background: var(--color-surface-default);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-4);
+}
+
+.fields > * {
+  grid-column: 1 / -1;
+}
+
+.fields > .half {
+  grid-column: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@container (max-width: 374px) {
+  .fields > .half {
+    grid-column: 1 / -1;
+  }
+
+}
+
+// Appui : lien souligné, texte de couleur par défaut
+.tab:active {
+  color: var(--color-text-default);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--size-border-strong);
+  text-underline-offset: var(--space-1);
+}

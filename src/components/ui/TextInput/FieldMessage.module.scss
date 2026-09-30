@@ -1,0 +1,39 @@
+// FieldMessage : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+@include kf-msg-in;
+@include kf-fade-in;
+
+.root {
+  display: flex;
+  gap: var(--space-1);
+  align-items: flex-start;
+  margin: 0;
+  color: var(--color-text-brand);
+}
+
+.root svg {
+  margin-top: calc((1.5em - var(--size-icon-sm)) / 2);
+}
+
+.error {
+  color: var(--color-feedback-error);
+}
+
+.success {
+  color: var(--color-feedback-success);
+}
+
+/* Message d'erreur / succès (catalogue, base / enter, niveau 2) : fondu + décalage small ; réduit : fondu court. */
+.error,
+.success {
+  animation: msg-in var(--motion-duration-base) var(--motion-ease-enter) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .error,
+  .success {
+    animation: fade-in var(--motion-duration-fast) var(--motion-ease-standard) both;
+  }
+
+}

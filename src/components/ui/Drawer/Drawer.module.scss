@@ -1,0 +1,186 @@
+// Drawer : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+@include kf-fade-in;
+@include kf-fade-out;
+
+/* ——— Drawer ——— */
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  background: var(--color-overlay);
+  animation: fade-in var(--motion-duration-slow) var(--motion-ease-enter) both;
+}
+
+.panel {
+  position: absolute;
+  z-index: var(--z-drawer);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-default);
+  color: var(--color-text-default);
+  box-shadow: var(--shadow-overlay);
+  outline: none;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: min(100%, var(--size-drawer));
+  animation: drawer-in-right var(--motion-duration-slow) var(--motion-ease-enter) both;
+}
+
+.left .panel {
+  right: auto;
+  left: 0;
+  animation-name: drawer-in-left;
+}
+
+.bottom .panel {
+  top: auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 90%;
+  animation-name: drawer-in-bottom;
+}
+
+@container (max-width: 767px) {
+  .fullMobile .panel {
+    width: 100%;
+  }
+
+  .fullMobile.bottom .panel {
+    top: 0;
+    max-height: none;
+  }
+
+}
+
+.root.isClosing .veil {
+  animation: fade-out var(--motion-duration-slow) var(--motion-ease-exit) both;
+}
+
+.root.isClosing .panel {
+  animation: drawer-out-right var(--motion-duration-slow) var(--motion-ease-exit) both;
+}
+
+.left.isClosing .panel {
+  animation-name: drawer-out-left;
+}
+
+.bottom.isClosing .panel {
+  animation-name: drawer-out-bottom;
+}
+
+@keyframes drawer-in-right {
+  from { transform: translateX(100%); }
+}
+
+@keyframes drawer-out-right {
+  to { transform: translateX(100%); }
+}
+
+@keyframes drawer-in-left {
+  from { transform: translateX(-100%); }
+}
+
+@keyframes drawer-out-left {
+  to { transform: translateX(-100%); }
+}
+
+@keyframes drawer-in-bottom {
+  from { transform: translateY(100%); }
+}
+
+@keyframes drawer-out-bottom {
+  to { transform: translateY(100%); }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border-bottom: var(--size-border) solid var(--color-border-default);
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.foot {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-top: var(--size-border) solid var(--color-border-default);
+  background: var(--color-surface-default);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veil,
+  .panel,
+  .left .panel,
+  .bottom .panel {
+    animation: fade-in var(--motion-duration-fast) var(--motion-ease-standard) both;
+  }
+
+  .root.isClosing .veil,
+  .root.isClosing .panel,
+  .left.isClosing .panel,
+  .bottom.isClosing .panel {
+    animation: fade-out var(--motion-duration-fast) var(--motion-ease-standard) both;
+  }
+
+}
+
+/* Drawer « static » : rendu dans son conteneur (documentation, maquettes), sans piège de focus ni blocage du défilement. Le conteneur doit être positionné. */
+.static {
+  position: absolute;
+}
+
+.static .veil,
+.static .panel {
+  animation: none;
+}
+
+.static.sheet .panel {
+  animation: none;
+}
+
+// Variante « sheet » (FiltersSheet) : depuis le bas en mobile, panneau de droite dès 768 px.
+@container (min-width: 768px) {
+  .sheet.bottom .panel {
+    top: 0;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    width: var(--size-drawer);
+    max-height: none;
+    animation-name: drawer-in-right;
+  }
+
+  .sheet.bottom.isClosing .panel {
+    animation-name: drawer-out-right;
+  }
+}
+
+@include motion-reduce {
+  .sheet.bottom .panel {
+    animation: fade-in var(--motion-duration-fast) var(--motion-ease-standard) both;
+  }
+
+  .sheet.bottom.isClosing .panel {
+    animation: fade-out var(--motion-duration-fast) var(--motion-ease-standard) both;
+  }
+}

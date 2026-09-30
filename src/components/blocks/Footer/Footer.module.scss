@@ -1,0 +1,102 @@
+// Footer : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— Footer ——— */
+.root {
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+.inner {
+  padding-block: var(--space-7) var(--space-5);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-5);
+}
+
+.col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  margin: 0 0 var(--space-2);
+}
+
+.signup {
+  grid-column: 1 / -1;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: var(--size-border) solid var(--color-text-brand);
+}
+
+.copy {
+  margin: 0;
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.soc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-target-min);
+  height: var(--size-target-min);
+  color: var(--color-text-inverse);
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.soc:hover {
+  background: var(--color-brand-primary);
+}
+
+@container (min-width: 768px) {
+  .cols {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+}
+
+@container (min-width: 1280px) {
+  .inner {
+    padding-block: var(--space-8) var(--space-6);
+  }
+
+  .cols {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 2fr);
+  }
+
+  .signup {
+    grid-column: auto;
+  }
+
+}
+
+// Appui : fond de survol de marque
+.soc:active {
+  background: var(--color-action-primary-hover);
+}

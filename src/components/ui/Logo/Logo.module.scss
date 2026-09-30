@@ -1,0 +1,39 @@
+// Logo : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— Logo ——— */
+.root {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-target-min);
+  color: var(--color-text-default);
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: var(--size-border);
+  text-underline-offset: var(--space-1);
+  transition: color var(--motion-duration-fast) var(--motion-ease-standard), text-decoration-color var(--motion-duration-fast) var(--motion-ease-standard);
+  white-space: nowrap;
+}
+
+.root:hover {
+  color: var(--color-text-brand);
+  text-decoration-color: currentColor;
+}
+
+.root:active {
+  color: var(--color-text-default);
+}
+
+.inverse {
+  color: var(--color-text-inverse);
+}
+
+.inverse:hover,
+.inverse:active {
+  color: var(--color-text-inverse);
+  text-decoration-color: currentColor;
+}
+
+.inverse:focus-visible {
+  outline-color: var(--color-focus-ring-inverse);
+}

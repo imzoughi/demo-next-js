@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "date": "2026-09-30",
+  "source": "design/ds-export/version.json",
+  "composants": 37,
+  "verts": 29,
+  "rouges": ["IconButton", "Radio", "CartItem", "Badge", "MiniCart", "Footer", "EmailSignup", "ShoppingBasket"]
+}

@@ -1,0 +1,107 @@
+// CheckoutProgress : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— CheckoutProgress ——— */
+.root {
+  color: var(--color-text-default);
+}
+
+.mobile {
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-brand);
+}
+
+.list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  column-gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+}
+
+.item + .item::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--size-target-min) / 2);
+  right: calc(50% + var(--space-5));
+  left: calc(-50% - var(--space-2) + var(--space-5));
+  border-top: var(--size-border) solid var(--color-border-strong);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.item.isDone + .item::before {
+  border-top-color: var(--color-text-default);
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+}
+
+button.btn {
+  cursor: pointer;
+}
+
+button.btn:hover .label {
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-target-min);
+  height: var(--size-target-min);
+  border-radius: var(--radius-pill);
+  border: var(--size-border) solid var(--color-border-input);
+  background: var(--color-surface-default);
+  color: var(--color-text-brand);
+  font-variant-numeric: tabular-nums;
+}
+
+.item.isCurrent .mark {
+  background: var(--color-action-primary);
+  border-color: var(--color-action-primary);
+  color: var(--color-text-inverse);
+}
+
+.item.isDone .mark {
+  background: var(--color-surface-hover);
+  border-color: var(--color-text-default);
+  color: var(--color-text-default);
+}
+
+.item.isTodo .label {
+  color: var(--color-text-brand);
+}
+
+.item.isCurrent .label {
+  font-family: var(--font-display);
+}
+
+// Appui : lien souligné, texte de couleur par défaut
+button.btn:active {
+  color: var(--color-text-default);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--size-border-strong);
+  text-underline-offset: var(--space-1);
+}

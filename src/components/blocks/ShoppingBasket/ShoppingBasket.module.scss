@@ -1,0 +1,97 @@
+// ShoppingBasket : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+@use '../../../styles/mixins' as *;
+
+// Section de page : mise en page selon la largeur de la section (container queries)
+.sec {
+  @include sec-root;
+}
+
+.secInner {
+  @include sec-inner;
+}
+
+.secTitle {
+  @include sec-title;
+}
+
+.secTitleCenter {
+  text-align: center;
+}
+
+/* ——— ShoppingBasket ——— */
+.root {
+  background: var(--color-surface-subtle);
+}
+
+.panel {
+  background: var(--color-surface-default);
+  padding: var(--space-5);
+  container-type: inline-size;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.head h1 {
+  margin: 0;
+}
+
+.cols {
+  display: none;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+}
+
+.summary {
+  margin-top: var(--space-5);
+  align-items: stretch;
+}
+
+@container (min-width: 720px) {
+  .cols {
+    display: grid;
+    grid-template-columns: var(--size-cart-thumb-lg) minmax(0, 1fr) auto minmax(var(--space-9), auto);
+    gap: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: var(--size-border) solid var(--color-border-default);
+    color: var(--color-text-brand);
+  }
+
+  .cols span:first-child {
+    grid-column: 1 / 3;
+  }
+
+  .cols span:last-child {
+    text-align: right;
+  }
+
+  .summary {
+    align-items: flex-end;
+  }
+
+  .summary > div {
+    align-items: flex-end;
+  }
+
+  .summary dl > div {
+    gap: var(--space-5);
+  }
+
+}
+
+@container (min-width: 768px) {
+  .panel {
+    padding: var(--space-7) var(--space-6);
+  }
+
+}

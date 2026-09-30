@@ -1,0 +1,121 @@
+// HeroBlocks : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+@use '../../../styles/mixins' as *;
+
+// Section de page : mise en page selon la largeur de la section (container queries)
+.sec {
+  @include sec-root;
+}
+
+.secInner {
+  @include sec-inner;
+}
+
+.secTitle {
+  @include sec-title;
+}
+
+.secTitleCenter {
+  text-align: center;
+}
+
+/* ——— HeroBlocks ——— */
+.inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: var(--size-container);
+  margin-inline: auto;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-7) var(--space-5);
+}
+
+.dark .text {
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+.card .text {
+  background: var(--color-surface-default);
+  color: var(--color-text-default);
+}
+
+.title,
+.lead {
+  margin: 0;
+}
+
+.lead {
+  max-width: var(--size-measure-md);
+}
+
+.cta {
+  margin-top: var(--space-4);
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.card .media {
+  order: 2;
+}
+
+@container (min-width: 768px) {
+  .dark .inner {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .dark .text {
+    padding: var(--space-7) var(--space-6);
+  }
+
+  .card .inner {
+    position: relative;
+  }
+
+  .card .media img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .card .text {
+    position: absolute;
+    right: var(--space-6);
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(50%, calc(var(--size-drawer) + var(--space-9)));
+    padding: var(--space-7) var(--space-6);
+    z-index: var(--z-base);
+  }
+
+}
+
+@container (min-width: 1280px) {
+  .dark .inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    padding: var(--space-9) calc(var(--space-8) + var(--space-4));
+  }
+
+  .dark .text {
+    justify-content: space-between;
+  }
+
+  .dark .text {
+    padding: var(--space-8) var(--space-7);
+  }
+
+  .card .text {
+    right: calc(var(--space-8) + var(--space-4));
+    padding: var(--space-8) var(--space-7);
+  }
+
+}

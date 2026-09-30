@@ -1,0 +1,98 @@
+// Filters : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+@use '../../../styles/mixins' as *;
+
+// Section de page : mise en page selon la largeur de la section (container queries)
+.sec {
+  @include sec-root;
+}
+
+.secInner {
+  @include sec-inner;
+}
+
+.secTitle {
+  @include sec-title;
+}
+
+.secTitleCenter {
+  text-align: center;
+}
+
+/* ——— Filters ——— */
+.root .secInner {
+  padding-block: 0 var(--space-5);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  border-bottom: var(--size-border) solid var(--color-border-default);
+  padding-bottom: var(--space-3);
+}
+
+.groups,
+.sort {
+  display: none;
+}
+
+.mobile {
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.mobile > * {
+  flex: 1;
+}
+
+.active {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-top: var(--space-3);
+}
+
+.count {
+  margin: 0 var(--space-2) 0 0;
+}
+
+@container (min-width: 1280px) {
+  .groups {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .sort {
+    display: block;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+}
+
+@container (min-width: 768px) and (max-width: 1279px) {
+  .mobile {
+    width: auto;
+  }
+
+  .mobile > * {
+    flex: none;
+  }
+
+  .sort {
+    display: block;
+  }
+
+  .mobile > :last-child {
+    display: none;
+  }
+
+}

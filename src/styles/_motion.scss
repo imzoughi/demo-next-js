@@ -1,0 +1,53 @@
+// Mouvement Avion : mixins de mode réduit et images clés partagées.
+// Les durées, courbes et distances viennent des variables --motion-* (tokens.css) : rien en dur ici.
+// Les @keyframes sont émis dans chaque module qui les utilise (les modules CSS localisent les noms).
+
+@mixin motion-reduce {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin kf-fade-in {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+@mixin kf-fade-out {
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+// Trois pulsations d'opacité puis arrêt (chargement en mode réduit, Skeleton)
+@mixin kf-pulse-3 {
+  @keyframes pulse-3 {
+    0%,
+    33.3%,
+    66.6%,
+    100% {
+      opacity: 1;
+    }
+
+    16.6%,
+    50%,
+    83.3% {
+      opacity: var(--opacity-pulse);
+    }
+  }
+}
+
+// Message d'erreur ou de succès : fondu + décalage small
+@mixin kf-msg-in {
+  @keyframes msg-in {
+    from {
+      opacity: 0;
+      transform: translateY(calc(var(--motion-distance-small) * -1));
+    }
+  }
+}

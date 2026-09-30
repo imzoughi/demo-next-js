@@ -1,0 +1,55 @@
+// FiltersSheet : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— FiltersSheet ——— */
+.group {
+  border: 0;
+  margin: 0;
+  padding: 0 0 var(--space-3);
+  min-width: 0;
+  border-bottom: var(--size-border) solid var(--color-border-default);
+  outline: none;
+}
+
+.group legend {
+  float: left;
+  width: 100%;
+  padding: var(--space-5) 0 var(--space-2);
+}
+
+.group legend + * {
+  clear: left;
+}
+
+.none {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-subtle);
+}
+
+.none svg {
+  margin-top: calc((1.5em - var(--size-icon-sm)) / 2);
+  color: var(--color-text-default);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.actions > :first-child {
+  flex: none;
+  padding-inline: var(--space-3);
+}
+
+.actions > :last-child {
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
+  padding-inline: var(--space-4);
+  text-align: center;
+}

@@ -1,0 +1,147 @@
+// ProductDetails : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+@use '../../../styles/mixins' as *;
+
+// Section de page : mise en page selon la largeur de la section (container queries)
+.sec {
+  @include sec-root;
+}
+
+.secInner {
+  @include sec-inner;
+}
+
+.secTitle {
+  @include sec-title;
+}
+
+.secTitleCenter {
+  text-align: center;
+}
+
+/* ——— ProductDetails ——— */
+.root {
+  background: var(--color-surface-subtle);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  padding-top: 0;
+}
+
+.media {
+  margin-inline: calc(var(--space-5) * -1);
+}
+
+.media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--color-surface-default);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-bottom: var(--space-6);
+  border-bottom: var(--size-border) solid var(--color-border-strong);
+}
+
+.head > *,
+.block p,
+.block h2 {
+  margin: 0;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.block p {
+  max-width: var(--size-measure-lg);
+}
+
+.dims {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  width: 100%;
+  max-width: var(--size-content-narrow);
+}
+
+.dims > div {
+  padding: 0 var(--space-4);
+  border-left: var(--size-border) solid var(--color-border-strong);
+}
+
+.dims > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.dims dt {
+  color: var(--color-text-brand);
+  margin-bottom: var(--space-2);
+}
+
+.dims dd {
+  margin: 0;
+}
+
+.root .stepper {
+  background: var(--color-surface-default);
+}
+
+.stock {
+  margin: 0;
+  color: var(--color-text-brand);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+@container (min-width: 768px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-7);
+    padding-top: var(--space-7);
+    align-items: start;
+  }
+
+  .media {
+    margin-inline: 0;
+    position: sticky;
+    top: var(--space-5);
+  }
+
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+}
+
+@container (min-width: 1280px) {
+  .inner {
+    gap: var(--space-9);
+    padding-top: var(--space-8);
+  }
+
+}

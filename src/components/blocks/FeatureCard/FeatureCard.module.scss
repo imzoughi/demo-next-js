@@ -1,0 +1,25 @@
+// FeatureCard : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— FeatureCard ——— */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  height: 100%;
+  color: var(--color-text-default);
+}
+
+.filled {
+  background: var(--color-surface-subtle);
+}
+
+.icon {
+  margin-bottom: var(--space-2);
+}
+
+.title,
+.text {
+  margin: 0;
+}

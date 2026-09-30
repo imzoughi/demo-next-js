@@ -1,0 +1,109 @@
+// EmailSignup : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— EmailSignup ——— */
+.root {
+  container-type: inline-size;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-default);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-7) var(--space-5);
+}
+
+.dark {
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+/* Thème sombre : le message d'erreur (#F2B8B5) sur surface-subtle (#4E4D93) fait 4,38:1.
+   On l'éclaircit localement en mélangeant le token d'erreur avec le texte par défaut (blanc en sombre). */
+:global([data-theme='dark']) .root:not(.dark):not(.compact) {
+  /* Variable intermédiaire d'un autre nom (pas d'auto-référence), lue depuis la valeur héritée du thème. */
+  --es-error-on-subtle: color-mix(in srgb, var(--color-feedback-error) 50%, var(--color-text-default));
+}
+
+/* Réassignation sur les enfants seulement : la valeur vient de l'ancêtre .root, sans cycle. */
+:global([data-theme='dark']) .root:not(.dark):not(.compact) > * {
+  --color-feedback-error: var(--es-error-on-subtle);
+}
+
+.compact {
+  background: transparent;
+}
+
+.compact .inner {
+  padding: 0;
+  gap: var(--space-3);
+}
+
+.title,
+.text {
+  margin: 0;
+}
+
+.text {
+  max-width: var(--size-measure-lg);
+}
+
+.benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.benefits li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--size-content-form);
+}
+
+.field {
+  flex: 1;
+}
+
+.btn {
+  width: 100%;
+}
+
+@container (min-width: 400px) {
+  .form {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .btn {
+    width: auto;
+    flex: none;
+  }
+
+}
+
+@container (min-width: 768px) {
+  .root:not(.compact) .inner {
+    padding: var(--space-8) var(--space-6);
+    align-items: center;
+    text-align: center;
+  }
+
+  .field p {
+    text-align: left;
+  }
+
+}

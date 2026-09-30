@@ -1,0 +1,123 @@
+// OrderSummary : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— OrderSummary ——— */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  color: var(--color-text-default);
+}
+
+.paiement {
+  background: var(--color-surface-subtle);
+  padding: var(--space-5);
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.body[hidden] {
+  display: none;
+}
+
+.lines {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--space-4);
+  border-bottom: var(--size-border) solid var(--color-border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lines li,
+.totals > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+.qty {
+  color: var(--color-text-brand);
+}
+
+.totals {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.totals dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.panier .totals > div:first-child dt {
+  color: var(--color-text-brand);
+  font-family: var(--font-display);
+}
+
+.panier .totals > div:first-child dd {
+  font-size: inherit;
+}
+
+.total {
+  padding-top: var(--space-3);
+  border-top: var(--size-border) solid var(--color-border-strong);
+}
+
+.note {
+  margin: 0;
+  color: var(--color-text-brand);
+}
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--size-target-min);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-brand);
+  cursor: pointer;
+  text-align: left;
+}
+
+.toggleTotal {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-default);
+}
+
+.toggle .isOpen {
+  transform: rotate(180deg);
+}
+
+// Appui : lien souligné, texte de couleur par défaut
+.toggle:active {
+  color: var(--color-text-default);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--size-border-strong);
+  text-underline-offset: var(--space-1);
+}
+
+.toggle:hover > span:first-child {
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+  text-decoration-thickness: var(--size-border);
+}

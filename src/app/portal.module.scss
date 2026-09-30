@@ -1,0 +1,16 @@
+// Portail : mêmes proportions que la branche HTML. Uniquement des tokens.
+.portal { max-width: 1180px; margin: 0 auto; padding: clamp(40px, 7vw, 96px) clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: clamp(40px, 6vw, 72px); }
+.hero h1 { margin: var(--space-4) 0; }
+.hero p { color: var(--color-text-brand); max-width: var(--size-measure-lg); }
+.stats { display: flex; flex-wrap: wrap; gap: var(--space-5); margin: var(--space-5) 0 0; padding: 0; list-style: none; }
+.ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+.groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); }
+.group { background: var(--color-surface-subtle); padding: var(--space-6); }
+.ghead { display: flex; gap: var(--space-3); align-items: flex-start; }
+.ghead h2 { margin: 0; }
+.ghead p { margin: var(--space-1) 0 0; }
+.group ul { list-style: none; padding: 0; margin: var(--space-4) 0 0; }
+.group li { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); min-height: var(--size-target-min); border-top: var(--size-border) solid var(--color-border-default); }
+.group a { display: flex; flex: 1; justify-content: space-between; align-items: center; min-height: var(--size-target-min); color: inherit; text-decoration: none; }
+.docs { background: var(--color-surface-inverse); color: var(--color-text-inverse); }
+.docs li { border-color: var(--color-border-input-inverse); }

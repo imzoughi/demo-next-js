@@ -1,0 +1,155 @@
+// CartItem : styles traduits de design/ds-export (bundle.css, design system 1.0.0). Tokens en variables CSS uniquement.
+@use '../../../styles/motion' as *;
+
+/* ——— CartItem ——— */
+.root {
+  list-style: none;
+  container-type: inline-size;
+  display: grid;
+  grid-template-rows: 1fr;
+  border-bottom: var(--size-border) solid var(--color-border-default);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: var(--size-cart-thumb) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-5) 0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.img {
+  height: auto;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--color-surface-subtle);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.info p {
+  margin: 0;
+}
+
+.name {
+  margin: 0;
+  color: var(--color-text-default);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+/* Règle d'or 3 : cible du lien d'au moins 44 px, texte centré. */
+a.name {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-target-min);
+}
+
+a.name:hover {
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+}
+
+.desc {
+  max-width: var(--size-measure-sm);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.qty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.stock {
+  margin: 0;
+  color: var(--color-text-brand);
+}
+
+.total {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.page .qty {
+  grid-column: 2;
+}
+
+.page .total {
+  grid-column: 2;
+}
+
+.page .inner {
+  grid-template-columns: var(--size-cart-thumb) minmax(0, 1fr);
+}
+
+@container (min-width: 480px) {
+  .page .inner {
+    grid-template-columns: var(--size-cart-thumb-lg) minmax(0, 1fr);
+  }
+
+}
+
+@container (min-width: 720px) {
+  .page .inner {
+    grid-template-columns: var(--size-cart-thumb-lg) minmax(0, 1fr) auto minmax(var(--space-9), auto);
+    gap: var(--space-5);
+  }
+
+  .page .qty,
+  .page .total {
+    grid-column: auto;
+  }
+
+  .page .total {
+    text-align: right;
+  }
+
+}
+
+/* Retrait (catalogue : CartItem, base / exit, niveau 2) : fondu puis fermeture de la hauteur ; réduit : fondu court, hauteur fermée sans transition. */
+.root.isRemoving {
+  animation: ci-fade var(--motion-duration-base) var(--motion-ease-exit) both, ci-collapse var(--motion-duration-base) var(--motion-ease-exit) var(--motion-duration-base) both;
+  pointer-events: none;
+}
+
+@keyframes ci-fade {
+  to { opacity: 0; }
+}
+
+@keyframes ci-collapse {
+  from { grid-template-rows: 1fr; opacity: 0; } to { grid-template-rows: 0fr; opacity: 0; border-bottom-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root.isRemoving {
+    animation: ci-fade var(--motion-duration-fast) var(--motion-ease-standard) both, ci-collapse var(--motion-duration-reduced) linear var(--motion-duration-fast) both;
+  }
+
+}
+
+// Appui : lien souligné
+a.name:active {
+  color: var(--color-text-default);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--size-border-strong);
+  text-underline-offset: var(--space-1);
+}
