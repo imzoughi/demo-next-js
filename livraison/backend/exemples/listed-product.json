@@ -1,0 +1,122 @@
+[
+  {
+    "id": "chaise-dandy",
+    "name": "Chaise Dandy",
+    "price": 250,
+    "image": "/images/img-20.jpg",
+    "imageAlt": "Chaise Dandy, coque noire et pieds en hêtre, sur fond bleu-vert",
+    "href": "/fiche-produit/",
+    "category": "chaises",
+    "material": "hetre"
+  },
+  {
+    "id": "set-vases-rustic",
+    "name": "Set de vases Rustic",
+    "price": 155,
+    "image": "/images/img-13.jpg",
+    "imageAlt": "Trois vases en terre beige sur un socle en béton",
+    "href": "/fiche-produit/",
+    "category": "ceramiques",
+    "material": "terre"
+  },
+  {
+    "id": "vase-silky",
+    "name": "Vase Silky",
+    "price": 125,
+    "image": "/images/img-16.jpg",
+    "imageAlt": "Vase Silky en grès gris clair sur fond sombre",
+    "href": "/fiche-produit/",
+    "category": "ceramiques",
+    "material": "gres"
+  },
+  {
+    "id": "suspension-lucy",
+    "name": "Suspension Lucy",
+    "price": 399,
+    "image": "/images/img-14.jpg",
+    "imageAlt": "Suspension Lucy en métal noir, intérieur doré, sur fond turquoise",
+    "href": "/fiche-produit/",
+    "category": "decoration",
+    "material": "metal"
+  },
+  {
+    "id": "fauteuil-dandy",
+    "name": "Fauteuil Dandy",
+    "price": 250,
+    "image": "/images/img-01.png",
+    "imageAlt": "Fauteuil Dandy, coque noire et pieds en chêne",
+    "href": "/fiche-produit/",
+    "category": "chaises",
+    "material": "chene"
+  },
+  {
+    "id": "canape-poplar",
+    "name": "Canapé en velours Poplar",
+    "price": 980,
+    "image": "/images/img-04.jpg",
+    "imageAlt": "Canapé en velours Poplar, trois places",
+    "href": "/fiche-produit/",
+    "category": "chaises",
+    "material": "velours"
+  },
+  {
+    "id": "vase-graystone",
+    "name": "Vase Graystone",
+    "price": 85,
+    "image": "/images/img-10.png",
+    "imageAlt": "Vase Graystone en grès gris",
+    "href": "/fiche-produit/",
+    "category": "ceramiques",
+    "material": "gres"
+  },
+  {
+    "id": "vase-blanc-classique",
+    "name": "Vase blanc classique",
+    "price": 95,
+    "image": "/images/img-06.png",
+    "imageAlt": "Vase blanc classique en céramique",
+    "href": "/fiche-produit/",
+    "category": "ceramiques",
+    "material": "terre"
+  },
+  {
+    "id": "table-basse-chene",
+    "name": "Table basse en chêne massif avec plateau amovible et rangement intégré",
+    "price": 420,
+    "image": "/images/img-03.png",
+    "imageAlt": "Table basse en chêne massif avec plateau amovible",
+    "href": "/fiche-produit/",
+    "category": "tables",
+    "material": "chene"
+  },
+  {
+    "id": "vase-dune",
+    "name": "Vase Dune",
+    "price": 110,
+    "image": "/images/img-07.png",
+    "imageAlt": "Trois vases Dune en terre claire sur un socle en béton",
+    "href": "/fiche-produit/",
+    "category": "ceramiques",
+    "material": "terre"
+  },
+  {
+    "id": "suspension-lucy-mini",
+    "name": "Suspension Lucy mini",
+    "price": 289,
+    "image": "/images/img-14.jpg",
+    "imageAlt": "Suspension Lucy mini en métal noir, intérieur doré",
+    "href": "/fiche-produit/",
+    "category": "decoration",
+    "material": "metal"
+  },
+  {
+    "id": "chaise-dandy-chene",
+    "name": "Chaise Dandy, pieds en chêne",
+    "price": 275,
+    "image": "/images/img-20.jpg",
+    "imageAlt": "Chaise Dandy avec pieds en chêne, coque noire",
+    "href": "/fiche-produit/",
+    "category": "chaises",
+    "material": "chene"
+  }
+]

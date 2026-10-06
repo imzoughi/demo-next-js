@@ -1,0 +1,14 @@
+[
+  {
+    "value": "nouveautes",
+    "label": "Nouveautés"
+  },
+  {
+    "value": "prix-asc",
+    "label": "Prix croissant"
+  },
+  {
+    "value": "prix-desc",
+    "label": "Prix décroissant"
+  }
+]

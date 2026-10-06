@@ -1,0 +1,489 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "titre": "Contrat de données — Avion, boutique démo",
+  "version": "1.0.0",
+  "notes": "Une entité par objet métier affiché par le front. Noms = types TypeScript de src/mocks/types.ts et src/mocks/account.ts. Montants en euros TTC (nombre décimal). Les fonctions d’accès sont dans src/lib/api/index.ts.",
+  "entites": {
+    "Product": {
+      "description": "Produit du catalogue : listes « à la une », fiche produit, suggestions.",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "price",
+        "image",
+        "imageAlt",
+        "href",
+        "category",
+        "description",
+        "dimensions",
+        "max"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "identifiant stable (slug)"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "description": "prix unitaire en euros TTC"
+        },
+        "image": {
+          "type": "string",
+          "description": "URL ou chemin de l’image (aujourd’hui : public/images/…)"
+        },
+        "imageAlt": {
+          "type": "string",
+          "description": "texte alternatif (obligatoire, accessibilité)"
+        },
+        "href": {
+          "type": "string",
+          "description": "lien vers la fiche produit"
+        },
+        "category": {
+          "type": "string",
+          "description": "libellé de catégorie affiché (fil d’Ariane)"
+        },
+        "description": {
+          "type": "string"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "max": {
+          "type": "integer",
+          "description": "stock disponible : plafond du sélecteur de quantité"
+        }
+      }
+    },
+    "ListedProduct": {
+      "description": "Produit de la page liste : sous-ensemble de Product + valeurs des filtres.",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "price",
+        "image",
+        "imageAlt",
+        "href",
+        "category",
+        "material"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "description": "euros TTC"
+        },
+        "image": {
+          "type": "string",
+          "description": "URL ou chemin de l’image (aujourd’hui : public/images/…)"
+        },
+        "imageAlt": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "description": "valeur du filtre « Catégorie » (ex. ceramiques)"
+        },
+        "material": {
+          "type": "string",
+          "description": "valeur du filtre « Matière » (ex. chene)"
+        }
+      }
+    },
+    "CartLine": {
+      "description": "Ligne du panier (MiniCart, page panier, récapitulatif du paiement).",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "unitPrice",
+        "quantity",
+        "max",
+        "image",
+        "imageAlt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id du produit"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "unitPrice": {
+          "type": "number",
+          "description": "euros TTC"
+        },
+        "quantity": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer",
+          "description": "stock disponible"
+        },
+        "image": {
+          "type": "string",
+          "description": "URL ou chemin de l’image (aujourd’hui : public/images/…)"
+        },
+        "imageAlt": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "Order": {
+      "description": "Commande passée (espace compte).",
+      "type": "object",
+      "required": [
+        "number",
+        "date",
+        "status",
+        "total"
+      ],
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "description": "date affichée telle quelle (ex. « 29 septembre 2026 ») ; voir Points ouverts"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "En préparation",
+            "Expédiée",
+            "Livrée"
+          ]
+        },
+        "total": {
+          "type": "number",
+          "description": "euros TTC"
+        },
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "Category": {
+      "description": "Lien de catégorie (menu, pied de page).",
+      "type": "object",
+      "required": [
+        "label",
+        "href"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        }
+      }
+    },
+    "FilterGroup": {
+      "description": "Groupe de filtres de la liste produits.",
+      "type": "object",
+      "required": [
+        "id",
+        "legend",
+        "options"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "legend": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "value",
+              "label",
+              "count"
+            ],
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer",
+                "description": "nombre de produits ; 0 = option désactivée"
+              }
+            }
+          }
+        }
+      }
+    },
+    "SortOption": {
+      "description": "Option de tri de la liste produits.",
+      "type": "object",
+      "required": [
+        "value",
+        "label"
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "HomeContent": {
+      "description": "Textes et images éditoriaux de l’accueil (et de la newsletter, réutilisée sur la fiche produit).",
+      "type": "object",
+      "required": [
+        "hero",
+        "featuresTitle",
+        "featuredTitle",
+        "story",
+        "newsletter"
+      ],
+      "properties": {
+        "hero": {
+          "type": "object",
+          "required": [
+            "title",
+            "text",
+            "image",
+            "imageAlt",
+            "actionLabel",
+            "actionHref"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "imageAlt": {
+              "type": "string"
+            },
+            "actionLabel": {
+              "type": "string"
+            },
+            "actionHref": {
+              "type": "string"
+            }
+          }
+        },
+        "featuresTitle": {
+          "type": "string"
+        },
+        "featuredTitle": {
+          "type": "string"
+        },
+        "story": {
+          "type": "object",
+          "required": [
+            "title",
+            "text",
+            "image",
+            "imageAlt",
+            "actionLabel",
+            "actionHref"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "imageAlt": {
+              "type": "string"
+            },
+            "actionLabel": {
+              "type": "string"
+            },
+            "actionHref": {
+              "type": "string"
+            }
+          }
+        },
+        "newsletter": {
+          "type": "object",
+          "required": [
+            "title",
+            "text",
+            "benefits"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "benefits": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Account": {
+      "description": "Espace client : profil, commandes, adresses (type AccountData dans le code).",
+      "type": "object",
+      "required": [
+        "profile",
+        "orders",
+        "addresses"
+      ],
+      "properties": {
+        "profile": {
+          "type": "object",
+          "required": [
+            "firstName",
+            "lastName",
+            "email",
+            "phone"
+          ],
+          "properties": {
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "phone": {
+              "type": "string"
+            }
+          }
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/entites/Order"
+          }
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "name",
+              "lines"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "lines": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "isDefault": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ProductPage": {
+      "description": "Données de la fiche produit (getProductPage) : produit, suggestions et textes.",
+      "type": "object",
+      "required": [
+        "product",
+        "related",
+        "relatedTitle",
+        "breadcrumbHome"
+      ],
+      "properties": {
+        "product": {
+          "$ref": "#/entites/Product"
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "$ref": "#/entites/Product"
+          }
+        },
+        "relatedTitle": {
+          "type": "string"
+        },
+        "breadcrumbHome": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "exemples": {
+    "Product": "exemples/product.json",
+    "ListedProduct": "exemples/listed-product.json",
+    "CartLine": "exemples/cart-line.json",
+    "Order": "exemples/order.json",
+    "Category": "exemples/category.json",
+    "FilterGroup": "exemples/filter-group.json",
+    "SortOption": "exemples/sort-option.json",
+    "HomeContent": "exemples/home-content.json",
+    "Account": "exemples/account.json",
+    "ProductPage": "exemples/product-page.json"
+  }
+}

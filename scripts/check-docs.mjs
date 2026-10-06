@@ -4,7 +4,8 @@
 //   html   : node check-docs.mjs dist/docs
 //   nextjs : node check-docs.mjs out --prefix /docs [--base /mon-projet]   (export statique ; chemins absolus résolus depuis out/)
 // Bloquant (code 1) : Markdown non rendu, HTML échappé deux fois, bloc de code vide, lien interne cassé,
-// image sans alt, id en double, h1 absent ou multiple, kit de documentation absent.
+// image sans alt, id en double, h1 absent ou multiple, kit de documentation absent, variable CSS non définie
+// dans les styles de la doc ou du portail, portail sans le kit.
 // Avertissement : saut de niveau de titre (h2 → h4).
 import fs from 'node:fs';
 import path from 'node:path';
@@ -77,6 +78,36 @@ for (const f of files) {
   }
 }
 if (files.length && !kitSeen) errors.push('Kit de documentation Decade absent : aucune page n’utilise la structure .doc-shell (voir skill decade-portail, doc-kit/).');
+
+// Styles cassés : une variable CSS utilisée par la doc ou le portail, sans valeur de secours, et définie nulle part
+// (ex. le portail copié d’un autre projet qui lit --surface alors que le projet a --color-surface-default).
+const siteRoot = prefix ? dir : path.dirname(dir); // nextjs : out/ ; html : dist/
+const portal = path.join(siteRoot, 'index.html');
+{
+  const all = walk(siteRoot);
+  const css = all.filter((f) => f.endsWith('.css')).map((f) => [f, fs.readFileSync(f, 'utf8')]);
+  const htmls = [...files, ...(fs.existsSync(portal) ? [portal] : [])].map((f) => [f, fs.readFileSync(f, 'utf8')]);
+  for (const [f, h] of htmls) for (const m of h.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)) css.push([f, m[1]]);
+  const defined = new Set();
+  for (const [, c] of [...css, ...htmls]) for (const m of c.matchAll(/(--[\w-]+)\s*:/g)) defined.add(m[1]);
+  const vus = new Set();
+  for (const [f, c] of css) {
+    for (const rule of c.replace(/\/\*[\s\S]*?\*\//g, '').split('}')) {
+      const i = rule.indexOf('{'); if (i < 0) continue;
+      const sel = rule.slice(0, i).replace(/^[\s\S]*\{/, '').trim();
+      if (!/(^|[\s,.>~+(])\.?(doc|portal)/i.test(sel) && !/portal|doc-/i.test(sel)) continue;
+      for (const m of rule.slice(i).matchAll(/var\(\s*(--[\w-]+)\s*\)/g)) {
+        if (defined.has(m[1]) || vus.has(m[1])) continue; vus.add(m[1]);
+        err(f, `variable CSS ${m[1]} utilisée par « ${sel.slice(0, 60)} » mais définie nulle part : la page perd ses styles (utiliser les --doc-* du kit, ou relier le token dans _doc-theme.scss)`);
+      }
+    }
+  }
+  // Portail : présent et construit avec le kit (classes portal__*), sinon il n’a pas l’apparence attendue.
+  if (fs.existsSync(portal)) {
+    const h = fs.readFileSync(portal, 'utf8');
+    if (!/class="[^"]*\bportal__hero\b/.test(h)) err(portal, 'portail sans le kit Decade (classes portal__* absentes) : copier doc-kit/portal.scss et la page portail de référence');
+  }
+}
 
 console.log(`Documentation : ${files.length} page(s) contrôlée(s) dans ${path.relative(process.cwd(), dir) || '.'}`);
 if (warnings.length) console.log(`\nAvertissements (${warnings.length}) :\n- ` + warnings.slice(0, 40).join('\n- '));

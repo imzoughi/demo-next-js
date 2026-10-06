@@ -1,0 +1,127 @@
+[
+  {
+    "id": "fauteuil-dandy",
+    "name": "Fauteuil Dandy",
+    "price": 250,
+    "image": "/images/img-01.png",
+    "imageAlt": "Fauteuil Dandy, coque noire et pieds en chêne",
+    "href": "/fiche-produit/",
+    "category": "Chaises",
+    "description": "Une coque enveloppante en résine, des pieds en chêne massif. Le fauteuil Dandy se glisse dans un salon comme dans un bureau.",
+    "dimensions": [
+      {
+        "label": "Hauteur",
+        "value": "75 cm"
+      },
+      {
+        "label": "Largeur",
+        "value": "65 cm"
+      },
+      {
+        "label": "Profondeur",
+        "value": "60 cm"
+      }
+    ],
+    "max": 12
+  },
+  {
+    "id": "canape-poplar",
+    "name": "Canapé en velours Poplar",
+    "price": 980,
+    "image": "/images/img-04.jpg",
+    "imageAlt": "Canapé en velours Poplar, trois places",
+    "href": "/fiche-produit/",
+    "category": "Chaises",
+    "description": "Trois places en velours, assise profonde et structure en hêtre. Livré monté, déhoussable.",
+    "dimensions": [
+      {
+        "label": "Hauteur",
+        "value": "80 cm"
+      },
+      {
+        "label": "Largeur",
+        "value": "210 cm"
+      },
+      {
+        "label": "Profondeur",
+        "value": "95 cm"
+      }
+    ],
+    "max": 4
+  },
+  {
+    "id": "vase-graystone",
+    "name": "Vase Graystone",
+    "price": 85,
+    "image": "/images/img-10.png",
+    "imageAlt": "Vase Graystone en grès gris",
+    "href": "/fiche-produit/",
+    "category": "Céramiques",
+    "description": "Un vase en grès émaillé à la main, dans un gris de pierre. Chaque pièce est unique.",
+    "dimensions": [
+      {
+        "label": "Hauteur",
+        "value": "30 cm"
+      },
+      {
+        "label": "Largeur",
+        "value": "16 cm"
+      },
+      {
+        "label": "Profondeur",
+        "value": "16 cm"
+      }
+    ],
+    "max": 24
+  },
+  {
+    "id": "vase-blanc-classique",
+    "name": "Vase blanc classique",
+    "price": 95,
+    "image": "/images/img-06.png",
+    "imageAlt": "Vase blanc classique en céramique",
+    "href": "/fiche-produit/",
+    "category": "Céramiques",
+    "description": "Un vase blanc aux lignes simples, en céramique tournée. Étanche, il accueille fleurs fraîches ou séchées.",
+    "dimensions": [
+      {
+        "label": "Hauteur",
+        "value": "36 cm"
+      },
+      {
+        "label": "Largeur",
+        "value": "18 cm"
+      },
+      {
+        "label": "Profondeur",
+        "value": "18 cm"
+      }
+    ],
+    "max": 18
+  },
+  {
+    "id": "table-basse-chene",
+    "name": "Table basse en chêne massif avec plateau amovible et rangement intégré",
+    "price": 420,
+    "image": "/images/img-03.png",
+    "imageAlt": "Table basse en chêne massif avec plateau amovible",
+    "href": "/fiche-produit/",
+    "category": "Tables",
+    "description": "Un plateau amovible, un rangement intégré, du chêne massif huilé. Elle se transforme en table de service.",
+    "dimensions": [
+      {
+        "label": "Hauteur",
+        "value": "42 cm"
+      },
+      {
+        "label": "Largeur",
+        "value": "110 cm"
+      },
+      {
+        "label": "Profondeur",
+        "value": "60 cm"
+      }
+    ],
+    "max": 6
+  }
+]

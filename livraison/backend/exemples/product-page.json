@@ -1,0 +1,106 @@
+{
+  "product": {
+    "id": "chaise-dandy",
+    "name": "Chaise Dandy",
+    "price": 250,
+    "image": "/images/img-20.jpg",
+    "imageAlt": "Chaise Dandy, coque noire et pieds en hêtre, sur fond bleu-vert",
+    "href": "/fiche-produit/",
+    "category": "Chaises",
+    "description": "Un design intemporel, l’une de nos pièces les plus populaires et les plus emblématiques. La chaise Dandy s’accorde à tous les intérieurs, avec ses pieds en hêtre et son assise en cuir d’agneau.",
+    "dimensions": [
+      {
+        "label": "Hauteur",
+        "value": "110 cm"
+      },
+      {
+        "label": "Largeur",
+        "value": "75 cm"
+      },
+      {
+        "label": "Profondeur",
+        "value": "50 cm"
+      }
+    ],
+    "max": 5
+  },
+  "related": [
+    {
+      "id": "set-vases-rustic",
+      "name": "Set de vases Rustic",
+      "price": 155,
+      "image": "/images/img-13.jpg",
+      "imageAlt": "Trois vases en terre beige sur un socle en béton",
+      "href": "/fiche-produit/",
+      "category": "Céramiques",
+      "description": "Trois vases façonnés à la main, dans une terre claire.",
+      "dimensions": [
+        {
+          "label": "Hauteur",
+          "value": "28 cm"
+        },
+        {
+          "label": "Largeur",
+          "value": "18 cm"
+        },
+        {
+          "label": "Profondeur",
+          "value": "18 cm"
+        }
+      ],
+      "max": 10
+    },
+    {
+      "id": "vase-silky",
+      "name": "Vase Silky",
+      "price": 125,
+      "image": "/images/img-16.jpg",
+      "imageAlt": "Vase Silky en grès gris clair sur fond sombre",
+      "href": "/fiche-produit/",
+      "category": "Céramiques",
+      "description": "Un vase en grès à l’émail satiné, gris clair.",
+      "dimensions": [
+        {
+          "label": "Hauteur",
+          "value": "26 cm"
+        },
+        {
+          "label": "Largeur",
+          "value": "14 cm"
+        },
+        {
+          "label": "Profondeur",
+          "value": "14 cm"
+        }
+      ],
+      "max": 15
+    },
+    {
+      "id": "suspension-lucy",
+      "name": "Suspension Lucy",
+      "price": 399,
+      "image": "/images/img-14.jpg",
+      "imageAlt": "Suspension Lucy en métal noir, intérieur doré, sur fond turquoise",
+      "href": "/fiche-produit/",
+      "category": "Décoration",
+      "description": "Une suspension conique en métal noir à l’intérieur doré.",
+      "dimensions": [
+        {
+          "label": "Hauteur",
+          "value": "25 cm"
+        },
+        {
+          "label": "Largeur",
+          "value": "38 cm"
+        },
+        {
+          "label": "Profondeur",
+          "value": "38 cm"
+        }
+      ],
+      "max": 8
+    }
+  ],
+  "relatedTitle": "Vous aimerez aussi",
+  "breadcrumbHome": "Accueil"
+}

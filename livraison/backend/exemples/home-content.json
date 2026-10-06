@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "title": "Du mobilier de qualité pour celles et ceux qui aiment le design intemporel",
+    "text": "Découvrez la nouvelle collection de printemps.",
+    "image": "/images/img-17.jpg",
+    "imageAlt": "Deux chevets en chêne, une lampe noire et une plante sur un mur rose pâle",
+    "actionLabel": "Voir la collection",
+    "actionHref": "/liste-produits/"
+  },
+  "featuresTitle": "Ce qui rend notre marque différente",
+  "featuredTitle": "Notre sélection du moment",
+  "story": {
+    "title": "Tout a commencé par une petite idée",
+    "text": "Notre marque est née début 2014 dans un petit atelier du sud de Londres, avec des débuts locaux et une ambition mondiale.",
+    "image": "/images/img-12.jpg",
+    "imageAlt": "Fauteuil jaune devant un mur clair, avec un lampadaire en laiton",
+    "actionLabel": "Voir la collection",
+    "actionHref": "/liste-produits/"
+  },
+  "newsletter": {
+    "title": "Rejoignez le club et profitez d’avantages",
+    "text": "Inscrivez-vous à notre lettre d’information pour recevoir des offres exclusives, de nouvelles gammes, des ventes privées et plus encore.",
+    "benefits": [
+      "Offres exclusives",
+      "Évènements gratuits",
+      "Grosses remises"
+    ]
+  }
+}

@@ -6,10 +6,11 @@ export const metadata: Metadata = {
   description: 'Maquettes Next.js de la boutique démo',
 };
 
+// suppressHydrationWarning : les extensions du navigateur (LanguageTool, QuillBot…) et le thème de la doc changent les attributs de <html>/<body> avant React.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
-      <body>{children}</body>
+    <html lang="fr" suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

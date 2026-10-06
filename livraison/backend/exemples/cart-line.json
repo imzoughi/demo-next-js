@@ -1,0 +1,24 @@
+[
+  {
+    "id": "chaise-dandy",
+    "name": "Chaise Dandy",
+    "description": "Coque noire et pieds en hêtre",
+    "unitPrice": 250,
+    "quantity": 1,
+    "max": 5,
+    "image": "/images/img-20.jpg",
+    "imageAlt": "Chaise Dandy, coque noire et pieds en hêtre, sur fond bleu-vert",
+    "href": "/fiche-produit/"
+  },
+  {
+    "id": "vase-graystone",
+    "name": "Vase Graystone",
+    "description": "Grès émaillé gris",
+    "unitPrice": 85,
+    "quantity": 2,
+    "max": 2,
+    "image": "/images/img-10.png",
+    "imageAlt": "Vase Graystone en grès gris",
+    "href": "/fiche-produit/"
+  }
+]

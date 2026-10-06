@@ -1,0 +1,64 @@
+[
+  {
+    "id": "categorie",
+    "legend": "Catégorie",
+    "options": [
+      {
+        "value": "ceramiques",
+        "label": "Céramiques",
+        "count": 5
+      },
+      {
+        "value": "tables",
+        "label": "Tables",
+        "count": 1
+      },
+      {
+        "value": "chaises",
+        "label": "Chaises",
+        "count": 4
+      },
+      {
+        "value": "decoration",
+        "label": "Décoration",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "id": "matiere",
+    "legend": "Matière",
+    "options": [
+      {
+        "value": "chene",
+        "label": "Chêne",
+        "count": 3
+      },
+      {
+        "value": "hetre",
+        "label": "Hêtre",
+        "count": 1
+      },
+      {
+        "value": "gres",
+        "label": "Grès",
+        "count": 2
+      },
+      {
+        "value": "terre",
+        "label": "Terre cuite",
+        "count": 3
+      },
+      {
+        "value": "velours",
+        "label": "Velours",
+        "count": 1
+      },
+      {
+        "value": "metal",
+        "label": "Métal",
+        "count": 2
+      }
+    ]
+  }
+]
