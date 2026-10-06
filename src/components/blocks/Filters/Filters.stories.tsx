@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { filterGroups, sortOptions } from '@/mocks/catalog';
 import { Filters } from './Filters';
-import type { FilterSelection } from '../FiltersSheet/FiltersSheet';
+import { FiltersDemo } from './FiltersDemo';
 
 const meta = {
   title: 'Sections de page/Filters',
@@ -16,10 +15,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const ActiveFilters: Story = {
-  render: function Render(args) {
-    const [selected, setSelected] = useState<FilterSelection>({ categorie: ['ceramiques'], matiere: ['gres'] });
-    return <Filters {...args} selected={selected} onChange={setSelected} onClear={() => setSelected({})} resultCount={14} />;
-  },
+  render: () => <FiltersDemo />,
 };
 
 export const NoResult: Story = { args: { resultCount: 0, selected: { categorie: ['ceramiques'] } } };

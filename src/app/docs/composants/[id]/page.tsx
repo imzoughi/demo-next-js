@@ -1,44 +1,39 @@
-// Fiche composant : règles du design system, statut QA, exemples vivants (stories), code à copier, fichiers.
-import type { Metadata } from "next";
+// Fiche composant (kit Decade) : règles du design system (Markdown), exemples vivants avec leur code, import, fichiers, hooks.
 import { notFound } from "next/navigation";
-import { components } from "@/docs/entries";
+import { components } from "@/docs/catalog";
 import { CodeBlock } from "@/docs/CodeBlock";
-import { Examples } from "@/docs/Examples";
-import { Status } from "@/docs/Status";
+import { Markdown } from "@/docs/Markdown";
+import { ExampleDemo } from "@/docs/ExampleDemo";
+import { Hero } from "@/docs/Hero";
 import { readText } from "@/docs/read";
-import { qaRouge, qaStatus, qaSource } from "@/data/qa";
-import s from "@/docs/doc-ui.module.scss";
 
 export function generateStaticParams() { return components.map((c) => ({ id: c.id })); }
-
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
-  const c = components.find((x) => x.id === id);
-  return { title: c ? `${c.title} · documentation` : "Composant" };
-}
 
 export default async function ComponentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const c = components.find((x) => x.id === id);
   if (!c) notFound();
-  const rules = readText(`design/ds-export/components/${c.ds}/README.md`);
-  const source = readText(`${c.dir}/${c.title}.tsx`);
-  const props = source.match(new RegExp(`export interface ${c.title}Props[\\s\\S]*?\\n}`))?.[0] ?? "";
-  const status = qaStatus(c.ds);
+  const rules = c.ds ? readText(`design/ds-export/components/${c.ds}.md`) || readText(`design/ds-export/components/${c.ds}/README.md`) : "";
   return (
-    <article>
-      <h1 className="h2">{c.title} <Status value={status} /></h1>
-      <p className={s.muted}>{c.group} · statut d’après {qaSource}</p>
-      {status === "ROUGE" && <p>À reprendre : {qaRouge[c.ds]}</p>}
-      {rules && <section><h2 className="h4">Règles du design system</h2><div className={s.prose}>{rules}</div></section>}
-      <section><h2 className="h4">Exemples</h2><Examples id={c.id} /></section>
-      <section>
-        <h2 className="h4">Code</h2>
-        <CodeBlock code={`import { ${c.title} } from "@/components/${c.dir.split("/")[2]}/${c.title}/${c.title}";`} />
-        {props && <CodeBlock code={props} />}
+    <>
+      <Hero kicker={c.group} title={c.title} pills={[`${c.examples.length} exemple${c.examples.length > 1 ? "s" : ""}`, ...(c.page ? [`Utilisé dans ${c.page}`] : [])]} />
+      {rules && <section className="doc-section"><h2>Règles du design system</h2><Markdown source={rules} shift={1} label={c.title} /></section>}
+      <section className="doc-section">
+        <h2>Exemples</h2>
+        {c.examples.map(({ name, code }) => (
+          <div key={name} className="doc-example">
+            <h3 className="doc-example__title">{name}</h3>
+            <div className="doc-demo" role="region" tabIndex={0} aria-label={`Exemple ${name}`}><ExampleDemo id={c.id} name={name} /></div>
+            <CodeBlock code={code} label={`Code de l’exemple ${name}`} />
+          </div>
+        ))}
       </section>
-      <section><h2 className="h4">Fichiers</h2><ul className={s.list}>{c.files.map((f) => <li key={f}><code>{f}</code></li>)}</ul></section>
-      <section><h2 className="h4">Page où le voir</h2><p>Aucune page intégrée pour l’instant.</p></section>
-    </article>
+      <section className="doc-section">
+        <h2>Import</h2>
+        <CodeBlock label={`Import de ${c.title}`} code={`import { ${c.title} } from "@/${c.files[0].replace(/^src\//, "").replace(/\.tsx$/, "")}";`} />
+      </section>
+      <section className="doc-section"><h2>Fichiers</h2><ul className="doc-list">{c.files.map((f) => <li key={f}><code>{f}</code></li>)}</ul></section>
+      {c.hooks?.length ? <section className="doc-section"><h2>Hooks et API</h2><ul className="doc-hooks">{c.hooks.map((h) => <li key={h}><code>{h}</code></li>)}</ul></section> : null}
+    </>
   );
 }

@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import Image from 'next/image';
+import { withBase } from '@/lib/paths';
 import type { Product } from '@/mocks/types';
 import { cx } from '@/lib/cx';
 import { formatPrice } from '@/lib/format';
@@ -13,7 +14,11 @@ import styles from './ProductDetails.module.scss';
 export interface ProductDetailsProps {
   product: Pick<Product, 'name' | 'price' | 'image' | 'imageAlt' | 'description' | 'dimensions' | 'max'>;
   breadcrumb?: BreadcrumbItem[];
+  /** Quantité déjà dans le panier : l'ajout est refusé une fois le stock atteint. */
+  inCart?: number;
   className?: string;
+  /** Niveau du titre : 1 par défaut (titre de la page) ; plus bas quand le bloc est montré dans une fiche de documentation. */
+  headingLevel?: 1 | 2 | 3 | 4;
   /** Ajout au panier : promesse résolue = terminé (le bouton reste en chargement jusque-là). */
   onAdd?: (quantity: number) => Promise<unknown> | void;
   /** Affiche « Enregistrer dans mes favoris » quand présent. */
@@ -21,16 +26,21 @@ export interface ProductDetailsProps {
 }
 
 /** Fiche produit en pile verticale : image, titre, prix, description, dimensions, quantité, « Ajouter au panier ». */
-export function ProductDetails({ product: p, breadcrumb, className, onAdd, onFavorite }: ProductDetailsProps) {
+export function ProductDetails({ product: p, breadcrumb, className, headingLevel = 1, inCart = 0, onAdd, onFavorite }: ProductDetailsProps) {
+  const H = `h${headingLevel}` as 'h1' | 'h2' | 'h3' | 'h4';
   const [qty, setQty] = useState(1);
+  const stockId = useId();
   const [adding, setAdding] = useState(false);
   const max = p.max;
+  const remaining = Math.max(0, max - inCart);
+  const soldOut = remaining === 0;
+  const shownQty = Math.min(qty, Math.max(1, remaining));
 
   async function add() {
-    if (!onAdd) return;
+    if (!onAdd || soldOut) return;
     setAdding(true);
     try {
-      await onAdd(qty);
+      await onAdd(shownQty);
     } finally {
       setAdding(false);
     }
@@ -40,12 +50,12 @@ export function ProductDetails({ product: p, breadcrumb, className, onAdd, onFav
     <section className={cx(styles.sec, styles.root, className)}>
       <div className={cx(styles.secInner, styles.inner)}>
         <div className={styles.media}>
-          <Image src={p.image} alt={p.imageAlt || p.name} width={800} height={800} priority sizes="(min-width: 768px) 50vw, 100vw" />
+          <Image src={withBase(p.image)} alt={p.imageAlt || p.name} width={800} height={800} priority sizes="(min-width: 768px) 50vw, 100vw" />
         </div>
         <div className={styles.info}>
           {breadcrumb ? <Breadcrumb items={breadcrumb} /> : null}
           <div className={styles.head}>
-            <h1 className="h1">{p.name}</h1>
+            <H className="h1">{p.name}</H>
             <p className="price">{formatPrice(p.price)}</p>
           </div>
           <div className={styles.block}>
@@ -67,15 +77,19 @@ export function ProductDetails({ product: p, breadcrumb, className, onAdd, onFav
           ) : null}
           <div className={styles.block}>
             <h2 className="h5">Quantité</h2>
-            <Stepper className={styles.stepper} label={`Quantité, ${p.name}`} min={1} max={max} value={qty} onChange={setQty} />
-            {qty >= max ? (
+            <Stepper className={styles.stepper} label={`Quantité, ${p.name}`} min={1} max={Math.max(1, remaining)} value={shownQty} onChange={setQty} />
+            {soldOut ? (
+              <p className={cx(styles.stock, 'body-medium')} id={stockId}>
+                {`Stock maximum atteint : les ${max} exemplaire${max > 1 ? 's' : ''} disponible${max > 1 ? 's' : ''} sont déjà dans votre panier.`}
+              </p>
+            ) : shownQty >= remaining ? (
               <p className={cx(styles.stock, 'body-medium')}>
                 {`Stock maximum atteint : ${max} exemplaire${max > 1 ? 's' : ''} disponible${max > 1 ? 's' : ''}.`}
               </p>
             ) : null}
           </div>
           <div className={styles.actions}>
-            <Button onClick={add} loading={adding} loadingLabel="Ajout en cours" fullWidth="mobile">
+            <Button onClick={add} loading={adding} softDisabled={soldOut} aria-describedby={soldOut ? stockId : undefined} loadingLabel="Ajout en cours" fullWidth="mobile">
               Ajouter au panier
             </Button>
             {onFavorite ? (

@@ -1,3 +1,4 @@
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import type { MouseEvent, ReactNode } from 'react';
 import { cx } from '@/lib/cx';
 import { Icon, type IconName, type IconSize } from '../Icon/Icon';
@@ -52,9 +53,9 @@ export function IconButton({
   }
   if (href) {
     return (
-      <a className={cls} href={href} aria-label={label} aria-expanded={expanded} onClick={onClick}>
+      <AppLink className={cls} href={href} aria-label={label} aria-expanded={expanded} onClick={onClick}>
         {content}
-      </a>
+      </AppLink>
     );
   }
   return (

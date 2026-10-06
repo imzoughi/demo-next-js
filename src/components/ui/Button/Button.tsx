@@ -1,5 +1,6 @@
 'use client';
 
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import type { MouseEvent, ReactNode } from 'react';
 import { cx } from '@/lib/cx';
 import { Icon, type IconName } from '../Icon/Icon';
@@ -19,13 +20,16 @@ export interface ButtonProps {
   /** Libellé pendant le chargement (« Ajout en cours »). */
   loadingLabel?: string;
   disabled?: boolean;
-  /** Rend un lien `<a>`. */
+  /** Inactif mais focalisable et annoncé (aria-disabled), sans changer de rendu : utile quand un message explique pourquoi. */
+  softDisabled?: boolean;
+  /** Rend un lien `<AppLink>`. */
   href?: string;
   htmlType?: 'button' | 'submit' | 'reset';
   className?: string;
   children?: ReactNode;
   onClick?: (e: MouseEvent<HTMLElement>) => void;
   'aria-haspopup'?: 'dialog' | 'menu' | 'listbox' | boolean;
+  'aria-describedby'?: string;
   'aria-live'?: 'polite' | 'assertive' | 'off';
 }
 
@@ -38,6 +42,7 @@ export function Button({
   loading = false,
   loadingLabel,
   disabled = false,
+  softDisabled = false,
   href,
   htmlType = 'button',
   className,
@@ -45,7 +50,7 @@ export function Button({
   onClick,
   ...rest
 }: ButtonProps) {
-  const inactive = loading || disabled;
+  const inactive = loading || disabled || softDisabled;
   const right = iconRight === true ? 'chevron-down' : iconRight;
   const cls = cx(
     styles.root,
@@ -55,7 +60,7 @@ export function Button({
     fullWidth === true && styles.full,
     fullWidth === 'mobile' && styles.fullMobile,
     loading && styles.isLoading,
-    disabled && styles.isDisabled,
+    (disabled || softDisabled) && styles.isDisabled,
     className,
   );
   const content = (
@@ -74,7 +79,7 @@ export function Button({
   };
   if (href) {
     return (
-      <a
+      <AppLink
         {...rest}
         className={cls}
         href={inactive ? undefined : href}
@@ -84,7 +89,7 @@ export function Button({
         onClick={handle}
       >
         {content}
-      </a>
+      </AppLink>
     );
   }
   // aria-disabled plutôt que disabled pendant le chargement : le bouton garde le focus et annonce son état.
@@ -94,7 +99,7 @@ export function Button({
       className={cls}
       type={htmlType}
       disabled={disabled && !loading ? true : undefined}
-      aria-disabled={loading ? true : undefined}
+      aria-disabled={loading || softDisabled ? true : undefined}
       aria-busy={loading ? true : undefined}
       onClick={handle}
     >

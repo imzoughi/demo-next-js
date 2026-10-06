@@ -37,6 +37,10 @@ export interface MiniCartProps {
   cartHref?: string;
   checkoutHref?: string;
   className?: string;
+  /** Rend le focus au bouton panier à la fermeture (false après une navigation). */
+  restoreFocus?: boolean;
+  /** « Voir le panier » ou « Commander » cliqué : la page va changer. */
+  onNavigate?: () => void;
   onClose?: () => void;
   onClosed?: () => void;
   onBrowse?: () => void;
@@ -52,10 +56,12 @@ export function MiniCart({
   loading,
   notice,
   static: isStatic,
-  collectionHref = '/collection',
-  cartHref = '/panier',
-  checkoutHref = '/paiement',
+  collectionHref = '/liste-produits/',
+  cartHref = '/panier/',
+  checkoutHref = '/paiement/',
   className,
+  restoreFocus,
+  onNavigate,
   onClose,
   onClosed,
   onBrowse,
@@ -142,10 +148,10 @@ export function MiniCart({
         </div>
         <p className={cx(styles.note, 'body-small')}>Taxes et livraison calculées au paiement</p>
         <div className={styles.actions}>
-          <Button type="secondary" href={cartHref} fullWidth>
+          <Button type="secondary" href={cartHref} fullWidth onClick={onNavigate}>
             Voir le panier
           </Button>
-          <Button href={checkoutHref} fullWidth>
+          <Button href={checkoutHref} fullWidth onClick={onNavigate}>
             Commander
           </Button>
         </div>
@@ -159,6 +165,7 @@ export function MiniCart({
       onClose={onClose}
       onClosed={onClosed}
       side="right"
+      restoreFocus={restoreFocus}
       title={loading || !count ? 'Votre panier' : `Votre panier (${count})`}
       busy={loading}
       footer={footer}

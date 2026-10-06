@@ -1,3 +1,4 @@
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import type { MouseEventHandler } from 'react';
 import { cx } from '@/lib/cx';
 import { Icon, type SocialIconName } from '../../ui/Icon/Icon';
@@ -87,9 +88,9 @@ export function Footer({ columns = COLUMNS, socials = SOCIALS, copyright = '© 2
           <ul className={styles.social} aria-label="Réseaux sociaux">
             {socials.map((s) => (
               <li key={s.name}>
-                <a href={s.href} className={styles.soc} aria-label={`Avion sur ${SOCIAL_LABELS[s.name]}`} onClick={onNavigate}>
+                <AppLink href={s.href} className={styles.soc} aria-label={`Avion sur ${SOCIAL_LABELS[s.name]}`} onClick={onNavigate}>
                   <Icon name={s.name} size="md" />
-                </a>
+                </AppLink>
               </li>
             ))}
           </ul>

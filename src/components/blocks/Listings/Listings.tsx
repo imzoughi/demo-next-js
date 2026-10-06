@@ -62,7 +62,7 @@ export function Listings({ products = [], title, loading, count, mobileColumns =
         {body}
         {action !== false && products.length > 0 && !loading ? (
           <div className={styles.more}>
-            <Button type="secondary" href={action?.href ?? '/collection'} onClick={action?.onClick} fullWidth="mobile">
+            <Button type="secondary" href={action?.href ?? '/liste-produits/'} onClick={action?.onClick} fullWidth="mobile">
               {action?.label ?? 'Voir la collection'}
             </Button>
           </div>

@@ -1,11 +1,14 @@
-// Journal des versions : affiche design/CHANGELOG.md, écrit à chaque /import-ds.
-import type { Metadata } from "next";
+// Journal des versions : design/CHANGELOG.md, écrit à chaque /import-ds, rendu en Markdown (jamais en texte brut).
+import { Hero } from "@/docs/Hero";
+import { Markdown } from "@/docs/Markdown";
 import { readText } from "@/docs/read";
-import s from "@/docs/doc-ui.module.scss";
-
-export const metadata: Metadata = { title: "Journal des versions · documentation" };
 
 export default function Versions() {
-  const md = readText("design/CHANGELOG.md");
-  return <article><h1 className="h2">Journal des versions</h1><div className={s.prose}>{md || "Aucune version pour l’instant."}</div></article>;
+  const log = readText("design/CHANGELOG.md");
+  return (
+    <>
+      <Hero kicker="Prise en main" title="Journal des versions" lead="Chaque version du design system importée dans le projet." />
+      {log ? <Markdown source={log} label="Journal des versions" /> : <p>Aucune version pour l’instant.</p>}
+    </>
+  );
 }

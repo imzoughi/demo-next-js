@@ -1,5 +1,6 @@
 import type { MouseEventHandler } from 'react';
 import Image from 'next/image';
+import { withBase } from '@/lib/paths';
 import { cx } from '@/lib/cx';
 import { Button } from '../../ui/Button/Button';
 import styles from './HeroBlocks.module.scss';
@@ -13,7 +14,7 @@ export interface HeroBlocksProps {
   variant?: 'dark' | 'card';
   action?: { label: string; href: string; onClick?: MouseEventHandler<HTMLElement> };
   /** Niveau du titre (1 par défaut : titre de la page). */
-  headingLevel?: 1 | 2;
+  headingLevel?: 1 | 2 | 3 | 4;
   /** Image principale de la page (chargée en priorité) ; false pour un second bloc plus bas. */
   priority?: boolean;
   className?: string;
@@ -26,12 +27,12 @@ export function HeroBlocks({
   image,
   imageAlt = '',
   variant = 'dark',
-  action = { label: 'Voir la collection', href: '/collection' },
+  action = { label: 'Voir la collection', href: '/liste-produits/' },
   headingLevel = 1,
   priority = true,
   className,
 }: HeroBlocksProps) {
-  const H = `h${headingLevel}` as 'h1' | 'h2';
+  const H = `h${headingLevel}` as 'h1' | 'h2' | 'h3' | 'h4';
   return (
     <section className={cx(styles.sec, styles[variant], className)}>
       <div className={styles.inner}>
@@ -43,7 +44,7 @@ export function HeroBlocks({
           </Button>
         </div>
         <div className={styles.media}>
-          <Image src={image} alt={imageAlt} width={1440} height={960} priority={priority} sizes="100vw" />
+          <Image src={withBase(image)} alt={imageAlt} width={1440} height={960} priority={priority} sizes="100vw" />
         </div>
       </div>
     </section>

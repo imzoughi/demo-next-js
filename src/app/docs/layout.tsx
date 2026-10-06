@@ -1,30 +1,26 @@
-// Documentation : barre latérale (prise en main + composants par groupe) et contenu.
-import Link from "next/link";
+// Documentation Decade (Next.js) : kit de documentation commun (skill decade-portail, doc-kit/) — mêmes classes et même
+// apparence que la doc HTML du projet de référence Intersport. Styles : docs.scss et _doc-theme.scss copiés depuis le kit.
 import type { ReactNode } from "react";
-import { groups, components } from "@/docs/entries";
+import { DocChrome, type NavGroup } from "@/docs/DocChrome";
+import { groups, components } from "@/docs/catalog";
 import { site } from "@/data/site";
-import s from "./docs.module.scss";
+import "./docs.scss";
 
-const start = [
-  ["/docs/", "Démarrage"], ["/docs/architecture/", "Architecture"], ["/docs/marque/", "Guide de marque"], ["/docs/tokens/", "Tokens"],
-  ["/docs/pages/", "Pages et maquettes"], ["/docs/performance/", "Performance"], ["/docs/versions/", "Journal des versions"],
-];
+const start: NavGroup = {
+  title: "Prise en main",
+  items: [["/docs", "Démarrage"], ["/docs/architecture", "Architecture"], ["/docs/marque", "Guide de marque"], ["/docs/tokens", "Tokens"],
+    ["/docs/pages", "Pages & maquettes"], ["/docs/versions", "Journal des versions"], ["/docs/performance", "Performance"]]
+    .map(([href, label]) => ({ href, label })),
+};
 
 export default function DocsLayout({ children }: { children: ReactNode }) {
+  const nav: NavGroup[] = [start, ...groups.map((g) => ({
+    title: g, items: components.filter((c) => c.group === g).map((c) => ({ href: `/docs/composants/${c.id}`, label: c.title })),
+  }))];
   return (
-    <div className={s.shell}>
-      <nav className={s.nav} aria-label="Documentation">
-        <Link href="/" className={s.brand}>{site.name} · Documentation</Link>
-        <p className={s.navTitle}>Prise en main</p>
-        <ul>{start.map(([href, l]) => <li key={href}><Link href={href}>{l}</Link></li>)}</ul>
-        {groups.map((g) => (
-          <div key={g}>
-            <p className={s.navTitle}>{g}</p>
-            <ul>{components.filter((c) => c.group === g).map((c) => <li key={c.id}><Link href={`/docs/composants/${c.id}/`}>{c.title}</Link></li>)}</ul>
-          </div>
-        ))}
-      </nav>
-      <main className={s.main}>{children}<footer className={s.foot}>Généré depuis le design system {site.name} v{site.dsVersion}</footer></main>
-    </div>
+    <DocChrome brand={site.name} siteHref={site.pages[0]?.href ?? "/"} nav={nav}>
+      {children}
+      <footer className="doc-foot">{site.name} front · généré depuis le design system {site.name} (Claude Design) · version {site.dsVersion}</footer>
+    </DocChrome>
   );
 }

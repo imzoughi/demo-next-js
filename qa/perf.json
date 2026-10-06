@@ -1,62 +1,8 @@
 [
-  {
-    "page": "panier",
-    "score": 99,
-    "lcpMs": 810,
-    "cls": 0.0009,
-    "tbtMs": 4,
-    "jsKo": 287,
-    "imagesKo": 27,
-    "ok": true
-  },
-  {
-    "page": "accueil",
-    "score": 99,
-    "lcpMs": 869,
-    "cls": 0,
-    "tbtMs": 4,
-    "jsKo": 284,
-    "imagesKo": 227,
-    "ok": false
-  },
-  {
-    "page": "liste-produits",
-    "score": 99,
-    "lcpMs": 973,
-    "cls": 0.001,
-    "tbtMs": 6,
-    "jsKo": 288,
-    "imagesKo": 208,
-    "ok": false
-  },
-  {
-    "page": "fiche-produit",
-    "score": 99,
-    "lcpMs": 820,
-    "cls": 0,
-    "tbtMs": 5,
-    "jsKo": 286,
-    "imagesKo": 42,
-    "ok": true
-  },
-  {
-    "page": "compte",
-    "score": 99,
-    "lcpMs": 906,
-    "cls": 0,
-    "tbtMs": 11,
-    "jsKo": 289,
-    "imagesKo": 0,
-    "ok": true
-  },
-  {
-    "page": "paiement",
-    "score": 99,
-    "lcpMs": 901,
-    "cls": 0,
-    "tbtMs": 17,
-    "jsKo": 290,
-    "imagesKo": 0,
-    "ok": true
-  }
+  { "page": "accueil", "score": 99, "lcpMs": 951, "cls": 0.0004, "tbtMs": 9, "jsKo": 288, "imagesKo": 227, "ok": false },
+  { "page": "liste-produits", "score": 99, "lcpMs": 901, "cls": 0.0006, "tbtMs": 12, "jsKo": 292, "imagesKo": 208, "ok": false },
+  { "page": "fiche-produit", "score": 99, "lcpMs": 845, "cls": 0.0005, "tbtMs": 42, "jsKo": 290, "imagesKo": 42, "ok": true },
+  { "page": "panier", "score": 99, "lcpMs": 881, "cls": 0.0009, "tbtMs": 26, "jsKo": 291, "imagesKo": 27, "ok": true },
+  { "page": "paiement", "score": 99, "lcpMs": 825, "cls": 0.0005, "tbtMs": 32, "jsKo": 294, "imagesKo": 0, "ok": true },
+  { "page": "compte", "score": 99, "lcpMs": 782, "cls": 0.0005, "tbtMs": 25, "jsKo": 293, "imagesKo": 0, "ok": true }
 ]

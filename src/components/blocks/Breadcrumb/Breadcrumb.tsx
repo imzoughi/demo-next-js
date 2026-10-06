@@ -1,3 +1,4 @@
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import type { MouseEventHandler } from 'react';
 import { cx } from '@/lib/cx';
 import { Icon } from '../../ui/Icon/Icon';
@@ -31,22 +32,22 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
                   {it.label}
                 </span>
               ) : (
-                <a href={it.href} className={cx(styles.link, 'body-medium')} onClick={it.onClick}>
+                <AppLink href={it.href} className={cx(styles.link, 'body-medium')} onClick={it.onClick}>
                   {it.label}
-                </a>
+                </AppLink>
               )}
             </li>
           );
         })}
       </ol>
       {parent ? (
-        <a href={parent.href} className={cx(styles.back, 'body-medium')} onClick={parent.onClick}>
+        <AppLink href={parent.href} className={cx(styles.back, 'body-medium')} onClick={parent.onClick}>
           <Icon name="arrow-left" size="sm" />
           <span>
             <span className="av-visually-hidden">Retour à </span>
             {parent.label}
           </span>
-        </a>
+        </AppLink>
       ) : null}
     </nav>
   );

@@ -6,6 +6,8 @@ const meta = {
   component: HeroBlocks,
   tags: ['autodocs'],
   args: {
+    // Titre rétrogradé : un seul H1 par fiche du portail.
+    headingLevel: 3,
     title: 'Du mobilier pensé pour durer',
     text: 'Découvrez plus de 400 pièces uniques, du petit objet au grand mobilier.',
     image: '/images/img-02.jpg',

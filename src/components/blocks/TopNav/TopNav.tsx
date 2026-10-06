@@ -1,5 +1,6 @@
 'use client';
 
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import { useState, type MouseEvent } from 'react';
 import { categories as defaultCategories } from '@/mocks/catalog';
 import type { Category } from '@/mocks/types';
@@ -41,8 +42,8 @@ export function TopNav({
   cartExpanded,
   sticky,
   homeHref = '/',
-  cartHref = '/panier',
-  accountHref = '/compte',
+  cartHref = '/panier/',
+  accountHref = '/compte/',
   className,
   onCart,
   onSearch,
@@ -58,14 +59,14 @@ export function TopNav({
       const cur = activeCategory === c.label;
       return (
         <li key={c.label}>
-          <a
+          <AppLink
             href={c.href}
             className={cx(cls, cur && styles.isCurrent)}
             aria-current={cur ? 'page' : undefined}
             onClick={onNavigate ? (e) => onNavigate(e, c) : undefined}
           >
             {c.label}
-          </a>
+          </AppLink>
         </li>
       );
     });

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>Avion</title>
+  <style>
+    .m { fill: black; }
+    @media (prefers-color-scheme: dark) { .m { fill: white; } }
+  </style>
+  <path class="m" d="M16 4 4 28h5l2.2-5h9.6l2.2 5h5L16 4Zm0 10.4L18.6 19h-5.2L16 14.4Z"/>
+</svg>

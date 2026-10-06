@@ -6,7 +6,7 @@ const meta = {
   title: 'Actions/TextLink',
   component: TextLink,
   tags: ['autodocs'],
-  args: { href: '/collection', children: 'Continuer mes achats' },
+  args: { href: '#', children: 'Continuer mes achats' },
   decorators: [Pad],
 } satisfies Meta<typeof TextLink>;
 export default meta;
@@ -19,7 +19,7 @@ export const Inline: Story = {
   render: () => (
     <p className="body-medium">
       Consultez notre{' '}
-      <TextLink href="/retours" inline tone="brand">
+      <TextLink href="#" inline tone="brand">
         politique de retour
       </TextLink>{' '}
       avant de commander.

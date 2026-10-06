@@ -8,7 +8,7 @@ const meta = {
   args: {
     items: [
       { label: 'Accueil', href: '/' },
-      { label: 'Chaises', href: '/chaises' },
+      { label: 'Chaises', href: '#' },
       { label: 'Fauteuil Dandy' },
     ],
   },
@@ -28,7 +28,7 @@ export const LongName: Story = {
   args: {
     items: [
       { label: 'Accueil', href: '/' },
-      { label: 'Tables', href: '/tables' },
+      { label: 'Tables', href: '#' },
       { label: 'Table basse en chêne massif avec plateau amovible et rangement intégré' },
     ],
   },

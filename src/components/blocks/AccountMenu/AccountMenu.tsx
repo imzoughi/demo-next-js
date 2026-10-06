@@ -1,5 +1,6 @@
 'use client';
 
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import { cx } from '@/lib/cx';
 import { Icon, type IconName } from '../../ui/Icon/Icon';
 import styles from './AccountMenu.module.scss';
@@ -35,7 +36,7 @@ export function AccountMenu({ items = ITEMS, active, className, onSelect, onLogo
           const cur = active === it.id;
           return (
             <li key={it.id}>
-              <a
+              <AppLink
                 href={it.href ?? `#${it.id}`}
                 className={cx(styles.link, 'body-medium', cur && styles.isCurrent)}
                 aria-current={cur ? 'page' : undefined}
@@ -49,7 +50,7 @@ export function AccountMenu({ items = ITEMS, active, className, onSelect, onLogo
                 <Icon name={it.icon ?? 'chevron-right'} size="md" className={styles.icon} />
                 <span>{it.label}</span>
                 <Icon name="chevron-right" size="sm" className={styles.chev} />
-              </a>
+              </AppLink>
             </li>
           );
         })}

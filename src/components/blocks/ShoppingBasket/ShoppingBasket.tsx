@@ -18,6 +18,8 @@ export interface ShoppingBasketProps {
   continueHref?: string;
   checkoutHref?: string;
   className?: string;
+  /** Niveau du titre : 1 par défaut (titre de la page) ; plus bas quand le bloc est montré dans une fiche de documentation. */
+  headingLevel?: 1 | 2 | 3 | 4;
   onContinue?: MouseEventHandler<HTMLElement>;
   onCheckout?: MouseEventHandler<HTMLElement>;
   onQuantityChange?: (id: string, quantity: number) => void;
@@ -28,9 +30,10 @@ export interface ShoppingBasketProps {
 /** Page panier : articles (CartItem), « Continuer mes achats », sous-total, « Passer la commande » ; état vide inclus. */
 export function ShoppingBasket({
   items = [],
-  continueHref = '/collection',
-  checkoutHref = '/paiement',
+  continueHref = '/liste-produits/',
+  checkoutHref = '/paiement/',
   className,
+  headingLevel = 1,
   onContinue,
   onCheckout,
   onQuantityChange,
@@ -38,13 +41,14 @@ export function ShoppingBasket({
   onRemoved,
 }: ShoppingBasketProps) {
   const subtotal = items.filter((i) => !i.removing).reduce((n, i) => n + i.unitPrice * i.quantity, 0);
+  const H = `h${headingLevel}` as 'h1' | 'h2' | 'h3' | 'h4';
   const empty = items.length === 0;
   return (
     <section className={cx(styles.sec, styles.root, className)}>
       <div className={styles.secInner}>
         <div className={styles.panel}>
           <div className={styles.head}>
-            <h1 className="h2" tabIndex={-1}>Votre panier</h1>
+            <H className="h2" tabIndex={-1}>Votre panier</H>
             {!empty ? (
               <TextLink tone="brand" href={continueHref} iconLeft="arrow-left" onClick={onContinue}>
                 Continuer mes achats
@@ -52,7 +56,7 @@ export function ShoppingBasket({
             ) : null}
           </div>
           {empty ? (
-            <EmptyState kind="cart" headingLevel={2} action={{ label: 'Découvrir la collection', href: continueHref, onClick: onContinue }} />
+            <EmptyState kind="cart" headingLevel={Math.min(headingLevel + 1, 4) as 2 | 3 | 4} action={{ label: 'Découvrir la collection', href: continueHref, onClick: onContinue }} />
           ) : (
             <>
               <div className={styles.cols} aria-hidden="true">

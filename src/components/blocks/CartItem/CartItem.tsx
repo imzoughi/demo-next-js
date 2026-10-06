@@ -1,7 +1,9 @@
 'use client';
 
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import { useRef, type AnimationEvent } from 'react';
 import Image from 'next/image';
+import { withBase } from '@/lib/paths';
 import { cx } from '@/lib/cx';
 import { formatPrice } from '@/lib/format';
 import { Stepper } from '../../ui/Stepper/Stepper';
@@ -77,12 +79,12 @@ export function CartItem({
   return (
     <li className={cx(styles.root, !drawer && styles.page, removing && styles.isRemoving, className)} onAnimationEnd={onAnimationEnd}>
       <div className={styles.inner}>
-        <Image className={styles.img} src={image} alt={imageAlt} width={240} height={300} priority={priority} />
+        <Image className={styles.img} src={withBase(image)} alt={imageAlt} width={240} height={300} priority={priority} />
         <div className={styles.info}>
           {href ? (
-            <a href={href} className={nameCls}>
+            <AppLink href={href} className={nameCls}>
               {name}
-            </a>
+            </AppLink>
           ) : (
             <p className={nameCls}>{name}</p>
           )}

@@ -8,7 +8,7 @@ import { useCart } from './CartProvider';
 const ADD_DELAY_MS = 700;
 
 export function ProductPurchase({ product, breadcrumb }: { product: Product; breadcrumb: ProductDetailsProps['breadcrumb'] }) {
-  const { addLine, openCart } = useCart();
+  const { lines, addLine, openCart } = useCart();
 
   async function onAdd(quantity: number) {
     await new Promise((resolve) => setTimeout(resolve, ADD_DELAY_MS));
@@ -25,5 +25,5 @@ export function ProductPurchase({ product, breadcrumb }: { product: Product; bre
     openCart();
   }
 
-  return <ProductDetails product={product} breadcrumb={breadcrumb} onAdd={onAdd} />;
+  return <ProductDetails product={product} breadcrumb={breadcrumb} inCart={lines.find((l) => l.id === product.id)?.quantity ?? 0} onAdd={onAdd} />;
 }

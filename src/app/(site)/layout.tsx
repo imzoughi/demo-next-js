@@ -4,12 +4,14 @@ import type { ReactNode } from 'react';
 import { Footer } from '@/components/blocks/Footer/Footer';
 import { getCart, getCategories } from '@/lib/api';
 import { announcement, footerColumns, routes } from '@/mocks/site';
+import { SiteLinkProvider } from './_components/SiteLinkProvider';
 import { CartProvider } from './_components/CartProvider';
 import { SiteHeader } from './_components/SiteHeader';
 
 export default async function SiteLayout({ children }: { children: ReactNode }) {
   const [categories, cart] = await Promise.all([getCategories(), getCart()]);
   return (
+    <SiteLinkProvider>
     <CartProvider initialCart={cart}>
       <SiteHeader
         categories={categories.map((c) => ({ ...c, href: routes.products }))}
@@ -23,5 +25,6 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
       {children}
       <Footer columns={footerColumns} />
     </CartProvider>
+    </SiteLinkProvider>
   );
 }

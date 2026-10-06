@@ -22,7 +22,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Cart: Story = { args: { context: 'panier', action: { label: 'Passer la commande', href: '/paiement' } } };
+export const Cart: Story = { args: { context: 'panier', action: { label: 'Passer la commande', href: '/paiement/' } } };
 export const Payment: Story = { args: { context: 'paiement', shipping: 0 } };
 export const ShippingNotComputed: Story = { args: { context: 'paiement' } };
 export const Collapsible: Story = { args: { context: 'paiement', shipping: 15, collapsible: true } };

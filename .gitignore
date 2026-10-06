@@ -8,3 +8,6 @@ playwright-report/
 next-env.d.ts
 *.tsbuildinfo
 tmp-qa/
+qa/lighthouse/
+tmp/
+workflow/historique/

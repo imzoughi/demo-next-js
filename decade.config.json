@@ -57,6 +57,16 @@
     ]
   },
   "validations": {
-    "chefDeProjet": ""
+    "pilote": ""
+  },
+  "modeles": {
+    "boucle": "haiku",
+    "audit": "opus",
+    "preparation": "sonnet",
+    "integration": "sonnet",
+    "qa": "sonnet",
+    "documentation": "haiku",
+    "escalade": "opus",
+    "escaladeAuTour": 3
   }
 }

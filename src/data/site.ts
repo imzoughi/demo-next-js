@@ -1,30 +1,23 @@
-// Données du site (portail et documentation) : pages du BRIEF et groupes. À mettre à jour quand une page est intégrée
-// (passer `status` à "prête").
-export type PageStatus = "à venir" | "prête";
-export type Page = { id: string; href: string; title: string; group: string; status: PageStatus };
+// Site Decade (Next.js) : pages et groupes du portail. Même contenu que src/data/site.json de la branche HTML.
+export type Page = { id: string; href: string; title: string; group: string };
 export type Group = { title: string; icon: string; text: string };
 
-const groups: Group[] = [
-  { title: "Catalogue", icon: "Store", text: "Accueil, liste produits, fiche produit." },
-  { title: "Tunnel d’achat", icon: "ShoppingCart", text: "Panier et paiement." },
-  { title: "Compte", icon: "User", text: "Espace client." },
-];
-
-const pages: Page[] = [
-  { id: "accueil", href: "/accueil/", title: "Accueil", group: "Catalogue", status: "prête" },
-  { id: "liste-produits", href: "/liste-produits/", title: "Liste produits", group: "Catalogue", status: "prête" },
-  { id: "fiche-produit", href: "/fiche-produit/", title: "Fiche produit", group: "Catalogue", status: "prête" },
-  { id: "panier", href: "/panier/", title: "Panier", group: "Tunnel d’achat", status: "prête" },
-  { id: "paiement", href: "/paiement/", title: "Paiement", group: "Tunnel d’achat", status: "prête" },
-  { id: "compte", href: "/compte/", title: "Compte", group: "Compte", status: "prête" },
-];
-
 export const site = {
-  name: "Avion",
-  client: "Démo e-commerce",
-  projet: "boutique-demo",
+  name: "Avion — Boutique démo",
   stackLabel: "Next.js / React",
   dsVersion: "1.0.0",
-  groups,
-  pages,
+  repo: "",
+  groups: [
+    { title: "Catalogue", icon: "Store", text: "Accueil, liste de produits, fiche produit." },
+    { title: "Achat", icon: "ShoppingCart", text: "Panier, paiement." },
+    { title: "Compte", icon: "User", text: "Espace client et gestion des commandes." },
+  ] satisfies Group[],
+  pages: [
+    { id: "accueil", href: "/accueil", title: "Accueil", group: "Catalogue" },
+    { id: "liste-produits", href: "/liste-produits", title: "Liste de produits", group: "Catalogue" },
+    { id: "fiche-produit", href: "/fiche-produit", title: "Fiche produit", group: "Catalogue" },
+    { id: "panier", href: "/panier", title: "Panier", group: "Achat" },
+    { id: "paiement", href: "/paiement", title: "Paiement", group: "Achat" },
+    { id: "compte", href: "/compte", title: "Compte", group: "Compte" },
+  ] satisfies Page[],
 };

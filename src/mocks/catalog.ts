@@ -7,7 +7,7 @@ export const products: Product[] = [
     price: 250,
     image: '/images/img-01.png',
     imageAlt: 'Fauteuil Dandy, coque noire et pieds en chêne',
-    href: '/produits/fauteuil-dandy',
+    href: '/fiche-produit/',
     category: 'Chaises',
     description:
       'Une coque enveloppante en résine, des pieds en chêne massif. Le fauteuil Dandy se glisse dans un salon comme dans un bureau.',
@@ -24,7 +24,7 @@ export const products: Product[] = [
     price: 980,
     image: '/images/img-04.jpg',
     imageAlt: 'Canapé en velours Poplar, trois places',
-    href: '/produits/canape-poplar',
+    href: '/fiche-produit/',
     category: 'Chaises',
     description: 'Trois places en velours, assise profonde et structure en hêtre. Livré monté, déhoussable.',
     dimensions: [
@@ -40,7 +40,7 @@ export const products: Product[] = [
     price: 85,
     image: '/images/img-10.png',
     imageAlt: 'Vase Graystone en grès gris',
-    href: '/produits/vase-graystone',
+    href: '/fiche-produit/',
     category: 'Céramiques',
     description: 'Un vase en grès émaillé à la main, dans un gris de pierre. Chaque pièce est unique.',
     dimensions: [
@@ -56,7 +56,7 @@ export const products: Product[] = [
     price: 95,
     image: '/images/img-06.png',
     imageAlt: 'Vase blanc classique en céramique',
-    href: '/produits/vase-blanc-classique',
+    href: '/fiche-produit/',
     category: 'Céramiques',
     description: 'Un vase blanc aux lignes simples, en céramique tournée. Étanche, il accueille fleurs fraîches ou séchées.',
     dimensions: [
@@ -72,7 +72,7 @@ export const products: Product[] = [
     price: 420,
     image: '/images/img-03.png',
     imageAlt: 'Table basse en chêne massif avec plateau amovible',
-    href: '/produits/table-basse-chene',
+    href: '/fiche-produit/',
     category: 'Tables',
     description: 'Un plateau amovible, un rangement intégré, du chêne massif huilé. Elle se transforme en table de service.',
     dimensions: [
@@ -85,12 +85,12 @@ export const products: Product[] = [
 ];
 
 export const categories: Category[] = [
-  { label: 'Pots de plantes', href: '/pots-de-plantes' },
-  { label: 'Céramiques', href: '/ceramiques' },
-  { label: 'Tables', href: '/tables' },
-  { label: 'Chaises', href: '/chaises' },
-  { label: 'Vaisselle', href: '/vaisselle' },
-  { label: 'Couverts', href: '/couverts' },
+  { label: 'Pots de plantes', href: '/liste-produits/' },
+  { label: 'Céramiques', href: '/liste-produits/' },
+  { label: 'Tables', href: '/liste-produits/' },
+  { label: 'Chaises', href: '/liste-produits/' },
+  { label: 'Vaisselle', href: '/liste-produits/' },
+  { label: 'Couverts', href: '/liste-produits/' },
 ];
 
 export const filterGroups: FilterGroup[] = [

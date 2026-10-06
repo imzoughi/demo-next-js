@@ -14,7 +14,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = { name: 'Par défaut' };
-export const AsLink: Story = { name: 'Lien', args: { icon: 'circle-user', label: 'Mon compte', href: '/compte' } };
+export const AsLink: Story = { name: 'Lien', args: { icon: 'circle-user', label: 'Mon compte', href: '/compte/' } };
 export const Expanded: Story = { name: 'Ouvert', args: { icon: 'menu', label: 'Ouvrir le menu', expanded: true } };
 export const Pressed: Story = { name: 'Pressé', args: { pressed: true } };
 export const SizeSm: Story = { name: 'Taille petite (16 px)', args: { size: 'sm' } };
@@ -27,7 +27,7 @@ export const WithBadge: Story = {
 export const Disabled: Story = { name: 'Désactivé', args: { disabled: true } };
 export const DisabledLink: Story = {
   name: 'Lien désactivé',
-  args: { icon: 'circle-user', label: 'Mon compte', href: '/compte', disabled: true },
+  args: { icon: 'circle-user', label: 'Mon compte', href: '/compte/', disabled: true },
 };
 export const Inverse: Story = { name: 'Inverse', args: { tone: 'inverse' }, decorators: [OnInverse] };
 export const InverseExpanded: Story = {

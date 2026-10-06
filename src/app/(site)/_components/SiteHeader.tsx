@@ -20,7 +20,7 @@ export interface SiteHeaderProps {
 }
 
 export function SiteHeader({ categories, announcement, activeCategory, current, homeHref, cartHref, accountHref, collectionHref, checkoutHref }: SiteHeaderProps) {
-  const { lines, open, openCart, closeCart, setQuantity, removeLine } = useCart();
+  const { lines, open, restoreFocus, openCart, closeCart, closeForNavigation, setQuantity, removeLine } = useCart();
   const count = lines.reduce((n, l) => n + l.quantity, 0);
 
   return (
@@ -43,6 +43,8 @@ export function SiteHeader({ categories, announcement, activeCategory, current, 
         cartHref={cartHref}
         checkoutHref={checkoutHref}
         collectionHref={collectionHref}
+        restoreFocus={restoreFocus}
+        onNavigate={closeForNavigation}
         onClose={closeCart}
         onQuantityChange={setQuantity}
         onRemove={removeLine}

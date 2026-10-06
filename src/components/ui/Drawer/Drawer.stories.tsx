@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Button } from '../Button/Button';
 import { Drawer } from './Drawer';
+import { DrawerDemo } from './DrawerDemo';
 
 const meta = {
   title: 'Couches/Drawer',
@@ -35,15 +35,5 @@ export const Closed: Story = { args: { open: false } };
 /** Ouverture réelle : focus piégé, Échap, retour du focus au déclencheur. */
 export const Interactive: Story = {
   args: { static: false, open: false },
-  render: function Render(args) {
-    const [open, setOpen] = useState(false);
-    return (
-      <div style={{ padding: 'var(--space-5)' }}>
-        <Button onClick={() => setOpen(true)}>Ouvrir le panneau</Button>
-        <Drawer {...args} open={open} onClose={() => setOpen(false)}>
-          <p className="body-medium">Contenu du panneau.</p>
-        </Drawer>
-      </div>
-    );
-  },
+  render: () => <DrawerDemo />,
 };

@@ -9,8 +9,10 @@ const meta = {
   component: ProductDetails,
   tags: ['autodocs'],
   args: {
+    // Titre rétrogradé : un seul H1 par fiche du portail.
+    headingLevel: 3,
     product: dandy,
-    breadcrumb: [{ label: 'Accueil', href: '/' }, { label: 'Chaises', href: '/chaises' }, { label: dandy.name }],
+    breadcrumb: [{ label: 'Accueil', href: '/' }, { label: 'Chaises', href: '#' }, { label: dandy.name }],
   },
 } satisfies Meta<typeof ProductDetails>;
 export default meta;

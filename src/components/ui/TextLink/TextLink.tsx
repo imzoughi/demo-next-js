@@ -1,3 +1,4 @@
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import type { MouseEvent, ReactNode } from 'react';
 import { cx } from '@/lib/cx';
 import { Icon, type IconName } from '../Icon/Icon';
@@ -39,9 +40,9 @@ export function TextLink({
   );
   if (href) {
     return (
-      <a {...rest} className={cls} href={href} onClick={onClick}>
+      <AppLink {...rest} className={cls} href={href} onClick={onClick}>
         {content}
-      </a>
+      </AppLink>
     );
   }
   return (

@@ -6,7 +6,7 @@ const meta = {
   title: 'Sections de page/ShoppingBasket',
   component: ShoppingBasket,
   tags: ['autodocs'],
-  args: { items: cartLines },
+  args: { headingLevel: 3, items: cartLines },
 } satisfies Meta<typeof ShoppingBasket>;
 export default meta;
 type Story = StoryObj<typeof meta>;

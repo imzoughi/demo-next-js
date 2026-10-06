@@ -1,3 +1,4 @@
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import type { AnchorHTMLAttributes } from 'react';
 import { cx } from '@/lib/cx';
 import styles from './Logo.module.scss';
@@ -15,7 +16,7 @@ export interface LogoProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>,
 /** Marque « Avion » : texte Red Hat Display, lien vers l'accueil. Ne jamais la redessiner. */
 export function Logo({ tone = 'default', href = '/', current, label = 'Avion, accueil', className, ...rest }: LogoProps) {
   return (
-    <a
+    <AppLink
       {...rest}
       href={href}
       aria-label={label}
@@ -23,6 +24,6 @@ export function Logo({ tone = 'default', href = '/', current, label = 'Avion, ac
       className={cx(styles.root, 'h3', tone === 'inverse' && styles.inverse, className)}
     >
       Avion
-    </a>
+    </AppLink>
   );
 }

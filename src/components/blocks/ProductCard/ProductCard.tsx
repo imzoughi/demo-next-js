@@ -1,5 +1,7 @@
+import { AppLink } from '@/components/ui/AppLink/AppLink';
 import type { MouseEventHandler } from 'react';
 import Image from 'next/image';
+import { withBase } from '@/lib/paths';
 import { cx } from '@/lib/cx';
 import { formatPrice } from '@/lib/format';
 import { Skeleton } from '../../ui/Skeleton/Skeleton';
@@ -32,14 +34,14 @@ export function ProductCard({ name, price = 0, image, imageAlt = '', href = '#',
     );
   }
   return (
-    <a href={href} className={cx(styles.root, size === 'lg' && styles.lg, className)} onClick={onClick}>
+    <AppLink href={href} className={cx(styles.root, size === 'lg' && styles.lg, className)} onClick={onClick}>
       <span className={styles.media}>
         {image ? (
-          <Image className={styles.img} src={image} alt={imageAlt} fill priority={priority} sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" />
+          <Image className={styles.img} src={withBase(image)} alt={imageAlt} fill priority={priority} sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" />
         ) : null}
       </span>
       <span className={cx(styles.name, 'h4')}>{name}</span>
       <span className={cx(styles.price, 'body-large')}>{formatPrice(price)}</span>
-    </a>
+    </AppLink>
   );
 }

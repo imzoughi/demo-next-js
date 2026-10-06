@@ -26,6 +26,8 @@ export interface DrawerProps {
   footer?: ReactNode;
   /** Élément qui reçoit le focus à l'ouverture (le panneau par défaut). */
   initialFocus?: RefObject<HTMLElement | null>;
+  /** Rend le focus au déclencheur à la fermeture (true par défaut) ; false quand la fermeture suit une navigation. */
+  restoreFocus?: boolean;
   className?: string;
   children?: ReactNode;
   onClose?: () => void;
@@ -44,6 +46,7 @@ export function Drawer({
   busy,
   footer,
   initialFocus,
+  restoreFocus = true,
   className,
   children,
   onClose,
@@ -123,7 +126,7 @@ export function Drawer({
     setPhase('closed');
     const o = opener.current as HTMLElement | null;
     opener.current = null;
-    if (o?.focus && document.contains(o)) o.focus();
+    if (restoreFocus && o?.focus && document.contains(o)) o.focus();
     onClosed?.();
   }
 

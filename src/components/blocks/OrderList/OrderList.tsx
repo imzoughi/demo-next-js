@@ -26,7 +26,7 @@ export interface OrderListProps {
 }
 
 /** Liste des commandes : tableau dès 768 px, cartes en mobile ; états chargement et vide. */
-export function OrderList({ orders = [], loading, collectionHref = '/collection', className, onBrowse, onOpen }: OrderListProps) {
+export function OrderList({ orders = [], loading, collectionHref = '/liste-produits/', className, onBrowse, onOpen }: OrderListProps) {
   if (loading) {
     return (
       <div className={cx(styles.sec, className)} aria-busy="true">

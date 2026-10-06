@@ -16,7 +16,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Cart: Story = { args: { kind: 'cart', action: { label: 'Découvrir la collection', href: '/collection' } } };
+export const Cart: Story = { args: { kind: 'cart', action: { label: 'Découvrir la collection', href: '#' } } };
 export const Results: Story = { args: { kind: 'results' } };
 export const Custom: Story = {
   args: { icon: 'package', title: 'Aucune commande pour l’instant', text: 'Vos commandes apparaîtront ici, avec leur suivi.' },
