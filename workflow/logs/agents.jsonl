@@ -577,3 +577,16 @@
 {"date":"2026-10-06T10:20:35.868Z","evenement":"SubagentStop","agent":null,"session":"ac1f85e6-defa-49f1-a1cc-08c6b472efbe"}
 {"date":"2026-10-06T10:21:32.505Z","evenement":"SubagentStop","agent":"decade-front:decade-documentaliste","session":"ac1f85e6-defa-49f1-a1cc-08c6b472efbe"}
 {"date":"2026-10-06T10:26:24.311Z","evenement":"SubagentStop","agent":"decade-front:decade-documentaliste","session":"ac1f85e6-defa-49f1-a1cc-08c6b472efbe"}
+{"date":"2026-10-06T16:45:14.156Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:46:22.897Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:47:01.964Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:47:36.089Z","evenement":"SubagentStop","agent":"decade-front:decade-documentaliste","session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:47:41.864Z","evenement":"SubagentStop","agent":"decade-front:decade-documentaliste","session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:47:56.942Z","evenement":"SubagentStop","agent":"decade-front:decade-passeur-backend","session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:48:38.697Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:49:12.119Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:51:05.831Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:52:14.578Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:52:47.644Z","evenement":"SubagentStop","agent":null,"session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:54:19.374Z","evenement":"SubagentStop","agent":"decade-front:decade-documentaliste","session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}
+{"date":"2026-10-06T16:54:28.723Z","evenement":"SubagentStop","agent":"decade-front:decade-documentaliste","session":"0d15d779-7807-4ccf-a7d3-a103ca5d2bdc"}

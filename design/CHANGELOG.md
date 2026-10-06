@@ -1,5 +1,10 @@
 # Journal des versions du design system
 
+## Correctifs d'intégration
+
+### TopNav - États des liens de catégories (oct. 6)
+Les liens de catégories desktop (.cat) ne doivent pas être affectés par la règle :active du menu mobile (.mcat:active). Correctif : sélecteur .cat retiré de la règle :active, qui ne vise maintenant que .mcat:active (menu mobile). Voir `/docs/composants/top-nav` section « États ».
+
 ## 1.0.0 - 2026-09-30 (premier import)
 
 - Import du design system Avion 1.0.0 (source : `design/ds-export/`).

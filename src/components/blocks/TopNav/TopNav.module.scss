@@ -150,8 +150,7 @@
   text-decoration-thickness: var(--size-border-strong);
 }
 
-// Appui : lien souligné, texte de couleur par défaut
-.cat,
+// Appui (menu mobile) : lien souligné, texte de couleur par défaut
 .mcat:active {
   color: var(--color-text-default);
   text-decoration-line: underline;

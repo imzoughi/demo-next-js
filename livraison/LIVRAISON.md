@@ -2,12 +2,14 @@
 
 ## Package de livraison
 
-**Fichier** : `boutique-demo-v1.0.0.zip` (36,56 Mo)
+**Fichier** : `boutique-demo-v1.0.0.zip` (21.91 Mo, 701 fichiers)
 
 **Contenu** :
-- Toutes les sources du projet (sauf `node_modules`, `.next`, `.git`)
+- Toutes les sources du projet (`src/`, `public/`, `design/`)
 - Build de production statique dans `out/` prêt pour GitHub Pages
-- README avec commandes de démarrage
+- Passation backend : `livraison-backend/` (API mock, contrat, exemples, actions)
+- Workflows GitHub Pages (`.github/`)
+- Fichiers de configuration et documentation (package.json, tsconfig.json, README, AGENTS.md, etc.)
 
 ## Démarrage
 
@@ -57,9 +59,13 @@ Ouvre http://localhost:3000 pour le site, http://localhost:3000/docs pour la doc
 
 **Build docs** : `npm run build` puis `npm run docs:check` — contrôle HTML + images + liens internes.
 
+## Nouveautés de cette livraison
+
+- **TopNav, correctif soulignement** : les liens de catégories desktop ne sont plus affectés par la règle `:active` du menu mobile. Voir `design/CHANGELOG.md`.
+
 ## Résultats QA
 
-**Verdict global** : VERT (5e passe du 6 octobre 2026)
+**Verdict global** : VERT (5e passe du 6 octobre 2026, R1 corrigé)
 
 | Domaine | Statut | Détail |
 |---------|--------|--------|
@@ -197,6 +203,20 @@ const addLine = async (line: CartLine) => {
 - **Plugin Decade front** — voir `CLAUDE.md` pour les conventions et le workflow
 - **Design system** — `design/ds-export/README.md` et `/docs/marque`
 - **Conventions React/Next.js** — `plugins/decade-front/skills/decade-stack-nextjs/conventions.md`
+
+## Commandes git (à lancer par le pilote)
+
+```bash
+git add src/components/blocks/TopNav/TopNav.module.scss design/CHANGELOG.md livraison/LIVRAISON.md
+git commit -m "fix: soulignement de la barre de navigation"
+```
+
+Le commit inclut :
+- Retrait du sélecteur `.cat` de la règle `:active` (TopNav.module.scss)
+- Mise à jour du journal des versions (design/CHANGELOG.md)
+- Cette livraison (LIVRAISON.md)
+
+**Ne pas pousser** (`git push`) — le pilote le fera lui-même après validation locale.
 
 ---
 
