@@ -1,15 +1,4 @@
 {
-    "extraKnownMarketplaces": {
-    "decade": {
-      "source": {
-        "source": "directory",
-        "path": "C:\\Users\\Issam-Mzoughi\\decade-claude-plugins"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "decade-front@decade": true
-  },
   "permissions": {
     "allow": [
       "Bash(npm run *)",
@@ -30,5 +19,7 @@
       "Read(./.env)",
       "Read(./.env.*)"
     ]
-  }
+  },
+  "enabledPlugins": {},
+  "extraKnownMarketplaces": {}
 }

@@ -32,7 +32,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ id: 
         <h2>Import</h2>
         <CodeBlock label={`Import de ${c.title}`} code={`import { ${c.title} } from "@/${c.files[0].replace(/^src\//, "").replace(/\.tsx$/, "")}";`} />
       </section>
-      <section className="doc-section"><h2>Fichiers</h2><ul className="doc-list">{c.files.map((f) => <li key={f}><code>{f}</code></li>)}</ul></section>
+      <section className="doc-section"><h2>Fichiers</h2><ul className="doc-list">{c.files.map((f) => <li key={f}><code>{f.split(/(?<=[/.])/).map((part, i) => <span key={i}>{part}<wbr /></span>)}</code></li>)}</ul></section>
       {c.hooks?.length ? <section className="doc-section"><h2>Hooks et API</h2><ul className="doc-hooks">{c.hooks.map((h) => <li key={h}><code>{h}</code></li>)}</ul></section> : null}
     </>
   );

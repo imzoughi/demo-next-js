@@ -1,74 +1,99 @@
-# QA all — boutique-demo (06/10/2026, 5e passe)
+# QA all — boutique-demo (09/10/2026, 7e passe)
 
-**Verdict global : VERT** (avec réserves orange, toutes déjà connues). Le point rouge R1 de la 4e passe est corrigé et vérifié. Aucune régression détectée sur les 6 pages ni sur le portail.
+**Verdict global : VERT.** R1 et R2 de la 6e passe sont corrigés et vérifiés sur un build préfixé `/boutique-demo` ; O7 et O8 aussi. Aucune régression sur les 10 pages, le portail et la doc.
 
-Environnement : Node v22.12.0, Windows. Contrôle fait dans une copie propre du dépôt (`next dev` tourne sur le port 3000).
-- **MCP Next DevTools** : répond. `get_compilation_issues` vide. `get_errors` ne remonte qu'un avertissement d'hydratation dû à des extensions du navigateur (`data-lt-installed`, `data-qb-installed`, `cz-shortcut-listen`), pas une erreur du code.
-- **MCP Storybook** : `docs-list` répond, `test-run` n'est pas exposé au contrôleur. Axe refait sur les 185 stories (`storybook build` + Playwright).
-- `tests/` toujours vide : `test:ui` et `shots` remplacés par des scripts Playwright. `npm run docs:check` absent : contrôle équivalent fait à la main.
+Environnement : Node 22.12, Windows, Edge (Playwright). Copie propre du dépôt (`%TEMP%\qacopy7`, sans `.next`, sans `tsconfig.tsbuildinfo`), build préfixé `NEXT_PUBLIC_BASE_PATH=/boutique-demo` servi sous `http://localhost:4100/boutique-demo/`. Aucun code du dépôt modifié.
 
-## Vérification prioritaire de R1 : VERT
-- Build préfixé `NEXT_PUBLIC_BASE_PATH=/boutique-demo` : OK.
-- `src/app/docs/pages/page.tsx` : l. 5 `import { withBase } from "@/lib/paths"`, l. 18 et 19 `src={withBase(p.href)}`.
-- `out/docs/pages/index.html` contient 2 fois chacun `src="/boutique-demo/accueil/"`, `/liste-produits/`, `/fiche-produit/`, `/panier/`, `/paiement/`, `/compte/` ; plus aucun `src="/accueil/"` nu.
-- Servi sous `/boutique-demo/` dans Edge : 12 iframes chargées (1 H1 et un titre chacune), 0 réponse 404 hors artefact `__next.!…`.
+## Vérification des corrections de la 6e passe
+| Point | Statut | Preuve |
+|---|---|---|
+| R1 — aperçus de `/docs/pages/` | VERT | `src/app/docs/pages/page.tsx` : `src={withBase(`${p.href.replace(/\/+$/, "")}/`)}`. L'export contient 10 `<iframe src="/boutique-demo/…/">`. Servi : les 10 documents répondent 200, chacun avec 1 h1 et son titre (Accueil, Tous les produits, Chaise Dandy, Votre panier, Paiement, Mon compte, Mes commandes, Commande N° 10530, Mes informations, Mon magasin) à 1280 et 375 ; 0 réponse >= 400 |
+| R1 — historique git | CONFIRMÉ | `git log -S withBase -- src/app/docs` est vide : le correctif de la 5e passe n'avait jamais été commité (la 6e passe l'appelait à tort une régression du code ; elle était une absence de commit). Les modifications actuelles sont dans l'arbre de travail, **non commitées** : à commiter avant livraison |
+| R2 — débordement à 375 px | VERT | `docs.scss` l. 35 : `overflow-wrap: anywhere` sur `:not(pre) > code`. Les 37 fiches composants + 8 pages (45) : `scrollWidth - clientWidth = 0` à 375 px |
+| R2 — blocs de code intacts | VERT | `pre code` : `white-space: pre`, `overflow-wrap: normal`, `pre` en `overflow-x: auto` (défile sur 375 px) ; tous les `<pre>` qui défilent gardent `tabindex="0"` ; capture `docs-checkout-progress-375.png` |
+| O7 — `typecheck` sans `.next` | VERT | script `next typegen && tsc --noEmit` ; `npm run check` complet réussi sur une copie sans `.next` |
+| O8 — `docs:check` avec et sans préfixe | VERT | sans préfixe : VERT (44 pages). Build préfixé avec `NEXT_PUBLIC_BASE_PATH=/boutique-demo` : VERT sans option. Build préfixé vérifié sans variable ni `--base` : ROUGE, normal (le script ne peut pas deviner le préfixe) ; avec `--base /boutique-demo` : VERT |
 
-## Point rouge
-Aucun.
+## Contrôles rejoués
+| Domaine | Contrôle | Statut | Détail |
+|---|---|---|---|
+| Build | `npm run check` (copie propre) | VERT | lint 0 erreur (1 avertissement `<img>` connu, `src/app/page.tsx` l. 23), `tsc`, `next build` 60 pages, `docs:check` VERT ; build préfixé aussi |
+| Build | Next DevTools MCP | VERT | `get_compilation_issues` vide ; `get_errors` sans réponse (aucun navigateur connecté au serveur de dev), couvert par le build et par 0 erreur JS sur 152 passes |
+| Préfixe | export (60 HTML, 3 050 références, 7 CSS) | VERT | 0 lien mort, 0 référence nue (seul le `preconnect href="/"` de Next, inoffensif) ; 55 liens internes distincts de la doc, 0 mort |
+| Captures | 10 pages + 2 commandes × 375 / 768 / 1280 / 1440, compte déconnecté puis connecté (76 passes) | VERT | 0 débordement, 1 h1, 1 main, 0 image cassée, cartes de même hauteur |
+| Captures | portail et doc (45 pages) à 375 | VERT | 0 débordement, 1 h1 |
+| Accessibilité | axe, 76 passes site | VERT | 0 serious / critical ; 1 minor `aria-allowed-role` (AuthForm, connu) |
+| Accessibilité | axe, portail et doc (45) | VERT | 0 serious / critical ; `landmark-unique` moderate sur des fiches, inchangé |
+| Interactions | panier (tiroir, piège de focus, Échap, ajout 670 €, persistance, paiement), filtres, espace client complet, à 1440 et 375 | VERT | 51 OK sur 55. Les 4 « FAIL » sont une assertion de mon script (la valeur d'un champ n'est pas dans le texte de la page) ; refait à la main : « Vos informations ont été enregistrées. », « Camille Dupont » repris sur l'accueil du compte |
+| Mouvement | `prefers-reduced-motion` émulé, même parcours | VERT | mêmes résultats, rien de bloqué |
+| Règles du BRIEF | casse, Lucide, couleurs en dur, durées | VERT | inchangé depuis la 6e passe (aucun fichier concerné modifié, sauf `docs.scss` : une propriété ajoutée) |
+| Portail | pages et liens | VERT | 10 pages listées, groupe « Compte » complet, 20 liens = 200 |
+| Performance | `npm run perf` | NON LANCÉ (non bloquant) | `lighthouserc.cjs` ne vise pas `/compte/commandes/`, `/compte/commandes/10530/`, `/compte/informations/`, `/compte/magasin/` ; `qa/perf.json` de la 5e passe non rejoué |
+| Écarts connus | menu du compte à 8 px (768 à 782 px, barre classique) ; 404 de préchargement RSC | ACCEPTÉ | seule source des 404 en console ; 0 erreur JS |
 
-## Contrôles
+## Points orange restants (non bloquants)
+- **Non commité** : les 4 correctifs (`package.json`, `scripts/check-docs.mjs`, `docs.scss`, `docs/pages/page.tsx`) sont dans l'arbre de travail seulement.
+- O1 : `tsconfig.json` inclut `.next/dev/types` (peut gêner `npm run check` pendant `next dev`).
+- O2 / O4 : tableau de doc ; `tests/` vide (`test:ui` et `shots` remplacés par des scripts Playwright, `playwright.config.ts` vise le port 6006).
+- O6 : images accueil (227 Ko) et liste (208 Ko) au-dessus de 200 Ko (mesure de la 5e passe).
+- Performance du compte non mesurée (voir ci-dessus).
+- Données de démo : compte « Camille Durand » (ou nom saisi) et adresses « Camille Martin » (`src/mocks/account.ts`).
+- Le workflow Pages lance `npm run build`, pas `npm run check`.
+
+## Captures de référence
+Dossier `qa/captures-passe7/` : `<page>-<largeur>.png` et `co-<page>-<largeur>.png` (compte connecté), plus `portail-*`, `docs-pages-*`, `docs-marque-*`, `docs-button-*`, `docs-checkout-progress-*`. Les captures de la 6e passe restent dans `qa/captures-passe6/`.
+
+## Suite
+VERT : le backlog peut être coché par la session principale. Recette : voir les points par page rendus avec ce rapport.
+
+---
+
+# Contrôle après publish étape 1 (09/10/2026)
+
+**Verdict : ROUGE** (1 écart, serious pour axe, sur `/docs/pages/` à 375 et 768 px). Tout le reste est VERT. Le verdict VERT de la 7e passe ci-dessus ne vaut donc plus pour l'état actuel du dépôt tant que cet écart n'est pas corrigé.
+
+Méthode : copie propre sans `.next` (`%TEMP%\qacopy8`), `npm run check` sans préfixe, puis build préfixé `/boutique-demo` servi sous `http://localhost:4100/boutique-demo/`. Aucun code modifié.
+
+## Rouge
+
+### R3 — tableau « Fiches des pages » non focalisable au clavier (axe serious `scrollable-region-focusable`)
+- Page : `/docs/pages/`, à 375 px et 768 px (le tableau défile : 874 px de large pour 341 / 734 px visibles). À 1280 et 1440 px il tient, 0 violation.
+- Fichier : `src/app/docs/pages/page.tsx`, section « Fiches des pages » : `<div className="doc-table">` n'a ni `tabIndex` ni rôle (relevé : `tabindex`, `role`, `aria-label` nuls). Le composant `src/docs/Markdown.tsx` l. 21 fait déjà le bon modèle pour ses tableaux.
+- Correction attendue : `<div className="doc-table" role="region" tabIndex={0} aria-label="Fiches des pages">`. Contrôle : axe 0 serious / critical sur `/docs/pages/` aux 4 largeurs.
+- Remarque de lisibilité (orange) : à 375 px, la première colonne laisse des lignes très hautes (~165 px) car les autres colonnes sont à droite (défilement horizontal) ; lisible mais long. Capture : `qa/captures-passe8/docs-pages-table-375.png`.
+
+## Vérifié VERT
 | Contrôle | Statut | Détail |
 |---|---|---|
-| R1 — aperçus de « Pages et maquettes » préfixés | VERT | voir ci-dessus |
-| `npm run check` (copie propre) | VERT | lint, `tsc`, `next build` : 54 pages en export statique, avec et sans préfixe. O1 reste latent |
-| `npm run docs:check` | ORANGE | script absent (O3) ; équivalent VERT (ligne Documentation) |
-| get_errors / compilation (MCP Next) | VERT avec réserve | 0 erreur du code ; avertissement dû aux extensions |
-| N1 — tiroir après navigation | VERT | 1440 et 375 : « Voir le panier » et « Commander » ferment le tiroir ; focus sur body (avertissement) |
-| E1 — cohérence du panier | VERT | 670 € de la fiche au tiroir, au panier, au paiement ; 0 rechargement complet ; survit au rechargement |
-| MiniCart | VERT | Échap, fermer, clic sur le fond (1440), focus rendu au bouton Panier, piège de focus à 1440 et 375 |
-| Interactions (parcours, compte, paiement, filtres, feuille Filtres) | VERT | 28 / 28 |
-| Mouvement réduit | VERT | 6 pages × 4 largeurs, aucun blocage |
-| Plafond de stock (A5) | VERT | `aria-disabled` + message relié par `aria-describedby` |
-| Captures 6 pages × 4 largeurs (24) | VERT | 0 débordement, 1 H1 et 1 main par page, 0 image cassée, cartes de même hauteur, 0 texte coupé |
-| axe 6 pages × 4 largeurs | VERT | 1 minor : `aria-allowed-role` sur `/compte/` (AuthForm), inchangé |
-| Portail / docs à 375 (45 pages) | VERT | 0 débordement, 1 H1, `<pre>` défilants focalisables |
-| axe portail / docs | VERT | 0 serious ; moderate inchangés (`landmark-unique`, `heading-order` sur `/docs/marque`) |
-| Documentation (équivalent docs:check) | VERT | rendu vérifié à 1280 et 375 ; 0 lien interne cassé (51) ; « 6 pages prêtes sur 6 » |
-| axe stories (185), clair et sombre, 375 | VERT | 0 serious ou critical |
-| axe stories (185), clair et sombre, 1440 | VERT | 0 violation ; O5 (`document-title`) disparu |
-| E3 — liens des exemples | ORANGE | liens `#` du pied de page et des stories (écart n° 2) |
-| A1 — GitHub Pages préfixé | VERT | liens, images, polices, CSS, JS, parcours et logo préfixés ; `.nojekyll` et `.github/workflows/pages.yml` présents |
-| A2 — 404 de préchargement / console | ORANGE | 0 erreur JS ; 404 `__next.!…txt` en prefetch RSC sous `serve` (probable artefact Windows), à revérifier sur le déploiement |
-| Code React / Next.js (Vercel) | VERT | `Promise.all`, `use()`, pas de barrel ni de `forwardRef` ; remarque : Button cumule `loading`, `disabled`, `softDisabled`, `fullWidth` |
-| BRIEF et règles d'or | VERT | casse de phrase, Lucide, aucune couleur en dur (un hexa en commentaire, `EmailSignup.module.scss` l. 23), durées via tokens. Titres en Red Hat Display au lieu de Clash Display (écart n° 3, à trancher) |
-| Performance (non bloquant) | ORANGE | score 99, LCP < 1 s, CLS < 0,001, TBT < 35 ms, JS 288-294 Ko ; images accueil 227 Ko et liste 208 Ko > 200 Ko |
+| `npm run check` sans préfixe (sans `.next`) | VERT | lint 0 erreur (1 avertissement connu), `typecheck` avec `next typegen`, build 60 pages, `docs:check` VERT (44 pages) |
+| `docs:check:pages` sur build préfixé | VERT | 44 pages, 0 lien cassé |
+| 45 pages de doc à 375 px | VERT | 0 débordement, 1 h1, 0 réponse >= 400 ; tous les `<pre>` qui défilent gardent `tabindex="0"` |
+| R2 par `<wbr />` | VERT | `src/app/docs/composants/[id]/page.tsx` l. 35 : le chemin est coupé en `<span>…<wbr></span>` ; `textContent` et `innerText` = `src/components/blocks/CheckoutProgress/CheckoutProgress.tsx` ; copier-coller (Ctrl+C) donne le même chemin exact, sans caractère ajouté |
+| `/docs/pages/` aperçus | VERT | 10 iframes `/boutique-demo/…/`, 10 documents en 200 avec 1 h1 chacun, 0 débordement de page aux 4 largeurs |
+| `/docs/pages/` tableau et section « Espace client » | VERT sauf R3 | lisible à 1280 et 1440 (tient sans défilement) ; à 375 et 768 défile dans son cadre |
+| Axe, 45 pages de doc | ROUGE | 0 serious / critical sauf R3 ; moderate `landmark-unique` et minor `aria-allowed-role` inchangés |
+| Liens de la doc | VERT | 55 liens internes distincts, 0 mort |
+| Rejeu rapide du site | VERT | 76 passes (10 pages + 2 commandes, 4 largeurs, compte déconnecté et connecté) : 0 débordement, 0 image cassée, 0 axe serious / critical ; interactions 51 OK sur 55 (les 4 « FAIL » sont l'assertion de mon script déjà expliquée en 7e passe) |
 
-## Points orange (inchangés)
-- **O1** — `tsconfig.json` l. 19 inclut `.next/dev/types/**/*.ts` : `npm run check` peut échouer quand `next dev` tourne. Retirer l'entrée, ou arrêter le dev et supprimer `.next/dev`.
-- **O2** — `src/docs/Table.tsx` : mots coupés lettre par lettre dans les colonnes étroites (fiche Button à 1280). Largeur minimale ou `white-space: nowrap`.
-- **O3** — `scripts/check-docs.mjs` et le script `docs:check` absents.
-- **O4** — `tests/` vide : `test:ui` et `shots` ne tournent pas.
-- **O6** — images accueil (227 Ko) et liste (208 Ko) au-dessus de `performance.imagesKo` (200). Non bloquant.
+## État laissé
+- `out/` du dépôt contient un build **préfixé** `/boutique-demo` (vérifié : `/boutique-demo/_next` dans `accueil/index.html`, iframes préfixées dans `docs/pages/index.html`). Il a été fabriqué dans la copie propre puis copié ; le dépôt n'a pas été reconstruit sur place (`next dev` tourne).
+- Captures : `qa/captures-passe8/` (76 captures du site, plus `docs-pages-table-*.png`, `docs-checkout-progress-375.png`).
+- Après correction de R3 : relancer ce contrôle ciblé (axe sur `/docs/pages/` aux 4 largeurs) avant de repasser VERT.
 
-## Avertissements
-- Après « Voir le panier » ou « Commander », le focus reste sur body : idéalement le placer sur le titre ou le main.
-- `landmark-unique` : nommer les régions répétées de `/docs/pages` et de quelques fiches.
-- Le workflow Pages lance `npm run build` mais pas `npm run check`.
-- `suppressHydrationWarning` est sur `<html>` mais pas sur `<body>` (`src/app/layout.tsx`).
-- `test-run` du MCP Storybook non appelé : blocage ouvert dans `workflow/blocages.md`, mais axe équivalent VERT (2 thèmes, 2 largeurs).
-- Écarts n° 1 à 34 inchangés.
+---
 
-## Performance (Lighthouse desktop, médiane de 3)
-| Page | Score | LCP | CLS | TBT | JS | Images |
-|---|---|---|---|---|---|---|
-| accueil | 99 | 970 ms | 0,0004 | 32 ms | 288 Ko | 227 Ko (⚠) |
-| liste-produits | 99 | 921 ms | 0,0006 | 30 ms | 292 Ko | 208 Ko (⚠) |
-| fiche-produit | 99 | 861 ms | 0,0005 | 29 ms | 290 Ko | 42 Ko |
-| panier | 99 | 889 ms | 0,0009 | 32 ms | 291 Ko | 27 Ko |
-| paiement | 99 | 809 ms | 0,0005 | 27 ms | 294 Ko | 0 Ko |
-| compte | 99 | 834 ms | 0,0005 | 31 ms | 293 Ko | 0 Ko |
+# Contrôle R3 (09/10/2026)
 
-Seuils : score ≥ 85, LCP ≤ 2500 ms, CLS ≤ 0,1, TBT ≤ 300 ms, JS ≤ 300 Ko, images ≤ 200 Ko.
+**Verdict global : VERT.** R3 est corrigé. Les contrôles de la 7e passe et du contrôle après publish étape 1 n'ont plus aucun point rouge. Aucun code modifié.
 
-## Traces du contrôle
-Aucun code modifié. Captures ajoutées dans `tmp-qa/passe5/captures/`. Copies de travail temporaires dans `%TEMP%\qacopy*` (à effacer).
+| Contrôle | Statut | Détail |
+|---|---|---|
+| Code et `out/` concordent | VERT | `src/app/docs/pages/page.tsx` l. 55 : `<div className="doc-table" role="region" tabIndex={0} aria-label="Fiches des pages">`. `out/docs/pages/index.html` contient `<div class="doc-table" role="region" tabindex="0" aria-label="Fiches des pages">`, 10 `<iframe src="/boutique-demo/…/">` (0 sans préfixe) et des ressources `/boutique-demo/_next/`. Le fichier de `out/` (10:53) est postérieur à la source (10:51) : build préfixé de l'état actuel |
+| axe sur `/docs/pages/` à 375, 768, 1280, 1440 | VERT | 0 violation à chacune des 4 largeurs (R3 `scrollable-region-focusable` disparu) |
+| Tab atteint le tableau | VERT | focus sur `.doc-table` aux 4 largeurs, anneau visible (contour plein de 2 px) |
+| Flèches défilent le tableau | VERT | à 375 et 768 px (le tableau défile) : `ArrowRight` fait avancer `scrollLeft` ; à 1280 et 1440 il tient, rien à défiler |
+| Débordement et réponses | VERT | 0 px de débordement de page, 0 réponse >= 400 hors préchargement RSC, aux 4 largeurs |
+
+Captures : `qa/captures-passe9/docs-pages-table-375.png`, `-768.png`, `-1280.png`, `-1440.png`.
+
+Réserves inchangées (orange, non bloquantes) : lignes hautes du tableau à 375 px (défilement horizontal), performance des pages du compte non mesurée, `landmark-unique` moderate sur la doc, éléments non commités à vérifier avant livraison.

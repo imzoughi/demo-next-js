@@ -19,7 +19,8 @@
 | Cartes produit | 2 tailles (small, large) · état survol · hauteurs égales |
 | Navigation | à définir avec les maquettes de l’agence |
 | Listing | à définir avec les maquettes de l’agence |
-| Pages à produire | accueil, liste-produits, fiche-produit, panier, paiement, compte (une par ligne dans workflow/backlog.md) |
+| Pages à produire | accueil, liste-produits, fiche-produit, panier, paiement, compte, compte-commandes, compte-commande, compte-informations, compte-magasin (une par ligne dans workflow/backlog.md) |
+| Espace client (ajout du 8 octobre 2026) | Une page par rubrique : /compte (connexion + accueil de l’espace client), /compte/commandes (liste), /compte/commandes/[numéro] (fiche de commande), /compte/informations (modifier prénom, nom, e-mail, téléphone + bloc séparé « changer le mot de passe »), /compte/magasin (liste de magasins, recherche par ville, choix du magasin favori). Absent du Figma : composé avec les composants du kit (écart accepté). Connexion simulée, gardée pendant la session. |
 | Largeurs testées | 375, 768, 1280, 1440 px |
 | Animations | niveau sobre, respect de « réduire les animations » |
 | Navigateurs / appareils | 2 dernières versions des navigateurs courants, 375 → 1440 px |

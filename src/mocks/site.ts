@@ -6,7 +6,13 @@ export const routes = {
   cart: '/panier/',
   checkout: '/paiement/',
   account: '/compte/',
+  accountOrders: '/compte/commandes/',
+  accountInfo: '/compte/informations/',
+  accountStore: '/compte/magasin/',
 } as const;
+
+/** Fiche d'une commande de l'espace client. */
+export const orderHref = (number: string) => `/compte/commandes/${number}/`;
 
 export const announcement = 'Livraison offerte dès 100 € d’achat';
 

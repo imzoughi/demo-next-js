@@ -31,12 +31,48 @@ export interface CartLine {
   href?: string;
 }
 
+export interface OrderItem {
+  id: string;
+  name: string;
+  description?: string;
+  /** Prix unitaire en euros. */
+  unitPrice: number;
+  quantity: number;
+  image: string;
+  imageAlt: string;
+  href?: string;
+}
+
+export interface OrderAddress {
+  name: string;
+  lines: string[];
+}
+
 export interface Order {
   number: string;
   date: string;
   status: 'En préparation' | 'Expédiée' | 'Livrée';
+  /** Total payé en euros : articles + frais de livraison. */
   total: number;
   href?: string;
+  items: OrderItem[];
+  /** Frais de livraison en euros (0 = offerts). */
+  shipping: number;
+  shippingAddress: OrderAddress;
+  /** Mode de paiement affiché tel quel (« Carte bancaire se terminant par 4242 »). */
+  payment: string;
+}
+
+export interface Store {
+  id: string;
+  name: string;
+  address: string;
+  postalCode: string;
+  city: string;
+  /** Une ligne par plage d'horaires. */
+  hours: string[];
+  phone: string;
+  services: string[];
 }
 
 export interface FilterOption {

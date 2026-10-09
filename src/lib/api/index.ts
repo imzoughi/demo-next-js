@@ -3,10 +3,11 @@ import { accountData, type AccountAddress, type AccountData, type AccountProfile
 import { cartLines, categories, filterGroups, orders, products, sortOptions } from '@/mocks/catalog';
 import { listFilterGroups, listSortOptions, listedProducts, type ListedProduct } from '@/mocks/catalogue-list';
 import { featuredProducts, homeContent } from '@/mocks/home';
+import { stores } from '@/mocks/stores';
 import { productPage, productPageContent, relatedProducts } from '@/mocks/product';
-import type { CartLine, Category, FilterGroup, HomeContent, Order, Product, SortOption } from '@/mocks/types';
+import type { CartLine, Category, FilterGroup, HomeContent, Order, Product, SortOption, Store } from '@/mocks/types';
 
-export type { CartLine, Category, FilterGroup, HomeContent, Order, Product, SortOption };
+export type { CartLine, Category, FilterGroup, HomeContent, Order, Product, SortOption, Store };
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   return featuredProducts;
@@ -42,6 +43,16 @@ export async function getCart(): Promise<CartLine[]> {
 
 export async function getOrders(): Promise<Order[]> {
   return orders;
+}
+
+/** Fiche d'une commande de l'espace client (undefined si le numéro est inconnu). */
+export async function getOrder(number: string): Promise<Order | undefined> {
+  return accountData.orders.find((o) => o.number === number);
+}
+
+/** Magasins de démonstration. */
+export async function getStores(): Promise<Store[]> {
+  return stores;
 }
 
 export type { AccountAddress, AccountData, AccountProfile, ListedProduct };

@@ -1,3 +1,4 @@
+import { accountData } from './account';
 import type { CartLine, Category, FilterGroup, Order, Product, SortOption } from './types';
 
 export const products: Product[] = [
@@ -146,8 +147,5 @@ export const cartLines: CartLine[] = [
   },
 ];
 
-export const orders: Order[] = [
-  { number: '10482', date: '12 septembre 2026', status: 'Livrée', total: 335 },
-  { number: '10517', date: '24 septembre 2026', status: 'Expédiée', total: 980 },
-  { number: '10530', date: '29 septembre 2026', status: 'En préparation', total: 95 },
-];
+// Commandes : une seule source, dans l'espace compte (src/mocks/account.ts).
+export const orders: Order[] = accountData.orders;

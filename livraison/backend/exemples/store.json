@@ -1,0 +1,113 @@
+[
+  {
+    "id": "lyon-presquile",
+    "name": "Avion Lyon Presqu’île",
+    "address": "18 rue de la République",
+    "postalCode": "69002",
+    "city": "Lyon",
+    "hours": [
+      "Lundi au samedi : 10 h – 19 h",
+      "Dimanche : 11 h – 18 h"
+    ],
+    "phone": "04 78 00 12 01",
+    "services": [
+      "Retrait en magasin",
+      "Conseil en aménagement",
+      "Livraison à domicile"
+    ]
+  },
+  {
+    "id": "paris-marais",
+    "name": "Avion Paris Marais",
+    "address": "27 rue de Turenne",
+    "postalCode": "75003",
+    "city": "Paris",
+    "hours": [
+      "Lundi au samedi : 10 h – 19 h",
+      "Dimanche : 12 h – 18 h"
+    ],
+    "phone": "01 42 00 12 02",
+    "services": [
+      "Retrait en magasin",
+      "Conseil en aménagement",
+      "Atelier de décoration"
+    ]
+  },
+  {
+    "id": "bordeaux-chartrons",
+    "name": "Avion Bordeaux Chartrons",
+    "address": "9 cours Balguerie-Stuttenberg",
+    "postalCode": "33300",
+    "city": "Bordeaux",
+    "hours": [
+      "Lundi au samedi : 10 h – 19 h"
+    ],
+    "phone": "05 56 00 12 03",
+    "services": [
+      "Retrait en magasin",
+      "Livraison à domicile"
+    ]
+  },
+  {
+    "id": "nantes-bouffay",
+    "name": "Avion Nantes Bouffay",
+    "address": "5 rue de Verdun",
+    "postalCode": "44000",
+    "city": "Nantes",
+    "hours": [
+      "Mardi au samedi : 10 h – 19 h"
+    ],
+    "phone": "02 40 00 12 04",
+    "services": [
+      "Retrait en magasin",
+      "Conseil en aménagement"
+    ]
+  },
+  {
+    "id": "lille-vieux-lille",
+    "name": "Avion Lille Vieux-Lille",
+    "address": "14 rue de la Monnaie",
+    "postalCode": "59800",
+    "city": "Lille",
+    "hours": [
+      "Lundi au samedi : 10 h – 19 h",
+      "Dimanche : 11 h – 17 h"
+    ],
+    "phone": "03 20 00 12 05",
+    "services": [
+      "Retrait en magasin",
+      "Livraison à domicile",
+      "Atelier de décoration"
+    ]
+  },
+  {
+    "id": "marseille-vieux-port",
+    "name": "Avion Marseille Vieux-Port",
+    "address": "31 quai de Rive Neuve",
+    "postalCode": "13007",
+    "city": "Marseille",
+    "hours": [
+      "Lundi au samedi : 10 h – 19 h"
+    ],
+    "phone": "04 91 00 12 06",
+    "services": [
+      "Retrait en magasin",
+      "Conseil en aménagement"
+    ]
+  },
+  {
+    "id": "strasbourg-centre",
+    "name": "Avion Strasbourg Centre",
+    "address": "6 rue des Orfèvres",
+    "postalCode": "67000",
+    "city": "Strasbourg",
+    "hours": [
+      "Mardi au samedi : 10 h – 18 h 30"
+    ],
+    "phone": "03 88 00 12 07",
+    "services": [
+      "Retrait en magasin",
+      "Livraison à domicile"
+    ]
+  }
+]

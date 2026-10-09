@@ -14,7 +14,11 @@
     "fiche-produit",
     "panier",
     "paiement",
-    "compte"
+    "compte",
+    "compte-commandes",
+    "compte-commande",
+    "compte-informations",
+    "compte-magasin"
   ],
   "breakpoints": [
     375,

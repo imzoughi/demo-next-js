@@ -10,7 +10,7 @@ export const site = {
   groups: [
     { title: "Catalogue", icon: "Store", text: "Accueil, liste de produits, fiche produit." },
     { title: "Achat", icon: "ShoppingCart", text: "Panier, paiement." },
-    { title: "Compte", icon: "User", text: "Espace client et gestion des commandes." },
+    { title: "Compte", icon: "User", text: "Connexion, accueil de l’espace client, commandes, informations et magasin favori." },
   ] satisfies Group[],
   pages: [
     { id: "accueil", href: "/accueil", title: "Accueil", group: "Catalogue" },
@@ -19,5 +19,9 @@ export const site = {
     { id: "panier", href: "/panier", title: "Panier", group: "Achat" },
     { id: "paiement", href: "/paiement", title: "Paiement", group: "Achat" },
     { id: "compte", href: "/compte", title: "Compte", group: "Compte" },
+    { id: "compte-commandes", href: "/compte/commandes", title: "Commandes", group: "Compte" },
+    { id: "compte-commande", href: "/compte/commandes/10530", title: "Fiche de commande", group: "Compte" },
+    { id: "compte-informations", href: "/compte/informations", title: "Informations", group: "Compte" },
+    { id: "compte-magasin", href: "/compte/magasin", title: "Magasin favori", group: "Compte" },
   ] satisfies Page[],
 };

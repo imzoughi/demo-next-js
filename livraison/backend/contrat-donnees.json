@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "titre": "Contrat de données — Avion, boutique démo",
-  "version": "1.0.0",
-  "notes": "Une entité par objet métier affiché par le front. Noms = types TypeScript de src/mocks/types.ts et src/mocks/account.ts. Montants en euros TTC (nombre décimal). Les fonctions d’accès sont dans src/lib/api/index.ts.",
+  "version": "1.1.0",
+  "notes": "Une entité par objet métier affiché par le front. Noms = types TypeScript de src/mocks/types.ts, src/mocks/account.ts et src/mocks/stores.ts. Montants en euros TTC (nombre décimal). Les fonctions d’accès sont dans src/lib/api/index.ts. Entrées d’action (ProfileUpdate, PasswordChange, FavoriteStore) : pas de type dans le code, à créer côté API.",
   "entites": {
     "Product": {
       "description": "Produit du catalogue : listes « à la une », fiche produit, suggestions.",
@@ -165,17 +165,22 @@
       }
     },
     "Order": {
-      "description": "Commande passée (espace compte).",
+      "description": "Commande passée (liste du compte et fiche /compte/commandes/[numero]). Détail complet : articles, livraison, adresse, paiement.",
       "type": "object",
       "required": [
         "number",
         "date",
         "status",
-        "total"
+        "total",
+        "items",
+        "shipping",
+        "shippingAddress",
+        "payment"
       ],
       "properties": {
         "number": {
-          "type": "string"
+          "type": "string",
+          "description": "numéro de commande, identifiant de la page /compte/commandes/{number}/"
         },
         "date": {
           "type": "string",
@@ -191,10 +196,29 @@
         },
         "total": {
           "type": "number",
-          "description": "euros TTC"
+          "description": "total payé en euros TTC = somme des articles + shipping"
         },
         "href": {
-          "type": "string"
+          "type": "string",
+          "description": "calculé par le front (orderHref) : à ne pas fournir"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/entites/OrderItem"
+          },
+          "description": "au moins un article"
+        },
+        "shipping": {
+          "type": "number",
+          "description": "frais de livraison en euros ; 0 = offerts"
+        },
+        "shippingAddress": {
+          "$ref": "#/entites/OrderAddress"
+        },
+        "payment": {
+          "type": "string",
+          "description": "mode de paiement affiché tel quel, ex. « Carte bancaire se terminant par 4242 ». Jamais de numéro de carte complet."
         }
       }
     },
@@ -374,7 +398,7 @@
       }
     },
     "Account": {
-      "description": "Espace client : profil, commandes, adresses (type AccountData dans le code).",
+      "description": "Espace client : profil, commandes (détaillées), adresses, magasin favori (type AccountData dans le code, favori en plus à ajouter).",
       "type": "object",
       "required": [
         "profile",
@@ -443,6 +467,13 @@
               }
             }
           }
+        },
+        "favoriteStoreId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Store.id du magasin favori ; absent dans le code actuel (gardé en session simulée), à fournir par l’API"
         }
       }
     },
@@ -472,6 +503,178 @@
           "type": "string"
         }
       }
+    },
+    "OrderItem": {
+      "description": "Article d’une commande passée (copie figée à la date de la commande : nom, prix et image ne suivent pas le catalogue).",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "unitPrice",
+        "quantity",
+        "image",
+        "imageAlt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id du produit"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "unitPrice": {
+          "type": "number",
+          "description": "prix unitaire en euros TTC au moment de la commande"
+        },
+        "quantity": {
+          "type": "integer"
+        },
+        "image": {
+          "type": "string",
+          "description": "URL ou chemin de l’image"
+        },
+        "imageAlt": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string",
+          "description": "lien vers la fiche produit"
+        }
+      }
+    },
+    "OrderAddress": {
+      "description": "Adresse de livraison figée sur une commande (nom du destinataire + lignes d’adresse affichées telles quelles).",
+      "type": "object",
+      "required": [
+        "name",
+        "lines"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "une ligne par ligne d’adresse (rue, code postal et ville, pays)"
+        }
+      }
+    },
+    "Store": {
+      "description": "Magasin (page /compte/magasin/ : liste, recherche, favori).",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "address",
+        "postalCode",
+        "city",
+        "hours",
+        "phone",
+        "services"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "identifiant stable (slug)"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "description": "numéro et rue"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "5 chiffres ; la recherche compare le début"
+        },
+        "city": {
+          "type": "string",
+          "description": "la recherche ignore casse et accents"
+        },
+        "hours": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "une ligne par plage d’horaires, texte affiché tel quel"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ProfileUpdate": {
+      "description": "Entrée de « Enregistrer mes informations » (/compte/informations/) : mêmes champs que Account.profile, tous obligatoires.",
+      "type": "object",
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "phone"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "dix chiffres (06 12 34 56 78) ou +33 suivi de neuf chiffres ; espaces, points et tirets tolérés"
+        }
+      }
+    },
+    "PasswordChange": {
+      "description": "Entrée de « Changer le mot de passe ». La confirmation est contrôlée par le front et n’est pas envoyée. Valeur secrète : ne jamais journaliser ni stocker côté navigateur.",
+      "type": "object",
+      "required": [
+        "currentPassword",
+        "newPassword"
+      ],
+      "properties": {
+        "currentPassword": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string",
+          "description": "au moins 8 caractères, une majuscule, un chiffre ; différent de l’actuel"
+        }
+      }
+    },
+    "FavoriteStore": {
+      "description": "Magasin favori du compte (un seul, ou aucun). Entrée de PUT /me/favorite-store ; la lecture renvoie la même forme avec storeId null si aucun favori.",
+      "type": "object",
+      "required": [
+        "storeId"
+      ],
+      "properties": {
+        "storeId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Store.id ; null = retirer des favoris"
+        }
+      }
     }
   },
   "exemples": {
@@ -484,6 +687,12 @@
     "SortOption": "exemples/sort-option.json",
     "HomeContent": "exemples/home-content.json",
     "Account": "exemples/account.json",
-    "ProductPage": "exemples/product-page.json"
+    "ProductPage": "exemples/product-page.json",
+    "OrderItem": "exemples/order-item.json",
+    "OrderAddress": "exemples/order-address.json",
+    "Store": "exemples/store.json",
+    "ProfileUpdate": "exemples/profile-update.json",
+    "PasswordChange": "exemples/password-change.json",
+    "FavoriteStore": "exemples/favorite-store.json"
   }
 }

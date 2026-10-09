@@ -1,0 +1,394 @@
+// Espace client : mise en page composée avec les composants du kit. Tokens en variables CSS uniquement.
+.page {
+  container-type: inline-size;
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-5);
+  color: var(--color-text-default);
+
+  @container (min-width: 768px) {
+    padding: var(--space-8) var(--space-6);
+  }
+}
+
+.head {
+  margin-bottom: var(--space-7);
+
+  h1,
+  p {
+    margin: 0;
+  }
+
+  p {
+    margin-top: var(--space-3);
+  }
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+
+  @container (min-width: 1280px) {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.content {
+  min-width: 0;
+}
+
+.section {
+  margin-top: var(--space-8);
+
+  h2 {
+    margin: 0 0 var(--space-5);
+  }
+}
+
+// Cartes de l'accueil, adresses, magasins
+.cards {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @container (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cardsThree {
+  @container (min-width: 1024px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// Nombre impair de cartes en deux colonnes : la dernière occupe toute la ligne (jamais de case vide).
+.cards > li:last-child:nth-child(odd),
+.storeList > li:last-child:nth-child(odd) {
+  @container (min-width: 768px) {
+    grid-column: 1 / -1;
+  }
+}
+
+@container (min-width: 1024px) {
+  .cardsThree > li:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-5);
+  border: var(--size-border) solid var(--color-border-strong);
+  background: var(--color-surface-default);
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  address {
+    font-style: normal;
+  }
+}
+
+.cardAction {
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+
+.line {
+  display: block;
+}
+
+.muted {
+  color: var(--color-text-brand);
+}
+
+// Fiche de commande
+.meta {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-7);
+  padding: var(--space-5);
+  border: var(--size-border) solid var(--color-border-default);
+  background: var(--color-surface-subtle);
+
+  @container (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  div {
+    min-width: 0;
+  }
+
+  dt,
+  dd {
+    margin: 0;
+  }
+
+  dd {
+    margin-top: var(--space-1);
+  }
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: var(--size-border) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.statusDone {
+  border-color: var(--color-feedback-success);
+  color: var(--color-feedback-success);
+}
+
+.orderGrid {
+  display: grid;
+  gap: var(--space-7);
+  align-items: start;
+
+  @container (min-width: 1024px) {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+  }
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--size-border) solid var(--color-border-default);
+
+  > li {
+    display: grid;
+    grid-template-columns: var(--size-cart-thumb) minmax(0, 1fr) auto;
+    gap: var(--space-2) var(--space-4);
+    align-items: start;
+    padding: var(--space-4) 0;
+    border-bottom: var(--size-border) solid var(--color-border-default);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.thumb {
+  grid-row: span 2;
+  width: var(--size-cart-thumb);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--color-surface-subtle);
+}
+
+.itemPrice {
+  grid-column: 3;
+  grid-row: 1;
+  text-align: right;
+}
+
+.itemMeta {
+  grid-column: 2 / -1;
+}
+
+.itemName {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.side {
+  display: grid;
+  gap: var(--space-5);
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.tracking {
+  margin-bottom: var(--space-7);
+
+  h2 {
+    margin: 0 0 var(--space-4);
+  }
+}
+
+.back {
+  margin-bottom: var(--space-5);
+}
+
+// Formulaires (informations)
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: var(--size-content-form);
+
+  h2,
+  p {
+    margin: 0;
+  }
+}
+
+.fieldsTwo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5) var(--space-4);
+
+  @container (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.alert {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  border: var(--size-border) solid var(--color-feedback-error);
+  color: var(--color-feedback-error);
+  background: var(--color-surface-default);
+}
+
+.rules {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}
+
+.ruleOk {
+  color: var(--color-feedback-success);
+}
+
+.separator {
+  margin: var(--space-8) 0;
+  border: 0;
+  border-top: var(--size-border) solid var(--color-border-default);
+}
+
+// Magasins
+.search {
+  max-width: var(--size-content-form);
+  margin-bottom: var(--space-4);
+}
+
+.count {
+  margin: 0 0 var(--space-5);
+}
+
+.storeList {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @container (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.storeCard {
+  height: 100%;
+}
+
+.plain {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.favorite {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-feedback-success);
+}
+
+.isFavorite {
+  border-width: var(--size-border-strong);
+}
+
+.phone {
+  color: inherit;
+}
+
+// Titres de la fiche de commande
+.articlesTitle {
+  margin: 0 0 var(--space-4);
+}
+
+.sideTitle {
+  margin: 0 0 var(--space-2);
+}
+
+.plainText {
+  margin: 0;
+}
+
+.addressText {
+  font-style: normal;
+}
+
+// Menu du compte : replié sous 768 px pour que le titre reste dans l'écran
+.menuToggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--size-button-md);
+  padding: 0 var(--space-3);
+  border: var(--size-border) solid var(--color-border-strong);
+  background: var(--color-surface-default);
+  color: var(--color-text-default);
+  cursor: pointer;
+  text-align: left;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.menuWrap:not([data-open]) {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+// Onglets dès 768 px de fenêtre : AccountMenu bascule selon la largeur de son propre bloc (768 px).
+// On l'élargit de la marge de la page pour qu'il l'atteigne, et on rend le retrait aux onglets.
+.menuWrap {
+  @media (min-width: 768px) and (max-width: 1279px) {
+    margin-inline: calc(var(--space-6) * -1);
+
+    > nav > ul {
+      padding-inline: var(--space-6);
+    }
+  }
+}

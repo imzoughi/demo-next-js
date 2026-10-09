@@ -12,3 +12,8 @@
 ## Boucle pages (30/09/2026)
 
 - ~~**liste-produits — ROUGE après 3 tours**~~ Résolu au tour 4 accordé par le pilote (qa/qa-page-liste-produits-tour4.md) — (qa/qa-page-liste-produits-tour3.md) : dans le panneau « Filtres et tri » mobile, « Tout effacer » fait perdre le focus clavier (BODY) car le bouton se désactive. Correction identifiée dans `FiltersSheet.tsx` (focus replacé dans le panneau, ou `aria-disabled`). Décision du pilote : un tour de plus, ou accepter l'écart.
+
+## Espace client (08/10/2026)
+
+- **Écart accepté par le QA (tour 3, non bloquant)** : entre 768 et ~782 px de fenêtre avec une barre de défilement classique, les onglets du compte débordent de 8 px (barre de défilement horizontale). Cause : marge négative de `.menuWrap` dans `src/app/(site)/compte/_components/compte.module.scss`. Correction possible : `overflow-x: clip` sur `.layout` ou `.page`. Voir `qa/qa-page-compte.md`.
+- **Mesure de vitesse non faite pour les 5 pages du compte** : `lighthouserc.cjs` transforme chaque nom de page en adresse `/<nom>/`, or les pages du compte sont sous `/compte/…` (`/compte/commandes/`, `/compte/commandes/10530/`, `/compte/informations/`, `/compte/magasin/`). À adapter avant `npm run perf`. Mesure non bloquante (`performance.bloquant` = false).

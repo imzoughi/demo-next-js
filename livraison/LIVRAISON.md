@@ -1,223 +1,157 @@
-# Livraison — Boutique démo
+# Livraison — Boutique démo (espace client)
+
+**Date** : 9 octobre 2026
+**Version du package** : 1.0.0 · **Design system** : 1.0.0 (inchangé, 30 septembre 2026)
+**Livraison précédente** : 6 octobre 2026 (6 pages, sans espace client)
+
+## Lien public
+
+- **Site** : https://imzoughi.github.io/demo-next-js/
+- **Documentation** : https://imzoughi.github.io/demo-next-js/docs/
+
+Le site est servi sous le nom du dépôt (`demo-next-js`), pas sous `/boutique-demo/`. Vérifié de deux façons :
+- `.github/workflows/pages.yml` construit avec `NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}`, soit `/demo-next-js` ; `next.config.ts` lit cette variable.
+- Contrôle en ligne (9 octobre) : `https://imzoughi.github.io/demo-next-js/`, `/accueil/` et `/docs/pages/` répondent 200 ; `https://imzoughi.github.io/boutique-demo/` répond 404.
+
+**État de la mise en ligne** : le site publié ne contient pas encore l'espace client. `/compte/commandes/`, `/compte/commandes/10530/`, `/compte/informations/` et `/compte/magasin/` répondent 404 aujourd'hui. Ils apparaîtront après le `git push` du pilote (voir « Commandes git » plus bas) et le déploiement GitHub Pages.
 
 ## Package de livraison
 
-**Fichier** : `boutique-demo-v1.0.0.zip` (21.91 Mo, 701 fichiers)
+**Fichier** : `livraison/boutique-demo-v1.0.0.zip`
+**Taille** : 43,7 Mo compressé (43 739 848 octets), 53,3 Mo non compressés
+**Contenu** : 891 fichiers
 
-**Contenu** :
-- Toutes les sources du projet (`src/`, `public/`, `design/`)
-- Build de production statique dans `out/` prêt pour GitHub Pages
-- Passation backend : `livraison-backend/` (API mock, contrat, exemples, actions)
-- Workflows GitHub Pages (`.github/`)
-- Fichiers de configuration et documentation (package.json, tsconfig.json, README, AGENTS.md, etc.)
+| Inclus | Contenu |
+|---|---|
+| Sources | `src/`, `public/`, `design/` (dont `design/ds-export/`, lecture seule) |
+| Build de production | `out/` (367 fichiers), construit pour `https://imzoughi.github.io/demo-next-js/` (`NEXT_PUBLIC_BASE_PATH=/demo-next-js`) |
+| Passation | `AGENTS.md`, `livraison/backend/` (contrat, exemples, branchements, actions) |
+| Déploiement | `.github/` (workflow Pages), `.nojekyll` |
+| Configuration | `package.json`, `package-lock.json`, `next.config.ts`, `tsconfig.json`, `eslint.config.mjs`, `playwright.config.ts`, `lighthouserc.cjs`, `.storybook/`, `.claude/`, `.mcp.json`, `decade.config.json`, `BRIEF.md`, `CLAUDE.md` |
+| Suivi | `scripts/`, `workflow/` (sans les journaux), `audit/` |
+| QA | `qa/*.md` (rapports), `qa/captures-passe7/` (86 captures de référence de la recette), `qa/perf.json` |
 
-## Démarrage
+| Exclus | Raison |
+|---|---|
+| `node_modules/`, `.next/`, `.env*`, `.git/` | Installés ou générés, ou secrets |
+| `storybook-static/`, `test-results/`, `.lighthouseci/`, `*.tsbuildinfo`, `next-env.d.ts` | Artefacts générés, ignorés par git |
+| `tmp-qa/`, `qa/captures-passe6/`, `qa/captures-passe8/`, `qa/captures-passe9/`, `qa/lighthouse/` | Captures et rapports de passes intermédiaires |
+| `workflow/logs/` | Journaux de travail |
+| `livraison/LIVRAISON.md`, anciens zip | Lettre de livraison distribuée à part ; zip précédent remplacé |
 
-```bash
-npm ci
-npm run dev
-```
+Contrôle des secrets : aucun fichier `.env` dans le package, et aucune clé, token ou clé privée détectés dans la liste des fichiers. Les seules occurrences du mot « password » concernent le champ mot de passe des formulaires.
 
-Ouvre http://localhost:3000 pour le site, http://localhost:3000/docs pour la documentation.
+**Pas de `README.md` à la racine du dépôt.** Cette lettre (`livraison/LIVRAISON.md`) en tient lieu ; à décider par le pilote.
 
-### Commandes npm
+## Pages
 
-- `npm run dev` — serveur de développement
-- `npm run build` — compilation production (export statique dans `out/`)
-- `npm run docs:check` — vérification intégrité documentation
+Dix routes. Toutes les pages sont au statut VERT de la 7e passe QA (`qa/qa-all.md`).
 
-## Éléments livrés
+| Page | Route | Statut QA | Sur le lien public (9 octobre) |
+|---|---|---|---|
+| Accueil | `/accueil/` | VERT | 200 |
+| Liste de produits | `/liste-produits/` | VERT | 200 |
+| Fiche produit | `/fiche-produit/` | VERT | 200 |
+| Panier | `/panier/` | VERT | 200 |
+| Paiement | `/paiement/` | VERT | 200 |
+| Compte (accueil de l'espace client, connexion) | `/compte/` | VERT | 200 (contenu à revérifier après mise en ligne) |
+| Mes commandes | `/compte/commandes/` | VERT | 404 (pas encore en ligne) |
+| Fiche de commande | `/compte/commandes/[numero]/` (10530, 10517, 10482) | VERT | 404 (pas encore en ligne) |
+| Mes informations | `/compte/informations/` | VERT | 404 (pas encore en ligne) |
+| Mon magasin | `/compte/magasin/` | VERT | 404 (pas encore en ligne) |
 
-### Pages (6)
+Portail : `/`. Documentation : 44 pages contrôlées (`/docs/`, architecture, marque, tokens, 37 fiches composants, pages et maquettes, versions, performance).
 
-| Page | Route | Statut |
-|------|-------|--------|
-| Accueil | `/accueil` | VERT |
-| Liste de produits | `/liste-produits` | VERT |
-| Fiche produit | `/fiche-produit` | VERT |
-| Panier | `/panier` | VERT |
-| Paiement | `/paiement` | VERT |
-| Compte | `/compte` | VERT |
-
-### Documentation (44 pages)
-
-- Portail : `/` — vue d'ensemble, 6 pages, design system 1.0.0
-- Démarrage : `/docs`
-- Architecture : `/docs/architecture`
-- Guide de marque : `/docs/marque`
-- Tokens : `/docs/tokens`
-- Composants (37 fiches) : `/docs/composants/[id]`
-- Pages et maquettes : `/docs/pages`
-- Journal des versions : `/docs/versions`
-- Performance : `/docs/performance`
-
-## Design system
-
-**Version** : 1.0.0 (30 septembre 2026)
-
-**Contenu** : tokens (couleurs, typo, espacements, ombres, durées), 37 composants, architecture React/Next.js.
-
-**Build docs** : `npm run build` puis `npm run docs:check` — contrôle HTML + images + liens internes.
+L'espace client n'a pas de maquette Figma : il est composé avec les composants du kit (écart accepté dans `BRIEF.md`).
 
 ## Nouveautés de cette livraison
 
-- **TopNav, correctif soulignement** : les liens de catégories desktop ne sont plus affectés par la règle `:active` du menu mobile. Voir `design/CHANGELOG.md`.
+- **Espace client** (5 pages sous `/compte/`) : connexion simulée (la session est gardée pendant la visite), accueil du compte, mes commandes avec fiche détaillée (suivi, articles, adresse, paiement, récapitulatif), mes informations (profil et mot de passe), mon magasin (recherche par ville, choix du magasin favori). Menu du compte sur téléphone.
+- **Corrections de la documentation** :
+  - les aperçus de `/docs/pages/` sont préfixés et s'affichent ;
+  - les chemins longs des fiches composants se coupent sur téléphone, sans défilement de côté ;
+  - le tableau « Fiches des pages » est accessible au clavier (zone nommée, focalisable, défilable aux flèches).
+- **Scripts** :
+  - `npm run typecheck` lance `next typegen` puis `tsc --noEmit` ;
+  - `npm run docs:check` contrôle la doc d'un build sans préfixe ;
+  - `npm run docs:check:pages` contrôle la doc du build livré, préfixé `/demo-next-js` (`--base /demo-next-js`) : c'est la vérification à utiliser pour ce package ;
+  - `npm run check` enchaîne lint, typecheck, build et `docs:check`.
 
 ## Résultats QA
 
-**Verdict global** : VERT (5e passe du 6 octobre 2026, R1 corrigé)
+**Verdict global** : VERT (7e passe du 9 octobre, puis contrôles après publication : R3 corrigé, contrôle VERT). Source : `qa/qa-all.md`.
 
 | Domaine | Statut | Détail |
-|---------|--------|--------|
-| Vérification R1 (aperçus préfixés) | VERT | Liens et images préfixés `/boutique-demo/` validés sur Edge |
-| Compilation (`npm run check`) | VERT | `next build` en export statique : 54 routes, 0 erreur |
-| Documentation (`docs:check`) | VERT | 44 pages contrôlées, 0 lien cassé |
-| Interactions (panier, filtres, compte) | VERT | 28 / 28 validées |
-| Accessibilité (axe) | VERT | 6 pages × 4 largeurs + portail/docs : 0 serious, violations mineures inchangées |
-| Captures visuelles (24) | VERT | 6 pages × 4 largeurs (375, 768, 1280, 1440 px) : 0 débordement, 0 image cassée |
-| Mouvement réduit | VERT | 6 pages × 4 largeurs : préférence `prefers-reduced-motion` respectée |
-| Persistance panier | VERT | SessionStorage : survit au rechargement, cohérent fiche → tiroir → panier → paiement |
+|---|---|---|
+| Build (`npm run check`, copie propre) | VERT | lint 0 erreur (1 avertissement connu), typecheck, build 60 pages, doc VERT |
+| Préfixe | VERT | QA faite sur un build `/boutique-demo` (export complet, 0 lien mort, 0 référence nue) ; `out/` livré reconstruit en `/demo-next-js`, doc VERT (`docs:check:pages`) |
+| Captures | VERT | 10 pages + 2 commandes × 375 / 768 / 1280 / 1440 px, compte déconnecté puis connecté (76 passes) ; portail et doc à 375 px : 0 débordement |
+| Accessibilité (axe) | VERT | 0 serious / critical, site et doc ; 1 mineur connu (`aria-allowed-role`, formulaire de connexion) |
+| Interactions | VERT | panier, filtres, espace client : 51 sur 55 ; les 4 écarts viennent de l'assertion du script de test, vérifiés à la main |
+| Mouvement réduit | VERT | `prefers-reduced-motion` respecté sur le même parcours |
+| Règles du BRIEF | VERT | casse de phrase, icônes Lucide, couleurs en dur, durées |
+| Portail et documentation | VERT | 10 pages listées, groupe « Compte » complet ; aperçus de `/docs/pages/` (10 documents, 1 titre chacun), tableau accessible (R3) |
+| Performance | NON LANCÉ (non bloquant) | voir section suivante |
 
 ## Performance
 
-**Verdict** : ORANGE (non bloquant pour livraison)
+Mesures du 6 octobre 2026 (`qa/perf.json`), seuils du projet : score 85 min, LCP 2 500 ms, CLS 0,1, TBT 300 ms, JS 300 Ko, images 200 Ko.
 
-| Métrique | Seuil | Accueil | Liste | Fiche | Panier | Paiement | Compte |
-|----------|-------|---------|-------|-------|--------|----------|--------|
-| Lighthouse | 85 min | 99 | 99 | 99 | 99 | 99 | 99 |
-| LCP | 2500 ms | 951 | 901 | 845 | 881 | 825 | 782 |
-| CLS | 0,1 | 0,0004 | 0,0006 | 0,0005 | 0,0009 | 0,0005 | 0,0005 |
-| TBT | 300 ms | 9 | 12 | 42 | 26 | 32 | 25 |
-| JS | 300 Ko | 288 | 292 | 290 | 291 | 294 | 293 |
-| Images | 200 Ko | 227 | 208 | 42 | 27 | 0 | 0 |
+| Page | Score | LCP (ms) | CLS | TBT (ms) | JS (Ko) | Images (Ko) | Verdict |
+|---|---|---|---|---|---|---|---|
+| Accueil | 99 | 951 | 0,0004 | 9 | 288 | 227 | images au-dessus du seuil |
+| Liste de produits | 99 | 901 | 0,0006 | 12 | 292 | 208 | images au-dessus du seuil |
+| Fiche produit | 99 | 845 | 0,0005 | 42 | 290 | 42 | OK |
+| Panier | 99 | 881 | 0,0009 | 26 | 291 | 27 | OK |
+| Paiement | 99 | 825 | 0,0005 | 32 | 294 | 0 | OK |
+| Compte | 99 | 782 | 0,0005 | 25 | 293 | 0 | OK |
 
-**Point orange** : images accueil et liste > 200 Ko (227, 208). Raison : images de produits de bonne qualité. Impact négligeable sur LCP (< 1 s) et CLS (< 0,001).
+Les 4 sous-pages du compte (`/compte/commandes/`, `/compte/commandes/[numero]/`, `/compte/informations/`, `/compte/magasin/`) ne sont pas mesurées : `lighthouserc.cjs` ne vise pas les adresses `/compte/…`. Les mesures n'ont pas été refaites depuis l'ajout de l'espace client. La performance n'est pas bloquante (`performance.bloquant` = false).
 
-## GitHub Pages — Configuration requise
+## Points à trancher avant mise en ligne
 
-**Lien attendu** : `https://imzoughi.github.io/demo-next-js/`
+1. **`.claude/settings.json`** : la version du dépôt et celle de travail ne contiennent plus les entrées du plugin `decade-front` (marketplace et `enabledPlugins`). À vérifier avant tout commit ; voir la note après les commandes git.
+2. **Nom de marque** : `src/data/site.ts` affiche « Avion — Boutique démo », comme `livraison/backend/AGENTS.md`, `actions.md` et `branchements.md`, alors que le brief parle de « Démo e-commerce ». À confirmer.
+3. **Configuration des pages** : `decade.config.json` ajoute les 4 pages du compte (`compte-commandes`, `compte-commande`, `compte-informations`, `compte-magasin`) à la liste `pages`. À confirmer par le pilote.
 
-**État du projet** : 
-- `next.config.ts` : `output: 'export'` ✓ (export statique)
-- `basePath` : configuré par variable `NEXT_PUBLIC_BASE_PATH` au build ✓
-- Fichiers `.github/workflows/pages.yml` et `.nojekyll` : présents ✓
+## Réserves QA (non bloquantes)
 
-**Actions requises avant la mise en ligne** :
-1. Accepter le déploiement GitHub Pages sur la branche `gh-pages` (via paramètres du dépôt)
-2. À chaque push sur `main` : relancer `npm run build` avec `NEXT_PUBLIC_BASE_PATH=/demo-next-js` ; le workflow GitHub Actions le fait automatiquement via `pages.yml` (si configuré)
+- **Menu du compte** : débordement de 8 px entre 768 et 782 px de large avec barre de défilement Windows. Correctif possible : `overflow-x: clip` sur `.layout` ou `.page` (`src/app/(site)/compte/_components/compte.module.scss`).
+- **Tableau « Fiches des pages »** à 375 px : lignes hautes (défilement horizontal de la première colonne).
+- **404 de préchargement RSC** : seule source des 404 en console ; 0 erreur JavaScript. À confirmer sur GitHub Pages.
+- **Images** : accueil (227 Ko) et liste (208 Ko) au-dessus du seuil de 200 Ko.
+- **Storybook** : les `test-run` des stories (contrastes en thème sombre, Drawer, MiniCart, FiltersSheet) restent à rejouer depuis l'import du design system 1.0.0 ; Next DevTools MCP n'a pas servi à l'import.
+- **EmailSignup, thème sombre** : le token `color-feedback-error` (#F2B8B5) n'atteint que 4,38:1 ; surcharge locale en place (#F9DCDA, 5,80:1). À corriger dans Claude Design au prochain export, puis retirer la surcharge.
+- **Réglages mineurs** : `tsconfig.json` inclut `.next/dev/types/**` (peut gêner `npm run check` pendant `next dev`) ; `tests/` vide.
 
-**Test local** :
-```bash
-NEXT_PUBLIC_BASE_PATH=/demo-next-js npm run build
-npx serve out
-# puis http://localhost:3000/demo-next-js/
-```
+## Passation backend
 
-## Points ouverts
-
-### À corriger dans Claude Design
-
-- **EmailSignup, thème sombre** : le token `color-feedback-error` (#F2B8B5) n'atteint que 4,38:1 sur fond sombre. Corrigé localement dans `src/components/blocks/EmailSignup/EmailSignup.module.scss` (#F9DCDA, 5,80:1). À corriger dans l'export du design system, puis retirer la surcharge locale.
-
-### Tests à rejouer
-
-- **Storybook et MCP Storybook** : le serveur a été arrêté avant la fin de la boucle composants. Commande à rejouer quand Storybook tourne (`npm run storybook`), puis `test-run` sur toutes les stories — vérifier surtout contrastes sombre + Drawer, MiniCart, FiltersSheet.
-
-### Écarts acceptés (liste-produits)
-
-- **Focus clavier dans FiltersSheet** (mobile) : le bouton « Tout effacer » se désactive après utilisation et perd le focus. Écart accepté par le pilote (tour 4, workflow/historique) — correction possible via `focus-manager` ou `aria-disabled`. Classé comme VERT.
-
-### Réglages mineurs (orange)
-
-- **O1** — `tsconfig.json` inclut `.next/dev/types/**/*.ts` : peut causer échec de `npm run check` si `next dev` tourne. Retirer l'entrée ou arrêter le dev et supprimer `.next/dev`.
-- **O2** — `src/docs/Table.tsx` : texte des colonnes étroites coupé lettre par lettre. Ajouter `white-space: nowrap` ou largeur minimale.
-- **O4** — `tests/` vide : `test:ui` et `shots` ne tournent pas. Scripts remplacés par Playwright dans la boucle QA.
-
-## Brancher les données (backend)
-
-### Couche API (mocks)
-
-**Fichier** : `src/lib/api/index.ts`
-
-Ce fichier expose l'API du site. Actuellement, il importe depuis des mocks typés dans `src/mocks/` :
-- `getHomeContent()` — contenu accueil
-- `getProducts()` — liste tous les produits
-- `getProduct(id)` — détail 1 produit
-- `getCategories()` — catégories
-- `getFilterGroups()` — groupes de filtres (sur liste)
-- `getSortOptions()` — options de tri
-- `getCart()` — panier initial
-- `getOrders()` — commandes du compte
-- `getAccount()` — profil du compte
-
-**Comment brancher** : remplacer les retours `return monMock;` par des appels API réels :
-```typescript
-export async function getProducts(): Promise<Product[]> {
-  const response = await fetch('https://votre-api.com/products');
-  return response.json();
-}
-```
-
-Les types TypeScript sont déjà prêts (`Product`, `CartLine`, `Order`, etc.). Aucune modification du reste du code n'est nécessaire.
-
-### État du panier (client)
-
-**Fichier** : `src/app/(site)/_components/CartProvider.tsx`
-
-État du panier en React Context partagé partout le site. Basé sur l'état local du navigateur (`sessionStorage`) — le panier survit au rechargement de page, mais pas à la fermeture de l'onglet.
-
-**Intégration backend** :
-1. Remplacer la ligne `const [lines, setLines] = useState(initialCart);` (l. 35) par un appel serveur.
-2. Ajouter `useEffect` pour synchroniser les changements (ajout, suppression, quantité) avec votre API.
-3. Adapter `addLine`, `setQuantity`, `removeLine` pour appeler l'API backend avant de mettre à jour l'état local.
-
-Exemple :
-```typescript
-const [lines, setLines] = useState(initialCart);
-
-useEffect(() => {
-  // Appel API pour charger le panier utilisateur connecté
-  fetch('/api/cart').then(r => r.json()).then(setLines);
-}, []);
-
-const addLine = async (line: CartLine) => {
-  await fetch('/api/cart/lines', { method: 'POST', body: JSON.stringify(line) });
-  // puis mettre à jour l'état local
-};
-```
-
-## Fichiers clés
-
-| Fichier | Rôle |
-|---------|------|
-| `src/lib/api/index.ts` | Couche API, à brancher au backend |
-| `src/mocks/` | Données de démonstration (typées) |
-| `src/app/(site)/_components/CartProvider.tsx` | État du panier côté client |
-| `src/app/(site)/layout.tsx` | Layout site + header + footer |
-| `src/app/docs/` | Portail et documentation (automatisée) |
-| `design/ds-export/` | Design system (version 1.0.0) : tokens, composants, README |
-| `next.config.ts` | Config Next.js : export statique, basePath GitHub Pages |
-
-## Support
-
-- **Plugin Decade front** — voir `CLAUDE.md` pour les conventions et le workflow
-- **Design system** — `design/ds-export/README.md` et `/docs/marque`
-- **Conventions React/Next.js** — `plugins/decade-front/skills/decade-stack-nextjs/conventions.md`
+Voir `livraison/backend/AGENTS.md` (à lire en premier), puis `contrat-donnees.json`, `exemples/`, `branchements.md` et `actions.md`. Les données sont des mocks dans `src/mocks/` ; la couche d'accès est `src/lib/api/index.ts`. La session du compte est simulée (`AccountProvider.tsx`). Le site est un export statique : une API avec session demande de quitter l'export statique (point à décider avec Decade).
 
 ## Commandes git (à lancer par le pilote)
 
+Claude ne fait ni commit ni push. Les commandes ci-dessous sont à lancer par le pilote, depuis la racine du dépôt.
+
 ```bash
-git add src/components/blocks/TopNav/TopNav.module.scss design/CHANGELOG.md livraison/LIVRAISON.md
-git commit -m "fix: soulignement de la barre de navigation"
+# Retirer du commit les journaux de travail déjà en zone de préparation
+git restore --staged workflow/logs
+
+# Fichiers et dossiers modifiés ou nouveaux de cette livraison
+git add BRIEF.md decade.config.json next.config.ts package.json livraison/LIVRAISON.md livraison/boutique-demo-v1.0.0.zip livraison/backend qa/qa-all.md qa/recette.md qa/qa-page-compte.md qa/qa-page-compte-commande.md qa/qa-page-compte-commandes.md qa/qa-page-compte-informations.md qa/qa-page-compte-magasin.md qa/captures-passe7 scripts src/app/docs src/data/site.ts src/docs/catalog.tsx src/lib/api/index.ts src/mocks "src/app/(site)/compte" workflow/backlog.md workflow/blocages.md
+
+# Contrôle avant commit
+git status --short
+
+git commit -m "feat: espace client et corrections de la documentation" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+
+# À lancer par le pilote, après relecture du commit
+git push
 ```
 
-Le commit inclut :
-- Retrait du sélecteur `.cat` de la règle `:active` (TopNav.module.scss)
-- Mise à jour du journal des versions (design/CHANGELOG.md)
-- Cette livraison (LIVRAISON.md)
+**Note sur `.claude/settings.json`** : le pilote avait déjà mis ce fichier en préparation, il n'est donc pas dans la liste `git add` ci-dessus. S'il ne veut pas l'inclure dans le commit, il doit le retirer de la préparation avec `git restore --staged .claude/settings.json` (à lancer avant le `git commit`). Le fichier a été vérifié (point 1 ci-dessus) avant tout commit.
 
-**Ne pas pousser** (`git push`) — le pilote le fera lui-même après validation locale.
+Le zip fait 43,7 Mo : sous la limite de 50 Mo de GitHub, mais il sera lourd à chaque version. Le `out/` n'est pas suivi par git ; le zip n'est donc pas reproductible depuis git seul.
 
 ---
 
-Livraison du 6 octobre 2026, design system 1.0.0.
+Livraison du 9 octobre 2026, design system 1.0.0. Précédente : 6 octobre 2026.

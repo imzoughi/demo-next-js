@@ -1,0 +1,22 @@
+[
+  {
+    "id": "fauteuil-dandy",
+    "name": "Fauteuil Dandy",
+    "description": "Coque noire, pieds en chêne",
+    "unitPrice": 250,
+    "quantity": 1,
+    "image": "/images/img-01.png",
+    "imageAlt": "Fauteuil Dandy, coque noire et pieds en chêne",
+    "href": "/fiche-produit/"
+  },
+  {
+    "id": "vase-graystone",
+    "name": "Vase Graystone",
+    "description": "Grès émaillé gris",
+    "unitPrice": 85,
+    "quantity": 1,
+    "image": "/images/img-10.png",
+    "imageAlt": "Vase Graystone en grès gris",
+    "href": "/fiche-produit/"
+  }
+]

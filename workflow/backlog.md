@@ -47,4 +47,8 @@
 - [x] fiche-produit — frame Figma 11:123 (desktop) / 114:6398 (mobile), v2
 - [x] panier — frame Figma 119:3539 (desktop) / 119:3664 (mobile), v2
 - [x] paiement — absent du Figma, à composer avec le kit (prompt 10 du pack)
-- [x] compte — absent du Figma, à composer avec le kit (prompt 10 du pack)
+- [x] compte — absent du Figma, à composer avec le kit (prompt 10 du pack) · refonte 08/10/2026 : connexion + accueil de l’espace client, liens vers les rubriques
+- [x] compte-commandes — /compte/commandes, liste des commandes, composé avec le kit
+- [x] compte-commande — /compte/commandes/[numéro], fiche de commande, composé avec le kit
+- [x] compte-informations — /compte/informations, modifier ses informations + mot de passe, composé avec le kit
+- [x] compte-magasin — /compte/magasin, choix du magasin favori, composé avec le kit

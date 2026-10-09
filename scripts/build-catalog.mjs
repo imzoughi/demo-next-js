@@ -14,8 +14,8 @@ const pages = {
   ProductCard: "Liste de produits", Listings: "Liste de produits", Filters: "Liste de produits", FiltersSheet: "Liste de produits",
   ProductDetails: "Fiche produit",
   CartItem: "Panier", ShoppingBasket: "Panier",
-  CheckoutProgress: "Paiement", OrderSummary: "Paiement",
-  AuthForm: "Compte", OrderList: "Compte", AccountMenu: "Compte",
+  CheckoutProgress: "Paiement et fiche de commande", OrderSummary: "Paiement et fiche de commande", TextInput: "Paiement, Informations, Magasin",
+  AuthForm: "Compte (connexion)", OrderList: "Commandes", AccountMenu: "Toutes les pages du compte",
 };
 
 const entries = [];
