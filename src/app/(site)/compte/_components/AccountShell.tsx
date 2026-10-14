@@ -71,7 +71,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
 
   if (!ready) {
     return (
-      <div className={styles.page} ref={rootRef} aria-busy="true">
+      <div className={cx(styles.page, styles.pageLoading)} ref={rootRef} aria-busy="true">
         <PageTitle title="Mon compte" />
         <p className="av-visually-hidden" role="status">
           Chargement de votre espace client

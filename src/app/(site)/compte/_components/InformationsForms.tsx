@@ -1,6 +1,6 @@
 'use client';
 
-// Informations personnelles et mot de passe : deux formulaires indépendants. Démo : rien n'est envoyé,
+// Informations personnelles, adresses et mot de passe : trois formulaires indépendants. Démo : rien n'est envoyé,
 // les valeurs sont gardées en session. Validation à l'envoi, résumé d'erreurs, focus sur le premier champ en erreur,
 // message de succès annoncé par le Toast (role="status").
 import { useRef, useState, type FormEvent } from 'react';
@@ -9,15 +9,14 @@ import { Icon } from '@/components/ui/Icon/Icon';
 import { TextInput } from '@/components/ui/TextInput/TextInput';
 import { Toast } from '@/components/ui/Toast/Toast';
 import { cx } from '@/lib/cx';
+import { AddressesForm } from './AddressesForm';
 import { useAccount } from './AccountProvider';
+import { PHONE_ERROR, PHONE_RE, REQUIRED, Summary, focusFirst, without, type Errors } from './formUtils';
 import { PageTitle } from './PageTitle';
 import styles from './compte.module.scss';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_RE = /^(?:0\d{9}|\+33\d{9})$/;
-const REQUIRED = 'Ce champ est obligatoire';
 
-type Errors = Record<string, string>;
 
 const PROFILE_FIELDS = [
   ['firstName', 'Prénom', 'text', 'given-name'],
@@ -37,29 +36,6 @@ const RULES: [label: string, test: (v: string) => boolean][] = [
   ['Une majuscule', (v) => /[A-ZÀ-Ý]/.test(v)],
   ['Un chiffre', (v) => /\d/.test(v)],
 ];
-
-function focusFirst(form: HTMLFormElement | null, names: string[], errors: Errors) {
-  const first = names.find((n) => errors[n]);
-  if (first) setTimeout(() => form?.querySelector<HTMLInputElement>(`[name="${first}"]`)?.focus(), 0);
-  return Boolean(first);
-}
-
-function without(errors: Errors, name: string): Errors {
-  const next = { ...errors };
-  delete next[name];
-  return next;
-}
-
-function Summary({ errors }: { errors: Errors }) {
-  const n = Object.keys(errors).length;
-  if (n < 2) return null;
-  return (
-    <div className={cx(styles.alert, 'body-medium')} role="alert">
-      <Icon name="circle-alert" size="md" />
-      <span>{`${n} champs sont à corriger.`}</span>
-    </div>
-  );
-}
 
 export function InformationsForms() {
   const { profile, updateProfile } = useAccount();
@@ -87,7 +63,7 @@ export function InformationsForms() {
     const r: Errors = {};
     for (const [name] of PROFILE_FIELDS) if (!values[name].trim()) r[name] = REQUIRED;
     if (!r.email && !EMAIL_RE.test(values.email.trim())) r.email = 'Adresse e-mail invalide';
-    if (!r.phone && !PHONE_RE.test(values.phone.replace(/[\s.-]/g, ''))) r.phone = 'Numéro invalide : dix chiffres, par exemple 06 12 34 56 78';
+    if (!r.phone && !PHONE_RE.test(values.phone.replace(/[\s.-]/g, ''))) r.phone = PHONE_ERROR;
     setErrors(r);
     if (focusFirst(profileRef.current, PROFILE_FIELDS.map(([n]) => n), r)) return;
     setSaving(true);
@@ -122,7 +98,7 @@ export function InformationsForms() {
 
   return (
     <>
-      <PageTitle title="Mes informations">Modifiez vos coordonnées ou votre mot de passe. Cette démo n’envoie rien : vos changements restent dans cet onglet.</PageTitle>
+      <PageTitle title="Mes informations">Modifiez vos coordonnées, vos adresses ou votre mot de passe. Cette démo n’envoie rien : vos changements restent dans cet onglet.</PageTitle>
 
       <form ref={profileRef} className={styles.form} noValidate onSubmit={submitProfile} aria-labelledby="infos-titre">
         <h2 className="h3" id="infos-titre">
@@ -151,6 +127,10 @@ export function InformationsForms() {
           </Button>
         </div>
       </form>
+
+      <hr className={styles.separator} />
+
+      <AddressesForm onSaved={(message) => setToast({ open: true, message })} />
 
       <hr className={styles.separator} />
 

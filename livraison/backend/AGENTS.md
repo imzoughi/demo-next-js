@@ -1,7 +1,7 @@
 # Avion, boutique démo — passation backend
 
 > Fichier pour toute IA de développement (Claude Code, Codex, Cursor…) et pour les développeurs backend.
-> Front livré par Decade le 6 octobre 2026, mis à jour le 9 octobre 2026 (espace client : commandes détaillées, informations, magasins) · design system Avion v1.0.0 · stack Next.js 16 (App Router, export statique) + React 19 + SCSS modules.
+> Front livré par Decade le 6 octobre 2026, mis à jour le 14 octobre 2026 (carnet d’adresses modifiable, magasins avec carte et horaires structurés) · design system Avion v1.0.0 · stack Next.js 16 (App Router, export statique) + React 19 + SCSS modules.
 
 ## Ce que tu reçois
 - Un front **terminé et contrôlé** : 6 pages (Accueil, Liste de produits, Fiche produit, Panier, Paiement, Compte), 37 composants, documentation : `/docs` (en local) ou https://imzoughi.github.io/demo-next-js/docs/.
@@ -9,10 +9,10 @@
 - Ton travail : remplacer ces données par les vraies et brancher les actions utilisateur, **sans changer l’apparence**.
 
 ## Lis dans cet ordre
-1. `contrat-donnees.json` — la forme exacte de chaque donnée attendue (JSON Schema, 16 entités ; noms identiques aux types de `src/mocks/types.ts`).
+1. `contrat-donnees.json` — la forme exacte de chaque donnée attendue (JSON Schema, 20 entités ; noms identiques aux types de `src/mocks/types.ts`).
 2. `exemples/` — les données d’exemple actuelles, conformes au contrat (utilisables comme réponses factices d’API).
 3. `branchements.md` — page par page : quelle fonction de `src/lib/api/index.ts` remplacer, quels états gérer.
-4. `actions.md` — panier, commande, connexion, espace client (profil, mot de passe, magasin favori, lecture d’une commande), newsletter : ce que chaque action doit appeler.
+4. `actions.md` — panier, commande, connexion, espace client (profil, mot de passe, magasin favori, enregistrement des adresses, lecture d’une commande, carte et statut des magasins), newsletter : ce que chaque action doit appeler.
 
 ## Règles à respecter
 - **Ne modifie pas** : les styles (`*.scss`, `src/styles/`), les tokens (`src/styles/tokens.css`), les composants de `src/components/`, la documentation (`src/app/docs/`, `src/docs/`).
@@ -39,7 +39,9 @@ Le travail est fini quand `npm run check` est vert et que les tests visuels n’
 - `getOrder(number)` cherche dans les mocks ; prévoir un contrôle de propriété (une commande d’un autre client donne 404).
 - Aucune fonction d’accès n’existe pour les entrées `ProfileUpdate`, `PasswordChange`, `FavoriteStore` : créer dans `src/lib/api/index.ts` `updateProfile()`, `changePassword()`, `setFavoriteStore()`, `login()`, `register()`, `logout()` et les appeler depuis `AccountProvider` et `InformationsForms` (ne pas modifier le rendu).
 - Le magasin favori n’est pas dans `AccountData` : ajouter `favoriteStoreId` (voir entité Account).
-- Les adresses du compte sont en lecture seule : aucune action d’édition n’est livrée.
+- Les adresses d’affichage (`Account.addresses`, « Domicile / Bureau ») restent en lecture seule ; le carnet modifiable est `Account.addressBook` (`AddressBook` : livraison, facturation, « identique »). Créer `updateAddressBook()` dans `src/lib/api/index.ts` (`PUT /me/address-book`) et l’appeler depuis `AddressesForm.submit()` / `AccountProvider`. Rejouer côté serveur la règle du code postal (5 chiffres si pays « France »).
+- Magasins : le backend fournit `lat`, `lng` et `openingHours` structurés (plus de champ texte `hours`) mais **pas** le statut ouvert/fermé, calculé par le front (`src/lib/storeHours.ts`, heure de Paris). Les tuiles de la carte viennent d’OpenStreetMap, appelées par le navigateur : aucun branchement, mais à revoir en production (politique d’usage des tuiles).
+- Le client de démo est Issam MZOUGHI (profil, adresses, commandes) : les exemples sont cohérents.
 - `Order.href` est calculé par le front (`orderHref`) : ne pas le renvoyer.
 - `getProductPage()` ne prend pas d’identifiant : la fiche produit affiche toujours le même produit. Passer à `getProductPage(id)` et à une route `/fiche-produit/[id]`.
 - `Order.date` est un texte déjà formaté : préférer une date ISO 8601 côté API et formater dans `src/lib/format.ts`.

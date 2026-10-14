@@ -2,7 +2,7 @@
 
 ## Import du design system 1.0.0 (premier import)
 
-- **Storybook et MCP Storybook indisponibles** pendant l'import : le serveur Storybook a été arrêté par le système (mémoire basse). Les commandes `docs-list` (réutilisation) et `test-run` (tests et accessibilité des stories) n'ont pas été exécutées. À rejouer par la boucle composants dès que Storybook tourne : `npm run storybook`, puis `test-run` sur toutes les stories (vérifier surtout les contrastes en thème sombre et les stories Drawer, MiniCart, FiltersSheet).
+- ~~**Storybook et MCP Storybook indisponibles**~~ Résolu le 14/10/2026 : les 197 stories ont été ouvertes en clair et sombre (rendu, play functions, axe) par la QA all (qa/qa-all.md, tour 2). Le serveur MCP Storybook reste à relancer pour les prochaines boucles. — pendant l'import : le serveur Storybook a été arrêté par le système (mémoire basse). Les commandes `docs-list` (réutilisation) et `test-run` (tests et accessibilité des stories) n'ont pas été exécutées. À rejouer par la boucle composants dès que Storybook tourne : `npm run storybook`, puis `test-run` sur toutes les stories (vérifier surtout les contrastes en thème sombre et les stories Drawer, MiniCart, FiltersSheet).
 - **Next DevTools MCP** non utilisé (pas de serveur `npm run dev` lancé) : vérification faite par `npm run build` (prérendu statique de tous les composants sur une page temporaire, supprimée ensuite) et `npm run typecheck`.
 
 ## Boucle composants (30/09/2026)
@@ -16,4 +16,4 @@
 ## Espace client (08/10/2026)
 
 - **Écart accepté par le QA (tour 3, non bloquant)** : entre 768 et ~782 px de fenêtre avec une barre de défilement classique, les onglets du compte débordent de 8 px (barre de défilement horizontale). Cause : marge négative de `.menuWrap` dans `src/app/(site)/compte/_components/compte.module.scss`. Correction possible : `overflow-x: clip` sur `.layout` ou `.page`. Voir `qa/qa-page-compte.md`.
-- **Mesure de vitesse non faite pour les 5 pages du compte** : `lighthouserc.cjs` transforme chaque nom de page en adresse `/<nom>/`, or les pages du compte sont sous `/compte/…` (`/compte/commandes/`, `/compte/commandes/10530/`, `/compte/informations/`, `/compte/magasin/`). À adapter avant `npm run perf`. Mesure non bloquante (`performance.bloquant` = false).
+- ~~**Mesure de vitesse non faite pour les 5 pages du compte**~~ Résolu le 14/10/2026 : table nom → adresse dans `lighthouserc.cjs`, les 10 pages sont mesurées (qa/perf.json). — : `lighthouserc.cjs` transforme chaque nom de page en adresse `/<nom>/`, or les pages du compte sont sous `/compte/…` (`/compte/commandes/`, `/compte/commandes/10530/`, `/compte/informations/`, `/compte/magasin/`). À adapter avant `npm run perf`. Mesure non bloquante (`performance.bloquant` = false).

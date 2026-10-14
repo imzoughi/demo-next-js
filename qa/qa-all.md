@@ -1,99 +1,124 @@
-# QA all — boutique-demo (09/10/2026, 7e passe)
+# QA all — boutique-demo (14/10/2026, 8e passe, tour 2)
 
-**Verdict global : VERT.** R1 et R2 de la 6e passe sont corrigés et vérifiés sur un build préfixé `/boutique-demo` ; O7 et O8 aussi. Aucune régression sur les 10 pages, le portail et la doc.
+**Verdict global : VERT.** C1 (contraste Storybook), P1 (CLS du compte) et P2 (`lighthouserc.cjs`) sont corrigés et revérifiés de façon indépendante. Aucune régression. Restent des avertissements de performance non bloquants (`performance.bloquant` = false) : images accueil 227 Ko et liste-produits 208 Ko (seuil 200), JS de `/compte/magasin` 302 Ko (seuil 300 ; P3 non fait, accepté).
 
-Environnement : Node 22.12, Windows, Edge (Playwright). Copie propre du dépôt (`%TEMP%\qacopy7`, sans `.next`, sans `tsconfig.tsbuildinfo`), build préfixé `NEXT_PUBLIC_BASE_PATH=/boutique-demo` servi sous `http://localhost:4100/boutique-demo/`. Aucun code du dépôt modifié.
+Environnement : Node 22.12, Windows, Chromium (Playwright). Site `out/` et `storybook-static` reconstruits, servis par un serveur Node de mon script. Aucun code modifié (seul `qa/perf.json` est mis à jour, à la demande). Serveurs arrêtés (ports 4000, 4100, 6007 libres). Captures : `qa/captures-passe12/` (88 captures, pages × largeurs × thèmes).
 
-## Vérification des corrections de la 6e passe
+## Vérification des corrections
 | Point | Statut | Preuve |
 |---|---|---|
-| R1 — aperçus de `/docs/pages/` | VERT | `src/app/docs/pages/page.tsx` : `src={withBase(`${p.href.replace(/\/+$/, "")}/`)}`. L'export contient 10 `<iframe src="/boutique-demo/…/">`. Servi : les 10 documents répondent 200, chacun avec 1 h1 et son titre (Accueil, Tous les produits, Chaise Dandy, Votre panier, Paiement, Mon compte, Mes commandes, Commande N° 10530, Mes informations, Mon magasin) à 1280 et 375 ; 0 réponse >= 400 |
-| R1 — historique git | CONFIRMÉ | `git log -S withBase -- src/app/docs` est vide : le correctif de la 5e passe n'avait jamais été commité (la 6e passe l'appelait à tort une régression du code ; elle était une absence de commit). Les modifications actuelles sont dans l'arbre de travail, **non commitées** : à commiter avant livraison |
-| R2 — débordement à 375 px | VERT | `docs.scss` l. 35 : `overflow-wrap: anywhere` sur `:not(pre) > code`. Les 37 fiches composants + 8 pages (45) : `scrollWidth - clientWidth = 0` à 375 px |
-| R2 — blocs de code intacts | VERT | `pre code` : `white-space: pre`, `overflow-wrap: normal`, `pre` en `overflow-x: auto` (défile sur 375 px) ; tous les `<pre>` qui défilent gardent `tabindex="0"` ; capture `docs-checkout-progress-375.png` |
-| O7 — `typecheck` sans `.next` | VERT | script `next typegen && tsc --noEmit` ; `npm run check` complet réussi sur une copie sans `.next` |
-| O8 — `docs:check` avec et sans préfixe | VERT | sans préfixe : VERT (44 pages). Build préfixé avec `NEXT_PUBLIC_BASE_PATH=/boutique-demo` : VERT sans option. Build préfixé vérifié sans variable ni `--base` : ROUGE, normal (le script ne peut pas deviner le préfixe) ; avec `--base /boutique-demo` : VERT |
+| C1 — contraste du lien Leaflet en sombre (Storybook) | VERT | story StoreFinder `Page` en sombre : fond de l'attribution `rgb(42, 37, 75)` (token) au lieu de `rgba(255,255,255,0.8)`, 0 violation axe à 300 ms, 1,5 s et 5 s. Les 18 stories `compte-store*` × 2 thèmes rejouées 4 fois sous charge (4 workers, attente 400 ms) : 0 échec (avant : 2 à 5 échecs par passage). Dont StoreFinder `Page` / `ShowOnMap` et StoreMap `SingleResult` / `AllStores` |
+| P1 — CLS du compte | VERT | mesuré dans le navigateur (observateur de décalages) sur les 5 pages du compte, connecté et déconnecté, 375 et 1280 : 0,0002 à 0,0004 ; un seul pic isolé à 0,0154 (`/compte/commandes/` connecté, 1280, pied de page), très sous 0,1. Lighthouse : 0,0004 sur les 5 pages (avant : 0,172). Parcours connexion puis Commandes, Informations, Magasin : CLS total 0,0004, aucun saut |
+| P2 — `lighthouserc.cjs` | VERT | `npm run perf` mesure bien les 10 pages (`/accueil/` … `/compte/commandes/10530/`, `/compte/informations/`, `/compte/magasin/`), 3 passages chacune |
+| P3 — JS de `/compte/magasin` | NON FAIT, accepté | 302 Ko (309 561 octets) pour 300 Ko : avertissement non bloquant |
 
-## Contrôles rejoués
-| Domaine | Contrôle | Statut | Détail |
-|---|---|---|---|
-| Build | `npm run check` (copie propre) | VERT | lint 0 erreur (1 avertissement `<img>` connu, `src/app/page.tsx` l. 23), `tsc`, `next build` 60 pages, `docs:check` VERT ; build préfixé aussi |
-| Build | Next DevTools MCP | VERT | `get_compilation_issues` vide ; `get_errors` sans réponse (aucun navigateur connecté au serveur de dev), couvert par le build et par 0 erreur JS sur 152 passes |
-| Préfixe | export (60 HTML, 3 050 références, 7 CSS) | VERT | 0 lien mort, 0 référence nue (seul le `preconnect href="/"` de Next, inoffensif) ; 55 liens internes distincts de la doc, 0 mort |
-| Captures | 10 pages + 2 commandes × 375 / 768 / 1280 / 1440, compte déconnecté puis connecté (76 passes) | VERT | 0 débordement, 1 h1, 1 main, 0 image cassée, cartes de même hauteur |
-| Captures | portail et doc (45 pages) à 375 | VERT | 0 débordement, 1 h1 |
-| Accessibilité | axe, 76 passes site | VERT | 0 serious / critical ; 1 minor `aria-allowed-role` (AuthForm, connu) |
-| Accessibilité | axe, portail et doc (45) | VERT | 0 serious / critical ; `landmark-unique` moderate sur des fiches, inchangé |
-| Interactions | panier (tiroir, piège de focus, Échap, ajout 670 €, persistance, paiement), filtres, espace client complet, à 1440 et 375 | VERT | 51 OK sur 55. Les 4 « FAIL » sont une assertion de mon script (la valeur d'un champ n'est pas dans le texte de la page) ; refait à la main : « Vos informations ont été enregistrées. », « Camille Dupont » repris sur l'accueil du compte |
-| Mouvement | `prefers-reduced-motion` émulé, même parcours | VERT | mêmes résultats, rien de bloqué |
-| Règles du BRIEF | casse, Lucide, couleurs en dur, durées | VERT | inchangé depuis la 6e passe (aucun fichier concerné modifié, sauf `docs.scss` : une propriété ajoutée) |
-| Portail | pages et liens | VERT | 10 pages listées, groupe « Compte » complet, 20 liens = 200 |
-| Performance | `npm run perf` | NON LANCÉ (non bloquant) | `lighthouserc.cjs` ne vise pas `/compte/commandes/`, `/compte/commandes/10530/`, `/compte/informations/`, `/compte/magasin/` ; `qa/perf.json` de la 5e passe non rejoué |
-| Écarts connus | menu du compte à 8 px (768 à 782 px, barre classique) ; 404 de préchargement RSC | ACCEPTÉ | seule source des 404 en console ; 0 erreur JS |
-
-## Points orange restants (non bloquants)
-- **Non commité** : les 4 correctifs (`package.json`, `scripts/check-docs.mjs`, `docs.scss`, `docs/pages/page.tsx`) sont dans l'arbre de travail seulement.
-- O1 : `tsconfig.json` inclut `.next/dev/types` (peut gêner `npm run check` pendant `next dev`).
-- O2 / O4 : tableau de doc ; `tests/` vide (`test:ui` et `shots` remplacés par des scripts Playwright, `playwright.config.ts` vise le port 6006).
-- O6 : images accueil (227 Ko) et liste (208 Ko) au-dessus de 200 Ko (mesure de la 5e passe).
-- Performance du compte non mesurée (voir ci-dessus).
-- Données de démo : compte « Camille Durand » (ou nom saisi) et adresses « Camille Martin » (`src/mocks/account.ts`).
-- Le workflow Pages lance `npm run build`, pas `npm run check`.
-
-## Captures de référence
-Dossier `qa/captures-passe7/` : `<page>-<largeur>.png` et `co-<page>-<largeur>.png` (compte connecté), plus `portail-*`, `docs-pages-*`, `docs-marque-*`, `docs-button-*`, `docs-checkout-progress-*`. Les captures de la 6e passe restent dans `qa/captures-passe6/`.
-
-## Suite
-VERT : le backlog peut être coché par la session principale. Recette : voir les points par page rendus avec ce rapport.
-
----
-
-# Contrôle après publish étape 1 (09/10/2026)
-
-**Verdict : ROUGE** (1 écart, serious pour axe, sur `/docs/pages/` à 375 et 768 px). Tout le reste est VERT. Le verdict VERT de la 7e passe ci-dessus ne vaut donc plus pour l'état actuel du dépôt tant que cet écart n'est pas corrigé.
-
-Méthode : copie propre sans `.next` (`%TEMP%\qacopy8`), `npm run check` sans préfixe, puis build préfixé `/boutique-demo` servi sous `http://localhost:4100/boutique-demo/`. Aucun code modifié.
-
-## Rouge
-
-### R3 — tableau « Fiches des pages » non focalisable au clavier (axe serious `scrollable-region-focusable`)
-- Page : `/docs/pages/`, à 375 px et 768 px (le tableau défile : 874 px de large pour 341 / 734 px visibles). À 1280 et 1440 px il tient, 0 violation.
-- Fichier : `src/app/docs/pages/page.tsx`, section « Fiches des pages » : `<div className="doc-table">` n'a ni `tabIndex` ni rôle (relevé : `tabindex`, `role`, `aria-label` nuls). Le composant `src/docs/Markdown.tsx` l. 21 fait déjà le bon modèle pour ses tableaux.
-- Correction attendue : `<div className="doc-table" role="region" tabIndex={0} aria-label="Fiches des pages">`. Contrôle : axe 0 serious / critical sur `/docs/pages/` aux 4 largeurs.
-- Remarque de lisibilité (orange) : à 375 px, la première colonne laisse des lignes très hautes (~165 px) car les autres colonnes sont à droite (défilement horizontal) ; lisible mais long. Capture : `qa/captures-passe8/docs-pages-table-375.png`.
-
-## Vérifié VERT
+## Contrôles globaux (tour 2)
 | Contrôle | Statut | Détail |
 |---|---|---|
-| `npm run check` sans préfixe (sans `.next`) | VERT | lint 0 erreur (1 avertissement connu), `typecheck` avec `next typegen`, build 60 pages, `docs:check` VERT (44 pages) |
-| `docs:check:pages` sur build préfixé | VERT | 44 pages, 0 lien cassé |
-| 45 pages de doc à 375 px | VERT | 0 débordement, 1 h1, 0 réponse >= 400 ; tous les `<pre>` qui défilent gardent `tabindex="0"` |
-| R2 par `<wbr />` | VERT | `src/app/docs/composants/[id]/page.tsx` l. 35 : le chemin est coupé en `<span>…<wbr></span>` ; `textContent` et `innerText` = `src/components/blocks/CheckoutProgress/CheckoutProgress.tsx` ; copier-coller (Ctrl+C) donne le même chemin exact, sans caractère ajouté |
-| `/docs/pages/` aperçus | VERT | 10 iframes `/boutique-demo/…/`, 10 documents en 200 avec 1 h1 chacun, 0 débordement de page aux 4 largeurs |
-| `/docs/pages/` tableau et section « Espace client » | VERT sauf R3 | lisible à 1280 et 1440 (tient sans défilement) ; à 375 et 768 défile dans son cadre |
-| Axe, 45 pages de doc | ROUGE | 0 serious / critical sauf R3 ; moderate `landmark-unique` et minor `aria-allowed-role` inchangés |
-| Liens de la doc | VERT | 55 liens internes distincts, 0 mort |
-| Rejeu rapide du site | VERT | 76 passes (10 pages + 2 commandes, 4 largeurs, compte déconnecté et connecté) : 0 débordement, 0 image cassée, 0 axe serious / critical ; interactions 51 OK sur 55 (les 4 « FAIL » sont l'assertion de mon script déjà expliquée en 7e passe) |
+| `npm run check` | VERT | lint 0 erreur (1 avertissement `<img>` accepté), types, build, `docs:check` VERT |
+| Storybook (build + 197 stories × 2 thèmes = 394 ouvertures) | VERT | 0 échec : rendu, play functions et axe (sérieux et critique) |
+| Pages × 4 largeurs × 2 thèmes (88 passes, dont les 5 du compte, connecté, et le compte déconnecté) | VERT | 0 erreur JS, 0 requête en erreur (hors prélecture RSC du serveur statique), 1 h1, 0 image cassée, 0 débordement, 0 majuscule de style, 0 problème axe sérieux ou critique. Non-régression des 5 autres pages : identique à la passe 1 |
+| Interactions (script ad hoc, `tests/` toujours vide) | VERT | 26 vérifications OK (mouvement normal et réduit) |
+| Mouvement réduit, code React, règles du BRIEF | VERT | inchangés depuis le tour 1 |
+| Écart connu : onglets du compte à 768–782 px | ACCEPTÉ | inchangé (8 px avec barre de défilement classique), mesuré au tour 1 |
+| Documentation | VERT | `docs:check` VERT dans `npm run check` ; rendu contrôlé au tour 1, sans changement |
 
-## État laissé
-- `out/` du dépôt contient un build **préfixé** `/boutique-demo` (vérifié : `/boutique-demo/_next` dans `accueil/index.html`, iframes préfixées dans `docs/pages/index.html`). Il a été fabriqué dans la copie propre puis copié ; le dépôt n'a pas été reconstruit sur place (`next dev` tourne).
-- Captures : `qa/captures-passe8/` (76 captures du site, plus `docs-pages-table-*.png`, `docs-checkout-progress-375.png`).
-- Après correction de R3 : relancer ce contrôle ciblé (axe sur `/docs/pages/` aux 4 largeurs) avant de repasser VERT.
+## Performance (`npm run perf`, médiane de 3, reportée dans `qa/perf.json`)
+| Page | Score | LCP (ms) | CLS | TBT (ms) | JS (Ko) | Images (Ko) | Statut |
+|---|---|---|---|---|---|---|---|
+| accueil | 99 | 915 | 0,0004 | 4 | 291 | 227 | avertissement images |
+| liste-produits | 99 | 892 | 0,0006 | 3 | 295 | 208 | avertissement images |
+| fiche-produit | 99 | 861 | 0,0005 | 4 | 293 | 42 | OK |
+| panier | 99 | 819 | 0,0009 | 0 | 294 | 27 | OK |
+| paiement | 99 | 853 | 0,0005 | 0 | 296 | 0 | OK |
+| compte | 99 | 885 | 0,0004 | 7 | 298 | 0 | OK |
+| compte-commandes | 99 | 888 | 0,0004 | 1 | 298 | 0 | OK |
+| compte-commande | 99 | 882 | 0,0004 | 0 | 298 | 0 | OK |
+| compte-informations | 99 | 870 | 0,0004 | 4 | 300 (299,9) | 0 | OK, à la limite |
+| compte-magasin | 99 | 916 | 0,0004 | 19 | 302 | 0 | avertissement JS (+2 Ko) |
+
+Les poids sont les octets transférés (Lighthouse) ; les valeurs de `perf.json` des 6 premières pages sont légèrement plus hautes que celles d'avant (ex. accueil 288 → 291 Ko) : effet du layout du compte et de la mesure.
+
+## Reste (non bloquant)
+1. Images accueil et liste-produits au-dessus de 200 Ko ; JS compte-magasin 302 Ko et compte-informations 300 Ko (budget 300).
+2. `tests/` vide : `npm run test:ui` et `npm run shots` ne testent rien (config Playwright pointée sur Storybook `:6006`).
+3. Les composants du compte n'ont pas de fiche dans `/docs/composants/`.
+4. Tuiles de carte chargées depuis `tile.openstreetmap.org`.
+5. Écart accepté : débordement de 8 px des onglets du compte entre 768 et 782 px (`overflow-x: clip` possible).
+6. EmailSignup sombre : correctif local à retirer après le prochain export de Claude Design.
+
+## Captures de référence (`qa/captures-passe12/`)
+Nom : `<page>-<light|dark>-<largeur>.png` ; `compte-out-*` = compte déconnecté.
 
 ---
+# Historique : tour 1 (même journée)
+**Verdict du tour 1 : ROUGE** (1 correction obligatoire, limitée à Storybook : contraste du bloc « Leaflet · OpenStreetMap » en thème sombre dans 4 stories du compte). Les 10 pages, le portail et la documentation sont VERTS. Reste en avertissement non bloquant : décalage de mise en page (CLS) sur les 5 pages du compte et poids JS de `/compte/magasin` à 302 Ko pour 300 Ko.
 
-# Contrôle R3 (09/10/2026)
+Environnement : Node 22.12, Windows, Chromium (Playwright). Site construit (`npm run check`, sans basePath), `out/` servi en statique ; Storybook construit (`build-storybook`) et servi par un petit serveur Node de mon script. Session du compte simulée par `sessionStorage` (Issam MZOUGHI). Aucun fichier du code modifié ; tous les serveurs lancés sont arrêtés (ports 4100 et 6007 libres). Captures : `qa/captures-passe11/` (110 fichiers).
 
-**Verdict global : VERT.** R3 est corrigé. Les contrôles de la 7e passe et du contrôle après publish étape 1 n'ont plus aucun point rouge. Aucun code modifié.
-
+## Contrôles globaux
 | Contrôle | Statut | Détail |
 |---|---|---|
-| Code et `out/` concordent | VERT | `src/app/docs/pages/page.tsx` l. 55 : `<div className="doc-table" role="region" tabIndex={0} aria-label="Fiches des pages">`. `out/docs/pages/index.html` contient `<div class="doc-table" role="region" tabindex="0" aria-label="Fiches des pages">`, 10 `<iframe src="/boutique-demo/…/">` (0 sans préfixe) et des ressources `/boutique-demo/_next/`. Le fichier de `out/` (10:53) est postérieur à la source (10:51) : build préfixé de l'état actuel |
-| axe sur `/docs/pages/` à 375, 768, 1280, 1440 | VERT | 0 violation à chacune des 4 largeurs (R3 `scrollable-region-focusable` disparu) |
-| Tab atteint le tableau | VERT | focus sur `.doc-table` aux 4 largeurs, anneau visible (contour plein de 2 px) |
-| Flèches défilent le tableau | VERT | à 375 et 768 px (le tableau défile) : `ArrowRight` fait avancer `scrollLeft` ; à 1280 et 1440 il tient, rien à défiler |
-| Débordement et réponses | VERT | 0 px de débordement de page, 0 réponse >= 400 hors préchargement RSC, aux 4 largeurs |
+| `npm run check` (lint, types, build, docs) | VERT | 0 erreur ; 1 avertissement lint (`<img>` au lieu de `next/image`, accepté : export statique, images non optimisées) ; 60 pages prérendues ; `docs:check` : 44 pages, VERT |
+| Documentation (`docs:check`, rendu) | VERT | `/`, `/docs`, composants (Button), marque, pages, performance, tokens, versions, architecture à 375 et 1280 : 1 h1, 0 débordement, kit `doc-shell` présent, pas de Markdown brut, 0 axe sérieux. Captures `qa/captures-passe11/doc_*` |
+| Pages × 4 largeurs × 2 thèmes (88 passes) | VERT | 375, 768, 1280, 1440 ; clair et `data-theme="dark"` : 0 erreur JS, 0 requête en erreur (hors prélecture RSC, voir note), 1 h1, 0 image cassée, 0 débordement horizontal (hors écart accepté), 0 texte en capitales |
+| Accessibilité (axe wcag2a/2aa/21aa + best-practice) | VERT | 0 problème sérieux ou critique sur les 88 passes des pages |
+| Mouvement (reduced motion émulé, 88 passes) | VERT | aucune animation > 1 ms ; restent des changements de couleur de 160 ms (niveau 3) |
+| Interactions (`npm run test:ui` : dossier `tests/` vide, 0 test) | VERT par script ad hoc | 26 vérifications OK en mouvement normal et réduit : mini-panier (ouverture, focus dans la couche, Échap), connexion (erreurs, succès), recherche de magasin, favori + toast, bulle de carte, état vide, validation des informations, couche Filtres mobile. `npm run test:ui` ne teste rien aujourd'hui |
+| Storybook (build + 197 stories × 2 thèmes = 394 ouvertures) | ROUGE | build OK ; 0 erreur de rendu, 0 exception de play (53 occurrences de `play:`), 0 erreur de page ; axe `color-contrast` en sombre sur 4 stories (voir C1) |
+| Performance (`lhci`, 3 passages, médiane) | AVERTISSEMENTS | voir plus bas |
+| Erreurs Next.js (`get_errors`) | NON JOUÉ | pas de serveur `next dev` : équivalent par build (0 erreur) et 0 erreur d'hydratation en console sur les 88 passes |
+| Code React / Next (CRITICAL et HIGH) | VERT | Leaflet en import dynamique dans un effet (pas d'accès `window` au rendu) ; session par `useSyncExternalStore` ; horloge `useMinuteClock` sans écart d'hydratation ; pas de cascade de requêtes ; pas d'empilement de booléens (`fullWidth="mobile"` est une valeur). Mineur : commentaire en double au-dessus de `SERVICE_ICONS` dans `StoreFinder.tsx` |
+| Règles du BRIEF | VERT | casse de phrase (aucun `text-transform` dans le site), icônes Lucide, aucun hexadécimal ni `rgb()` dans composants et pages (seuls ceux du kit portail `docs/` et un commentaire) ; mouvement sobre, règles `prefers-reduced-motion` présentes |
 
-Captures : `qa/captures-passe9/docs-pages-table-375.png`, `-768.png`, `-1280.png`, `-1440.png`.
+Note de mesure : le serveur statique `serve` répond 404 aux fichiers de prélecture `__next.!…txt` (Next retombe sur la navigation normale ; déjà ignoré aux passes précédentes).
 
-Réserves inchangées (orange, non bloquantes) : lignes hautes du tableau à 375 px (défilement horizontal), performance des pages du compte non mesurée, `landmark-unique` moderate sur la doc, éléments non commités à vérifier avant livraison.
+## Tableau par page
+Lien local : `npm run start` sert `out/` sur `http://localhost:4000` (ou `npm run dev` sur `:3000`). Statut : 375 / 768 / 1280 / 1440, clair et sombre.
+
+| Page | Lien local | Visuel + a11y (8 passes) | Interactions | Perf (score / LCP / CLS / TBT / JS Ko / images Ko) | Statut |
+|---|---|---|---|---|---|
+| accueil | /accueil/ | VERT | menu, bandeau, lettre OK | 99 / 945 ms / 0,0004 / 4 / 291 / **227 (>200)** | VERT (perf : images) |
+| liste-produits | /liste-produits/ | VERT | couche Filtres mobile, Échap OK | 99 / 965 / 0,0006 / 5 / 295 / **208 (>200)** | VERT (perf : images) |
+| fiche-produit | /fiche-produit/ | VERT | ajout, mini-panier, focus, Échap OK | 99 / 815 / 0,0005 / 0 / 293 / 42 | VERT |
+| panier | /panier/ | VERT | OK | 99 / 871 / 0,0009 / 9 / 294 / 27 | VERT |
+| paiement | /paiement/ | VERT | OK | 99 / 855 / 0,0005 / 11 / 296 / 0 | VERT |
+| compte | /compte/ | VERT (déconnecté et connecté) | connexion, erreurs OK | 91 / 885 / **0,172** / 14 / 298 / 0 | VERT (perf : CLS) |
+| compte-commandes | /compte/commandes/ | VERT | OK | 91 / 849 / **0,172** / 3 / 298 / 0 | VERT (perf : CLS) |
+| compte-commande | /compte/commandes/10530/ | VERT | OK | 91 / 919 / **0,172** / 5 / 298 / 0 | VERT (perf : CLS) |
+| compte-informations | /compte/informations/ | VERT, écart accepté à 768 | validation OK | 91 / 859 / **0,172** / 5 / **300** / 0 | VERT (perf : CLS, JS limite) |
+| compte-magasin | /compte/magasin/ | VERT | recherche, favori, carte, bulle OK | 91 / 934 / **0,172** / 1 / **302 (>300)** / 0 | VERT (perf : CLS, JS) |
+
+## Performance
+- `npm run perf` ne mesure que 6 pages (`accueil` à `compte`) : pour `compte-commandes`, `compte-commande`, `compte-informations`, `compte-magasin`, `lighthouserc.cjs` fabrique `/<nom>/` (404). Je n'ai pas lancé `npm run perf` tel quel (pour ne pas polluer `qa/lighthouse/`) ; j'ai lancé `lhci autorun` avec la même configuration (preset desktop, 3 passages, mêmes seuils) et les 10 vraies adresses, rapports bruts hors dépôt. Les 10 pages sont mesurées. À reporter dans `qa/perf.json` par la session principale (les 4 lignes `compte-*` sont nouvelles ; JS et images en Ko transférés, médianes).
+- **CLS 0,172 identique sur les 5 pages du compte** (seuil 0,1) : le décalage est celui du `<footer>` (0,1716). Cause probable : la zone principale du compte est courte tant que la session n'est pas lue (`ready = false`), puis grandit. Correction : réserver la hauteur (min-height) ou un squelette pendant `ready = false`, dans `src/app/(site)/compte/layout.tsx` ou `AccountProvider`.
+- **JS de `/compte/magasin`** : 302 Ko (Lighthouse : 309 541 octets) contre 300 Ko. Leaflet (import dynamique) ajoute environ 4 Ko aux 298 Ko des autres pages du compte, déjà plus lourdes que le reste du site (291 à 296 Ko). Non bloquant (`performance.bloquant` = false). Pistes : charger Leaflet à l'entrée dans la vue (`IntersectionObserver`) ou à la première interaction, alléger le layout du compte.
+- Images accueil 227 Ko et liste-produits 208 Ko (seuil 200) : avertissement identique à la passe précédente.
+
+## Blocages connus revérifiés
+| Blocage | Résultat |
+|---|---|
+| Test des stories jamais fait sur l'ensemble | Fait : 197 stories × 2 thèmes. 1 problème (C1). Les stories Drawer, MiniCart, FiltersSheet, EmailSignup passent en clair et en sombre |
+| Correctif local EmailSignup sombre | Toujours en place (`EmailSignup.module.scss`) et nécessaire ; la story EmailSignup sombre passe axe. À retirer quand Claude Design aura corrigé `color-feedback-error` |
+| Débordement 8 px des onglets du compte entre 768 et 782 px | Confirmé avec barre de défilement classique : à 768, 775 et 782 px, contenu 8 px au-delà de la fenêtre (`/compte/informations/`) ; disparaît à 790 px. Écart accepté, inchangé. Correction possible : `overflow-x: clip` sur `.layout` ou `.page` dans `compte.module.scss` |
+| Perf non mesurée sur les pages du compte | Mesurée ici ; reste à corriger `lighthouserc.cjs` (liste d'adresses réelle, ou `performance.urls`) pour que `npm run perf` les couvre |
+
+## À corriger (ROUGE)
+**C1 — Storybook, StoreFinder / StoreMap, thème sombre (obligatoire)**
+- Stories touchées (intermittent, selon le chargement des tuiles) : `Sections de page/Compte/StoreFinder` (`Page`, `ShowOnMap`) et `Sections de page/Compte/StoreMap` (`SingleResult`, parfois `Default`).
+- Constat : le lien d'attribution Leaflet a une couleur claire (#ebe8f4) sur le fond par défaut de Leaflet `rgba(255,255,255,0.8)` : contraste 1,13:1 (axe `color-contrast`, `a[href$="leafletjs.com"]`). Dans Storybook, la règle `.map :global(.leaflet-control-attribution) { background: var(--color-surface-default) }` (`store-finder.module.scss`, ligne 83) ne l'emporte pas sur `leaflet.css` : même spécificité, l'ordre des feuilles décide. Sur le site construit le fond est bien `rgb(42, 37, 75)` (vérifié en sombre à 1280 px) : pas d'écart visible sur les pages, mais le résultat dépend de l'ordre de chargement.
+- Correction attendue : augmenter la spécificité (par ex. `.map:global(.leaflet-container) :global(.leaflet-control-attribution)` pour fond, couleur et lien), puis rejouer `test-run` sur ces 4 stories en sombre.
+- Boucle à relancer : composants (StoreMap), puis page `compte-magasin`.
+
+**Non bloquants (ne changent pas le verdict)**
+1. CLS 0,172 sur `compte`, `compte-commandes`, `compte-commande`, `compte-informations`, `compte-magasin`.
+2. JS 302 Ko sur `compte-magasin` et 300 Ko sur `compte-informations`.
+3. `lighthouserc.cjs` : couvrir les 4 adresses `/compte/...`.
+4. `tests/` est vide : `npm run test:ui` et `npm run shots` ne testent rien (la config Playwright pointe sur Storybook `:6006`) ; versionner les scénarios d'interaction ci-dessus comme tests permanents.
+5. Commentaire en double dans `StoreFinder.tsx` au-dessus de `SERVICE_ICONS`.
+6. Portail : `.portal__kicker` en `text-transform: uppercase` (kit `decade-portail`, hors site).
+7. Les composants du compte (AddressesForm, StoreFinder, StoreMap, StoreStatus) ont des stories mais pas de fiche dans `/docs/composants/` : à décider avec le pilote.
+8. Tuiles de carte chargées depuis `tile.openstreetmap.org` (appel externe) : à confirmer pour la démo.
+
+## Captures de référence (`qa/captures-passe11/`)
+Nom : `<page>-<light|dark>-<largeur>.png` ; `compte-out-*` = compte déconnecté ; `doc_*` = documentation ; `story-storefinder-page-dark.png` et `magasin-carte-dark-1280.png` = preuves de C1.

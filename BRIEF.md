@@ -21,6 +21,7 @@
 | Listing | à définir avec les maquettes de l’agence |
 | Pages à produire | accueil, liste-produits, fiche-produit, panier, paiement, compte, compte-commandes, compte-commande, compte-informations, compte-magasin (une par ligne dans workflow/backlog.md) |
 | Espace client (ajout du 8 octobre 2026) | Une page par rubrique : /compte (connexion + accueil de l’espace client), /compte/commandes (liste), /compte/commandes/[numéro] (fiche de commande), /compte/informations (modifier prénom, nom, e-mail, téléphone + bloc séparé « changer le mot de passe »), /compte/magasin (liste de magasins, recherche par ville, choix du magasin favori). Absent du Figma : composé avec les composants du kit (écart accepté). Connexion simulée, gardée pendant la session. |
+| Espace client — ajout du 14 octobre 2026 | /compte/informations : modifier l’adresse de livraison et l’adresse de facturation (option « identique à la livraison »). /compte/magasin : carte Leaflet (fond OpenStreetMap) avec un repère par magasin, choix du magasin depuis la liste ou la carte, statut « ouvert / fermé » calculé selon l’heure de Paris et les horaires. Absent du Figma : composé avec le kit (écart accepté). Données simulées, gardées pendant la session. |
 | Largeurs testées | 375, 768, 1280, 1440 px |
 | Animations | niveau sobre, respect de « réduire les animations » |
 | Navigateurs / appareils | 2 dernières versions des navigateurs courants, 375 → 1440 px |
@@ -28,4 +29,4 @@
 | Hébergement des maquettes | GitHub Pages |
 | Délai | pas de date fixe (projet de démo) |
 | Validé par le pilote | validé |
-| Recette du pilote | validé |
+| Recette du pilote | validé le 14 octobre 2026 (qa/recette.md, mise à jour de l’espace client) |

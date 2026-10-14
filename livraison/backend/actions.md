@@ -65,6 +65,16 @@ Aujourd’hui ces actions sont **simulées** côté navigateur (attente artifici
 - **Erreurs à gérer** : 422 champ invalide (renvoyer `{ "field": "email", "message": "…" }` pour afficher l’erreur sous le champ), 409 e-mail déjà utilisé, 401, réseau
 - **Retour visuel prévu** : bouton en chargement · Toast « Vos informations ont été enregistrées. » · erreur sous le champ et focus sur le premier champ en erreur (déjà en place pour la validation locale). Brancher l’appel dans `submitProfile()` et placer les erreurs serveur dans `errors`
 
+## Enregistrer les adresses (livraison et facturation)
+- **Où** : /compte/informations/, formulaire « Adresses » (AddressesForm) : fieldsets « Adresse de livraison » et « Adresse de facturation », case « Identique à l’adresse de livraison »
+- **Code actuel** : `src/app/(site)/compte/_components/AddressesForm.tsx` · `submit()` (validation locale `validate()`, attente 500 ms, puis `updateAddressBook(book)` du `AccountProvider.tsx`, qui écrit dans sessionStorage)
+- **Entrée** : `AddressBook` : `{ "shipping": PostalAddress, "billing": PostalAddress, "billingSameAsShipping": true }` (valeurs déjà nettoyées des espaces). Quand `billingSameAsShipping` est vrai, le front envoie quand même `billing` (valeurs mémorisées) : le backend peut l’ignorer et utiliser `shipping`
+- **Règles de validation à rejouer côté serveur** : prénom, nom, adresse, code postal, ville, pays obligatoires ; téléphone obligatoire pour la livraison, facultatif pour la facturation (dix chiffres commençant par 0, ou +33 et neuf chiffres, espaces, points et tirets tolérés) ; **code postal à 5 chiffres exactement si le pays est « France »** (sans casse ni accents), texte libre sinon ; complément d’adresse facultatif
+- **Appel attendu** : `PUT /me/address-book`
+- **Réponse attendue** : `AddressBook` à jour (le front remplace `addressBook` de la session)
+- **Erreurs à gérer** : 422 champ invalide (renvoyer `{ "field": "shipping_postalCode", "message": "…" }` ; le front nomme ses champs `<shipping|billing>_<clé>` pour afficher l’erreur sous le champ), 401, réseau
+- **Retour visuel prévu** : bouton en chargement (`saving`) · erreur sous le champ, résumé d’erreurs et focus sur le premier champ en erreur (déjà en place pour la validation locale). Brancher l’appel dans `submit()` à la place de l’attente simulée
+
 ## Changer le mot de passe
 - **Où** : /compte/informations/, formulaire « Changer le mot de passe »
 - **Code actuel** : `InformationsForms.tsx` · `submitPassword()` (règles locales : 8 caractères, une majuscule, un chiffre ; attente 500 ms ; rien n’est vérifié ni stocké)
@@ -88,9 +98,17 @@ Aujourd’hui ces actions sont **simulées** côté navigateur (attente artifici
 - **Code actuel** : `StoreFinder.tsx` : filtre local de `getStores()` (ville sans casse ni accents, code postal par le début)
 - **Entrée** : texte saisi
 - **Appel attendu** : aucun tant que la liste est courte ; sinon `GET /stores?q=` (même règle de correspondance)
-- **Réponse attendue** : liste de `Store`
+- **Réponse attendue** : liste de `Store` (avec `lat`, `lng` et `openingHours` : le front en tire la carte et le statut « Ouvert » / « Fermé »)
 - **Erreurs à gérer** : réseau
 - **Retour visuel prévu** : EmptyState « Aucun magasin ne correspond » si la liste est vide
+
+## Afficher la carte et le statut d’ouverture des magasins
+- **Où** : /compte/magasin/, StoreMap (carte) et StoreStatus (pastille « Ouvert » / « Fermé », prochaine ouverture ou fermeture, horaires de la semaine)
+- **Code actuel** : `StoreMap.tsx` (Leaflet) ; `src/lib/storeHours.ts` (calcul du statut à l’heure de Paris, `Europe/Paris`, quel que soit le fuseau du visiteur) ; `src/lib/useMinuteClock.ts` (rafraîchit le statut chaque minute)
+- **Entrée** : aucune, aucun appel serveur
+- **Appel attendu** : **aucun**. Le backend fournit seulement `Store.lat`, `Store.lng` et `Store.openingHours` ; il ne calcule ni ne renvoie le statut ouvert/fermé. Les tuiles de la carte (`https://{s}.tile.openstreetmap.org/…`) sont demandées directement par le navigateur à OpenStreetMap : rien à brancher, pas de clé d’API (respecter la politique d’usage des tuiles OSM, ou prévoir un fournisseur de tuiles dédié en production)
+- **Erreurs à gérer** : ne pas renvoyer un magasin sans `lat`/`lng` ; tuiles indisponibles : la liste reste utilisable
+- **Retour visuel prévu** : déjà en place, aucune action
 
 ## S’inscrire à la newsletter
 - **Où** : Accueil et Fiche produit, EmailSignup

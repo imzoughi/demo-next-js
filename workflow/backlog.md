@@ -50,5 +50,5 @@
 - [x] compte — absent du Figma, à composer avec le kit (prompt 10 du pack) · refonte 08/10/2026 : connexion + accueil de l’espace client, liens vers les rubriques
 - [x] compte-commandes — /compte/commandes, liste des commandes, composé avec le kit
 - [x] compte-commande — /compte/commandes/[numéro], fiche de commande, composé avec le kit
-- [x] compte-informations — /compte/informations, modifier ses informations + mot de passe, composé avec le kit
-- [x] compte-magasin — /compte/magasin, choix du magasin favori, composé avec le kit
+- [x] compte-informations — /compte/informations, modifier ses informations + mot de passe, composé avec le kit · ajout 14/10/2026 : adresses de livraison et de facturation modifiables
+- [x] compte-magasin — /compte/magasin, choix du magasin favori, composé avec le kit · ajout 14/10/2026 : carte Leaflet, statut ouvert / fermé

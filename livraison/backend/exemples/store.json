@@ -5,9 +5,72 @@
     "address": "18 rue de la République",
     "postalCode": "69002",
     "city": "Lyon",
-    "hours": [
-      "Lundi au samedi : 10 h – 19 h",
-      "Dimanche : 11 h – 18 h"
+    "lat": 45.764,
+    "lng": 4.8357,
+    "openingHours": [
+      {
+        "day": 0,
+        "ranges": [
+          {
+            "open": "11:00",
+            "close": "18:00"
+          }
+        ]
+      },
+      {
+        "day": 1,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      }
     ],
     "phone": "04 78 00 12 01",
     "services": [
@@ -22,9 +85,72 @@
     "address": "27 rue de Turenne",
     "postalCode": "75003",
     "city": "Paris",
-    "hours": [
-      "Lundi au samedi : 10 h – 19 h",
-      "Dimanche : 12 h – 18 h"
+    "lat": 48.8601,
+    "lng": 2.3629,
+    "openingHours": [
+      {
+        "day": 0,
+        "ranges": [
+          {
+            "open": "12:00",
+            "close": "18:00"
+          }
+        ]
+      },
+      {
+        "day": 1,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      }
     ],
     "phone": "01 42 00 12 02",
     "services": [
@@ -39,8 +165,67 @@
     "address": "9 cours Balguerie-Stuttenberg",
     "postalCode": "33300",
     "city": "Bordeaux",
-    "hours": [
-      "Lundi au samedi : 10 h – 19 h"
+    "lat": 44.8541,
+    "lng": -0.57,
+    "openingHours": [
+      {
+        "day": 0,
+        "ranges": []
+      },
+      {
+        "day": 1,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      }
     ],
     "phone": "05 56 00 12 03",
     "services": [
@@ -54,8 +239,62 @@
     "address": "5 rue de Verdun",
     "postalCode": "44000",
     "city": "Nantes",
-    "hours": [
-      "Mardi au samedi : 10 h – 19 h"
+    "lat": 47.215,
+    "lng": -1.556,
+    "openingHours": [
+      {
+        "day": 0,
+        "ranges": []
+      },
+      {
+        "day": 1,
+        "ranges": []
+      },
+      {
+        "day": 2,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      }
     ],
     "phone": "02 40 00 12 04",
     "services": [
@@ -69,9 +308,72 @@
     "address": "14 rue de la Monnaie",
     "postalCode": "59800",
     "city": "Lille",
-    "hours": [
-      "Lundi au samedi : 10 h – 19 h",
-      "Dimanche : 11 h – 17 h"
+    "lat": 50.645,
+    "lng": 3.065,
+    "openingHours": [
+      {
+        "day": 0,
+        "ranges": [
+          {
+            "open": "11:00",
+            "close": "17:00"
+          }
+        ]
+      },
+      {
+        "day": 1,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      }
     ],
     "phone": "03 20 00 12 05",
     "services": [
@@ -86,8 +388,67 @@
     "address": "31 quai de Rive Neuve",
     "postalCode": "13007",
     "city": "Marseille",
-    "hours": [
-      "Lundi au samedi : 10 h – 19 h"
+    "lat": 43.2905,
+    "lng": 5.372,
+    "openingHours": [
+      {
+        "day": 0,
+        "ranges": []
+      },
+      {
+        "day": 1,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "19:00"
+          }
+        ]
+      }
     ],
     "phone": "04 91 00 12 06",
     "services": [
@@ -101,8 +462,62 @@
     "address": "6 rue des Orfèvres",
     "postalCode": "67000",
     "city": "Strasbourg",
-    "hours": [
-      "Mardi au samedi : 10 h – 18 h 30"
+    "lat": 48.5835,
+    "lng": 7.749,
+    "openingHours": [
+      {
+        "day": 0,
+        "ranges": []
+      },
+      {
+        "day": 1,
+        "ranges": []
+      },
+      {
+        "day": 2,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "18:30"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "18:30"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "18:30"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "18:30"
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "ranges": [
+          {
+            "open": "10:00",
+            "close": "18:30"
+          }
+        ]
+      }
     ],
     "phone": "03 88 00 12 07",
     "services": [

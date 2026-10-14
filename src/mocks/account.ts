@@ -1,5 +1,5 @@
 // Données de démonstration de l'espace compte (aucune vraie authentification).
-import type { Order } from './types';
+import type { AddressBook, Order } from './types';
 
 export interface AccountAddress {
   id: string;
@@ -20,10 +20,11 @@ export interface AccountData {
   profile: AccountProfile;
   orders: Order[];
   addresses: AccountAddress[];
+  addressBook: AddressBook;
 }
 
 export const accountData: AccountData = {
-  profile: { firstName: 'Camille', lastName: 'Martin', email: 'camille.martin@exemple.fr', phone: '06 12 34 56 78' },
+  profile: { firstName: 'Issam', lastName: 'MZOUGHI', email: 'issam.mzoughi@exemple.fr', phone: '06 12 34 56 78' },
   // Commandes de la plus récente à la plus ancienne. Total = articles + livraison (offerte dès 100 €).
   orders: [
     {
@@ -33,7 +34,7 @@ export const accountData: AccountData = {
       total: 95,
       items: [{ id: 'vase-graystone', name: 'Vase Graystone', description: 'Grès émaillé gris', unitPrice: 85, quantity: 1, image: '/images/img-10.png', imageAlt: 'Vase Graystone en grès gris', href: '/fiche-produit/' }],
       shipping: 10,
-      shippingAddress: { name: 'Camille Martin', lines: ['12 rue des Tilleuls', '69003 Lyon', 'France'] },
+      shippingAddress: { name: 'Issam MZOUGHI', lines: ['12 rue des Tilleuls', '69003 Lyon', 'France'] },
       payment: 'Carte bancaire se terminant par 4242',
     },
     {
@@ -43,7 +44,7 @@ export const accountData: AccountData = {
       total: 980,
       items: [{ id: 'canape-poplar', name: 'Canapé en velours Poplar', description: 'Velours, trois places', unitPrice: 980, quantity: 1, image: '/images/img-04.jpg', imageAlt: 'Canapé en velours Poplar, trois places', href: '/fiche-produit/' }],
       shipping: 0,
-      shippingAddress: { name: 'Camille Martin', lines: ['4 quai de la Fonderie', '69002 Lyon', 'France'] },
+      shippingAddress: { name: 'Issam MZOUGHI', lines: ['4 quai de la Fonderie', '69002 Lyon', 'France'] },
       payment: 'Carte bancaire se terminant par 4242',
     },
     {
@@ -56,12 +57,18 @@ export const accountData: AccountData = {
         { id: 'vase-graystone', name: 'Vase Graystone', description: 'Grès émaillé gris', unitPrice: 85, quantity: 1, image: '/images/img-10.png', imageAlt: 'Vase Graystone en grès gris', href: '/fiche-produit/' },
       ],
       shipping: 0,
-      shippingAddress: { name: 'Camille Martin', lines: ['12 rue des Tilleuls', '69003 Lyon', 'France'] },
+      shippingAddress: { name: 'Issam MZOUGHI', lines: ['12 rue des Tilleuls', '69003 Lyon', 'France'] },
       payment: 'Carte bancaire se terminant par 4242',
     },
   ],
   addresses: [
-    { id: 'domicile', label: 'Domicile', name: 'Camille Martin', lines: ['12 rue des Tilleuls', '69003 Lyon', 'France'], isDefault: true },
-    { id: 'bureau', label: 'Bureau', name: 'Camille Martin', lines: ['4 quai de la Fonderie', '69002 Lyon', 'France'] },
+    { id: 'domicile', label: 'Domicile', name: 'Issam MZOUGHI', lines: ['12 rue des Tilleuls', '69003 Lyon', 'France'], isDefault: true },
+    { id: 'bureau', label: 'Bureau', name: 'Issam MZOUGHI', lines: ['4 quai de la Fonderie', '69002 Lyon', 'France'] },
   ],
+  // Adresses modifiables de « Mes informations » : la livraison reprend l'adresse « Domicile » ci-dessus.
+  addressBook: {
+    shipping: { firstName: 'Issam', lastName: 'MZOUGHI', address: '12 rue des Tilleuls', addressLine2: 'Bâtiment B, 2e étage', postalCode: '69003', city: 'Lyon', country: 'France', phone: '06 12 34 56 78' },
+    billing: { firstName: 'Issam', lastName: 'MZOUGHI', address: '4 quai de la Fonderie', addressLine2: '', postalCode: '69002', city: 'Lyon', country: 'France', phone: '' },
+    billingSameAsShipping: true,
+  },
 };

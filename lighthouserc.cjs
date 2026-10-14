@@ -3,7 +3,15 @@ const cfg = require("./decade.config.json");
 const p = cfg.performance || {};
 const level = p.bloquant ? "error" : "warn";
 const stack = cfg.stack;
-const pages = (cfg.pages || []).map((slug) => (stack === "html" ? `/${slug}.html` : `/${slug}`));
+// Les pages « compte-… » vivent sous /compte/… ; la fiche de commande est mesurée sur une commande réelle de la démo.
+const ROUTES = {
+  compte: "/compte",
+  "compte-commandes": "/compte/commandes",
+  "compte-commande": "/compte/commandes/10530",
+  "compte-informations": "/compte/informations",
+  "compte-magasin": "/compte/magasin",
+};
+const pages = (cfg.pages || []).map((slug) => (stack === "html" ? `/${slug}.html` : ROUTES[slug] || `/${slug}`));
 module.exports = {
   ci: {
     collect: {

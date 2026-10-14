@@ -5,9 +5,9 @@ import { listFilterGroups, listSortOptions, listedProducts, type ListedProduct }
 import { featuredProducts, homeContent } from '@/mocks/home';
 import { stores } from '@/mocks/stores';
 import { productPage, productPageContent, relatedProducts } from '@/mocks/product';
-import type { CartLine, Category, FilterGroup, HomeContent, Order, Product, SortOption, Store } from '@/mocks/types';
+import type { AddressBook, CartLine, Category, DayHours, FilterGroup, HomeContent, Order, PostalAddress, Product, SortOption, Store, TimeRange } from '@/mocks/types';
 
-export type { CartLine, Category, FilterGroup, HomeContent, Order, Product, SortOption, Store };
+export type { AddressBook, CartLine, Category, DayHours, FilterGroup, HomeContent, Order, PostalAddress, Product, SortOption, Store, TimeRange };
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   return featuredProducts;

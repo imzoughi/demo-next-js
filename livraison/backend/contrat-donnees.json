@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "titre": "Contrat de données — Avion, boutique démo",
-  "version": "1.1.0",
-  "notes": "Une entité par objet métier affiché par le front. Noms = types TypeScript de src/mocks/types.ts, src/mocks/account.ts et src/mocks/stores.ts. Montants en euros TTC (nombre décimal). Les fonctions d’accès sont dans src/lib/api/index.ts. Entrées d’action (ProfileUpdate, PasswordChange, FavoriteStore) : pas de type dans le code, à créer côté API.",
+  "version": "1.2.0",
+  "notes": "Une entité par objet métier affiché par le front. Noms = types TypeScript de src/mocks/types.ts, src/mocks/account.ts et src/mocks/stores.ts. Montants en euros TTC (nombre décimal). Les fonctions d’accès sont dans src/lib/api/index.ts. Entrées d’action (ProfileUpdate, PasswordChange, FavoriteStore ; AddressBook sert aussi d’entrée pour « Enregistrer les adresses ») : pas de type dans le code, à créer côté API.",
   "entites": {
     "Product": {
       "description": "Produit du catalogue : listes « à la une », fiche produit, suggestions.",
@@ -398,12 +398,13 @@
       }
     },
     "Account": {
-      "description": "Espace client : profil, commandes (détaillées), adresses, magasin favori (type AccountData dans le code, favori en plus à ajouter).",
+      "description": "Espace client : profil, commandes (détaillées), adresses d’affichage, carnet d’adresses modifiable, magasin favori (type AccountData dans le code, favori en plus à ajouter).",
       "type": "object",
       "required": [
         "profile",
         "orders",
-        "addresses"
+        "addresses",
+        "addressBook"
       ],
       "properties": {
         "profile": {
@@ -474,6 +475,9 @@
             "null"
           ],
           "description": "Store.id du magasin favori ; absent dans le code actuel (gardé en session simulée), à fournir par l’API"
+        },
+        "addressBook": {
+          "$ref": "#/entites/AddressBook"
         }
       }
     },
@@ -567,7 +571,7 @@
       }
     },
     "Store": {
-      "description": "Magasin (page /compte/magasin/ : liste, recherche, favori).",
+      "description": "Magasin (page /compte/magasin/ : liste, recherche, favori, carte).",
       "type": "object",
       "required": [
         "id",
@@ -575,7 +579,9 @@
         "address",
         "postalCode",
         "city",
-        "hours",
+        "lat",
+        "lng",
+        "openingHours",
         "phone",
         "services"
       ],
@@ -599,12 +605,26 @@
           "type": "string",
           "description": "la recherche ignore casse et accents"
         },
-        "hours": {
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "latitude en degrés décimaux (WGS 84), pour placer le repère sur la carte"
+        },
+        "lng": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "longitude en degrés décimaux (WGS 84)"
+        },
+        "openingHours": {
           "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "description": "horaires par jour, heure de Paris, sept entrées (day 0 = dimanche … 6 = samedi, convention de Date.getDay). Le backend fournit les horaires, PAS le statut ouvert/fermé : le front le calcule (src/lib/storeHours.ts, fuseau Europe/Paris).",
           "items": {
-            "type": "string"
-          },
-          "description": "une ligne par plage d’horaires, texte affiché tel quel"
+            "$ref": "#/entites/DayHours"
+          }
         },
         "phone": {
           "type": "string"
@@ -675,6 +695,115 @@
           "description": "Store.id ; null = retirer des favoris"
         }
       }
+    },
+    "TimeRange": {
+      "description": "Plage d’ouverture sur une journée.",
+      "type": "object",
+      "required": [
+        "open",
+        "close"
+      ],
+      "properties": {
+        "open": {
+          "type": "string",
+          "pattern": "^([01]d|2[0-3]):[0-5]d$",
+          "description": "heure locale « HH:MM » (24 h)"
+        },
+        "close": {
+          "type": "string",
+          "pattern": "^([01]d|2[0-3]):[0-5]d$",
+          "description": "heure locale « HH:MM », après open"
+        }
+      }
+    },
+    "DayHours": {
+      "description": "Horaires d’un jour de la semaine pour un magasin.",
+      "type": "object",
+      "required": [
+        "day",
+        "ranges"
+      ],
+      "properties": {
+        "day": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6,
+          "description": "0 = dimanche … 6 = samedi"
+        },
+        "ranges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/entites/TimeRange"
+          },
+          "description": "plages d’ouverture dans l’ordre ; tableau vide = jour fermé ; plusieurs plages = pause déjeuner"
+        }
+      }
+    },
+    "PostalAddress": {
+      "description": "Adresse postale du compte (livraison ou facturation), éditable dans « Mes informations » (type PostalAddress de src/mocks/types.ts).",
+      "type": "object",
+      "required": [
+        "firstName",
+        "lastName",
+        "address",
+        "addressLine2",
+        "postalCode",
+        "city",
+        "country",
+        "phone"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "description": "numéro et rue"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "complément (bâtiment, étage, digicode) ; chaîne vide si absent, facultatif"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "obligatoire ; si le pays est « France » : exactement 5 chiffres (^d{5}$), sinon texte libre"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "description": "obligatoire, texte libre (« France » déclenche la règle du code postal, sans casse ni accents)"
+        },
+        "phone": {
+          "type": "string",
+          "description": "obligatoire pour la livraison, facultatif (chaîne vide) pour la facturation ; si renseigné : dix chiffres (0 + 9) ou +33 + 9 chiffres, espaces, points et tirets tolérés"
+        }
+      }
+    },
+    "AddressBook": {
+      "description": "Carnet d’adresses du compte (type AddressBook) : exposé par Account.addressBook et envoyé en entrée de « Enregistrer les adresses ».",
+      "type": "object",
+      "required": [
+        "shipping",
+        "billing",
+        "billingSameAsShipping"
+      ],
+      "properties": {
+        "shipping": {
+          "$ref": "#/entites/PostalAddress"
+        },
+        "billing": {
+          "$ref": "#/entites/PostalAddress"
+        },
+        "billingSameAsShipping": {
+          "type": "boolean",
+          "description": "case « Identique à l’adresse de livraison » : si true, le front masque le formulaire de facturation et garde les valeurs de billing en mémoire ; le backend peut alors considérer billing = shipping"
+        }
+      }
     }
   },
   "exemples": {
@@ -693,6 +822,10 @@
     "Store": "exemples/store.json",
     "ProfileUpdate": "exemples/profile-update.json",
     "PasswordChange": "exemples/password-change.json",
-    "FavoriteStore": "exemples/favorite-store.json"
+    "FavoriteStore": "exemples/favorite-store.json",
+    "TimeRange": "exemples/time-range.json",
+    "DayHours": "exemples/day-hours.json",
+    "PostalAddress": "exemples/postal-address.json",
+    "AddressBook": "exemples/address-book.json"
   }
 }

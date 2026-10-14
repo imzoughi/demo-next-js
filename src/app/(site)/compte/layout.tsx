@@ -8,7 +8,7 @@ import { AccountShell } from './_components/AccountShell';
 export default async function CompteLayout({ children }: { children: ReactNode }) {
   const [account, stores] = await Promise.all([getAccount(), getStores()]);
   return (
-    <AccountProvider defaultProfile={account.profile} orders={account.orders} addresses={account.addresses} stores={stores}>
+    <AccountProvider defaultProfile={account.profile} defaultAddressBook={account.addressBook} orders={account.orders} addresses={account.addresses} stores={stores}>
       <main id="contenu">
         <AccountShell>{children}</AccountShell>
       </main>

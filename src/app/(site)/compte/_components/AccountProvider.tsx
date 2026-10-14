@@ -1,14 +1,16 @@
 'use client';
 
-// Session simulée de l'espace client (démo, aucune vraie authentification) : connexion, profil modifié et magasin favori,
+// Session simulée de l'espace client (démo, aucune vraie authentification) : connexion, profil, adresses et magasin favori,
 // gardés dans sessionStorage pour la durée de l'onglet. Lecture via useSyncExternalStore : le rendu serveur dit « pas encore
 // lu » (ready = false), le navigateur lit ensuite le stockage sans écart d'hydratation.
 import { createContext, use, useCallback, useMemo, useSyncExternalStore, type ReactNode } from 'react';
-import type { AccountAddress, AccountProfile, Order, Store } from '@/lib/api';
+import type { AccountAddress, AccountProfile, AddressBook, Order, PostalAddress, Store } from '@/lib/api';
 
 interface Session {
   profile: AccountProfile;
   favoriteStoreId: string | null;
+  /** Absent tant que l'adresse n'a pas été modifiée : on retombe sur les valeurs de démonstration. */
+  addressBook?: AddressBook;
 }
 
 interface AccountContextValue {
@@ -17,12 +19,14 @@ interface AccountContextValue {
   signedIn: boolean;
   profile: AccountProfile;
   favoriteStoreId: string | null;
+  addressBook: AddressBook;
   orders: Order[];
   addresses: AccountAddress[];
   stores: Store[];
   signIn: (mode: 'login' | 'register', values: Record<string, string | boolean>) => void;
   signOut: () => void;
   updateProfile: (profile: AccountProfile) => void;
+  updateAddressBook: (book: AddressBook) => void;
   setFavoriteStore: (id: string | null) => void;
 }
 
@@ -65,7 +69,11 @@ function parse(raw: string): Session | null {
     const s = JSON.parse(raw) as Session;
     const p = s?.profile;
     if (p && typeof p.firstName === 'string' && typeof p.lastName === 'string' && typeof p.email === 'string' && typeof p.phone === 'string') {
-      return { profile: p, favoriteStoreId: typeof s.favoriteStoreId === 'string' ? s.favoriteStoreId : null };
+      return {
+        profile: p,
+        favoriteStoreId: typeof s.favoriteStoreId === 'string' ? s.favoriteStoreId : null,
+        ...(isAddressBook(s.addressBook) ? { addressBook: s.addressBook } : {}),
+      };
     }
   } catch {
     /* contenu illisible : on repart déconnecté */
@@ -73,17 +81,30 @@ function parse(raw: string): Session | null {
   return null;
 }
 
+function isAddress(a: unknown): a is PostalAddress {
+  if (!a || typeof a !== 'object') return false;
+  const o = a as Record<string, unknown>;
+  return ['firstName', 'lastName', 'address', 'addressLine2', 'postalCode', 'city', 'country', 'phone'].every((k) => typeof o[k] === 'string');
+}
+
+function isAddressBook(b: unknown): b is AddressBook {
+  if (!b || typeof b !== 'object') return false;
+  const o = b as Record<string, unknown>;
+  return isAddress(o.shipping) && isAddress(o.billing) && typeof o.billingSameAsShipping === 'boolean';
+}
+
 const AccountContext = createContext<AccountContextValue | null>(null);
 
 export interface AccountProviderProps {
   defaultProfile: AccountProfile;
+  defaultAddressBook: AddressBook;
   orders: Order[];
   addresses: AccountAddress[];
   stores: Store[];
   children: ReactNode;
 }
 
-export function AccountProvider({ defaultProfile, orders, addresses, stores, children }: AccountProviderProps) {
+export function AccountProvider({ defaultProfile, defaultAddressBook, orders, addresses, stores, children }: AccountProviderProps) {
   const raw = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const session = useMemo(() => parse(raw), [raw]);
 
@@ -106,6 +127,10 @@ export function AccountProvider({ defaultProfile, orders, addresses, stores, chi
     const current = parse(getSnapshot());
     if (current) write({ ...current, profile });
   }, []);
+  const updateAddressBook = useCallback((addressBook: AddressBook) => {
+    const current = parse(getSnapshot());
+    if (current) write({ ...current, addressBook });
+  }, []);
   const setFavoriteStore = useCallback((id: string | null) => {
     const current = parse(getSnapshot());
     if (current) write({ ...current, favoriteStoreId: id });
@@ -117,15 +142,17 @@ export function AccountProvider({ defaultProfile, orders, addresses, stores, chi
       signedIn: session !== null,
       profile: session?.profile ?? defaultProfile,
       favoriteStoreId: session?.favoriteStoreId ?? null,
+      addressBook: session?.addressBook ?? defaultAddressBook,
       orders,
       addresses,
       stores,
       signIn,
       signOut,
       updateProfile,
+      updateAddressBook,
       setFavoriteStore,
     }),
-    [raw, session, defaultProfile, orders, addresses, stores, signIn, signOut, updateProfile, setFavoriteStore],
+    [raw, session, defaultProfile, defaultAddressBook, orders, addresses, stores, signIn, signOut, updateProfile, updateAddressBook, setFavoriteStore],
   );
   return <AccountContext value={value}>{children}</AccountContext>;
 }

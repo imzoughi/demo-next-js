@@ -17,8 +17,8 @@ const fiches: { page: string; route: string; components: string; data: string; s
   { page: "Compte (connexion, accueil)", route: "/compte/", components: "AuthForm (connexion), AccountMenu, TextLink", data: "getAccount : profil, commandes, adresses ; session simulée", source: noMockup },
   { page: "Commandes", route: "/compte/commandes/", components: "OrderList, AccountMenu", data: "getAccount : liste des commandes", source: noMockup },
   { page: "Fiche de commande", route: "/compte/commandes/10530/ · 10517/ · 10482/", components: "Breadcrumb, CheckoutProgress, OrderSummary, AccountMenu", data: "getOrder(numéro) ; numéro inconnu : page introuvable", source: noMockup },
-  { page: "Informations", route: "/compte/informations/", components: "TextInput, Button, Toast, AccountMenu", data: "profil du compte (modifiable pendant la session)", source: noMockup },
-  { page: "Magasin favori", route: "/compte/magasin/", components: "TextInput, EmptyState, Toast, AccountMenu", data: "getStores : liste des magasins de démonstration", source: noMockup },
+  { page: "Informations", route: "/compte/informations/", components: "TextInput, Checkbox, Button, Icon, Toast, AccountMenu, AddressesForm (Mes adresses)", data: "getAccount : profil et adresses de livraison / facturation (modifiables pendant la session)", source: noMockup },
+  { page: "Magasin favori", route: "/compte/magasin/", components: "TextInput, Button, Icon, EmptyState, Toast, AccountMenu, StoreMap (Leaflet), StoreStatus", data: "getStores : magasins avec coordonnées et horaires par jour ; carte Leaflet (OpenStreetMap), statut ouvert / fermé à l’heure de Paris", source: noMockup },
 ];
 
 // Comportements de l’espace client (démo : aucune authentification réelle, session gardée dans l’onglet).
@@ -27,8 +27,9 @@ const comportements = [
   "Le menu du compte comporte quatre rubriques : Accueil, Commandes, Informations, Magasin. Sous 768 px, il se replie. La rubrique active reste en surbrillance, y compris sur une fiche de commande.",
   "La liste des commandes mène aux trois fiches de démonstration (10530, 10517, 10482). Un numéro inconnu affiche la page introuvable.",
   "La fiche de commande montre la progression de la commande (CheckoutProgress) et son récapitulatif (OrderSummary).",
-  "Informations : profil (prénom, nom, e-mail, téléphone) et mot de passe. Les erreurs sont résumées en haut du formulaire, la confirmation s’affiche dans un toast.",
-  "Magasin : recherche par ville ou code postal, puis choix d’un magasin favori (un seul). Le choix est confirmé par un toast et gardé pendant la session.",
+  "Informations : profil (prénom, nom, e-mail, téléphone), bloc « Mes adresses » (livraison, puis facturation : la case « identique à la livraison » masque les champs de facturation) et bloc séparé « Changer le mot de passe ». Les erreurs sont résumées en haut de chaque formulaire, la confirmation s’affiche dans un toast.",
+  "Magasin : recherche par ville ou code postal, puis choix d’un magasin favori (un seul), confirmé par un toast et gardé pendant la session. Une carte des magasins (Leaflet, fond OpenStreetMap) complète la liste. « Voir sur la carte » centre le repère et ouvre sa bulle.",
+  "Magasin : chaque magasin affiche son statut ouvert / fermé, calculé à l’heure de Paris et mis à jour chaque minute. Le bouton favori passe de primary à secondary une fois le magasin choisi.",
   "Changement de rubrique : le focus rejoint le titre (h1) de la nouvelle page, pour les lecteurs d’écran et le clavier.",
 ];
 

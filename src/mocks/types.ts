@@ -63,14 +63,29 @@ export interface Order {
   payment: string;
 }
 
+/** Plage d'ouverture sur une journée, heures locales « HH:MM » (24 h). */
+export interface TimeRange {
+  open: string;
+  close: string;
+}
+
+/** Horaires d'un jour : 0 = dimanche … 6 = samedi (convention de Date.getDay). Aucune plage = fermé. */
+export interface DayHours {
+  day: number;
+  ranges: TimeRange[];
+}
+
 export interface Store {
   id: string;
   name: string;
   address: string;
   postalCode: string;
   city: string;
-  /** Une ligne par plage d'horaires. */
-  hours: string[];
+  /** Latitude et longitude en degrés décimaux (WGS 84). */
+  lat: number;
+  lng: number;
+  /** Horaires par jour (heure de Paris), sept entrées de 0 à 6. */
+  openingHours: DayHours[];
   phone: string;
   services: string[];
 }
@@ -103,4 +118,25 @@ export interface HomeContent {
 export interface Category {
   label: string;
   href: string;
+}
+
+/** Adresse postale du compte (livraison ou facturation). */
+export interface PostalAddress {
+  firstName: string;
+  lastName: string;
+  address: string;
+  /** Complément d'adresse : bâtiment, étage, digicode (facultatif). */
+  addressLine2: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  /** Facultatif pour la facturation. */
+  phone: string;
+}
+
+/** Carnet d'adresses du compte : livraison, facturation, et option « facturation identique ». */
+export interface AddressBook {
+  shipping: PostalAddress;
+  billing: PostalAddress;
+  billingSameAsShipping: boolean;
 }

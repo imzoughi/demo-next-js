@@ -1,0 +1,334 @@
+// Magasins : carte Leaflet, repères, bulle, badge ouvert / fermé. Tokens en variables CSS uniquement.
+// Seuil carte à côté de la liste : 1024 px de largeur de page (la fenêtre de 1280 px a une page un peu plus étroite que 1280).
+@use '../../../../styles/motion' as *;
+
+// ——— Mise en page : carte au-dessus de la liste en mobile, à côté en desktop ———
+.finder {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+
+  @container (min-width: 1024px) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-7);
+  }
+}
+
+.mapCol {
+  min-width: 0;
+
+  @container (min-width: 1024px) {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: calc(var(--size-header-bar) + var(--space-4));
+  }
+}
+
+.listCol {
+  min-width: 0;
+
+  @container (min-width: 1024px) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+// En desktop la liste est une seule colonne à côté de la carte.
+.listSingle {
+  @container (min-width: 1024px) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+// ——— Carte ———
+.mapWrap {
+  position: relative;
+  isolation: isolate; // les calques de Leaflet (z-index jusqu'à 1000) ne passent jamais devant l'en-tête ni les couches
+  width: 100%;
+  // Assez haute pour que la bulle (au-dessus du repère centré) reste entièrement dans la carte
+  height: min(32rem, calc(100svh - var(--size-header-bar) - var(--space-6)));
+  scroll-margin-top: var(--size-header-bar); // centrage dans la zone visible, sous la barre fixe
+  border: var(--size-border) solid var(--color-border-strong);
+  background: var(--color-surface-subtle);
+
+  @container (min-width: 1024px) {
+    height: min(36rem, calc(100vh - var(--size-header-bar) - var(--space-8)));
+  }
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.mapLoading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-default);
+}
+
+// Habillage de Leaflet par tokens (sélecteurs globaux limités à la carte).
+// Tout est sous `.map.leaflet-container` : un niveau de spécificité de plus que leaflet.css, donc le résultat
+// ne dépend pas de l'ordre de chargement des feuilles (site, Storybook).
+.map:global(.leaflet-container) {
+  font-family: var(--font-body);
+  font-size: inherit;
+  line-height: inherit;
+  color: var(--color-text-default);
+  background: var(--color-surface-subtle);
+
+  :global(.leaflet-control-attribution) {
+    padding: var(--space-1) var(--space-2);
+    color: var(--color-text-default);
+    background: var(--color-surface-default);
+  }
+
+  :global(.leaflet-control-attribution a),
+  :global(.leaflet-control-attribution a:hover) {
+    color: var(--color-text-brand);
+    text-decoration: underline;
+  }
+
+  :global(.leaflet-bar a) {
+    color: var(--color-text-on-white);
+    background-color: var(--color-action-white);
+    border-color: var(--color-border-strong);
+    width: var(--size-target-min);
+    height: var(--size-target-min);
+    line-height: var(--size-target-min);
+  }
+
+  :global(.leaflet-bar a:hover) {
+    background-color: var(--color-action-white-hover);
+  }
+
+  :global(.leaflet-bar a:focus-visible),
+  :global(.leaflet-popup-close-button:focus-visible) {
+    outline: var(--size-focus-ring) solid var(--color-focus-ring);
+    outline-offset: calc(var(--size-focus-ring) * -1);
+  }
+
+  :global(.leaflet-popup-content-wrapper),
+  :global(.leaflet-popup-tip) {
+    color: var(--color-text-default);
+    background: var(--color-surface-default);
+    box-shadow: var(--shadow-overlay);
+  }
+
+  :global(.leaflet-popup-content-wrapper) {
+    border-radius: var(--radius-none);
+  }
+
+  :global(.leaflet-popup-content) {
+    margin: var(--space-3) var(--space-4);
+    font: inherit;
+  }
+
+  // Croix de la bulle (Leaflet la colore en gris #757575)
+  :global(a.leaflet-popup-close-button) {
+    color: var(--color-text-default);
+  }
+}
+
+// ——— Repères (divIcon) ———
+.marker {
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+}
+
+.pin {
+  display: grid;
+  place-items: center;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+  color: var(--color-text-inverse);
+  background: var(--color-surface-inverse);
+  border: var(--size-border-strong) solid var(--color-surface-default);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-overlay);
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+
+  @include motion-reduce {
+    transition: none;
+  }
+
+  // Point central : un repère ordinaire, sans symbole
+  &::after {
+    content: '';
+    width: var(--space-2);
+    height: var(--space-2);
+    border-radius: var(--radius-pill);
+    background: currentcolor;
+  }
+
+  svg {
+    display: none;
+    width: var(--size-icon-sm);
+    height: var(--size-icon-sm);
+  }
+}
+
+// Favori : plus grand, couleur de succès et coche (jamais la couleur seule)
+.markerFavorite .pin {
+  width: calc(var(--size-icon-lg) + var(--space-2));
+  height: calc(var(--size-icon-lg) + var(--space-2));
+  color: var(--color-text-inverse);
+  background: var(--color-feedback-success);
+
+  &::after {
+    display: none;
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+.markerSelected .pin {
+  transform: scale(1.2);
+  outline: var(--size-focus-ring) solid var(--color-focus-ring);
+  outline-offset: var(--size-focus-offset);
+}
+
+// ——— Bulle ———
+.popupBody {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 12rem;
+
+  p,
+  h3 {
+    margin: 0;
+  }
+}
+
+.popupTitle {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.popupRow,
+.status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.popupRow {
+  align-items: flex-start;
+}
+
+.popupIcon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Bouton de la bulle : mêmes couleurs que le bouton primary (favori : secondary) du design system
+.popupButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  justify-self: start;
+  min-height: var(--size-button-sm);
+  padding: 0 var(--space-5);
+  border: 0;
+  color: var(--color-text-inverse);
+  background: var(--color-action-primary);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease-standard);
+
+  &:hover {
+    background: var(--color-action-primary-hover);
+  }
+
+  &:focus-visible {
+    outline: var(--size-focus-ring) solid var(--color-focus-ring);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  @include motion-reduce {
+    transition: none;
+  }
+}
+
+.popupButtonFav {
+  color: var(--color-text-default);
+  background: var(--color-action-secondary);
+
+  &:hover {
+    background: var(--color-action-secondary-hover);
+  }
+}
+
+// ——— Badge ouvert / fermé : texte + icône, contraste AA en clair et en sombre ———
+.statusSlot {
+  min-height: calc(var(--size-icon-lg) + var(--space-2) + var(--size-border) * 2);
+}
+
+.status {
+  display: inline-flex;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: var(--size-border) solid currentcolor;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-default);
+}
+
+.statusOpen {
+  color: var(--color-feedback-success);
+}
+
+.statusClosed {
+  color: var(--color-text-default);
+}
+
+// ——— Cartes de la liste ———
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+
+// Carte de la liste centrée dans la zone visible (sous la barre de navigation fixe)
+.listCol li {
+  scroll-margin-top: var(--size-header-bar);
+}
+
+.isSelected {
+  background: var(--color-surface-subtle);
+  border-color: var(--color-text-brand);
+}
+
+// Ligne d'information de la carte magasin : icône décorative + texte
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.infoIcon {
+  flex: none;
+  margin-top: var(--space-1);
+}
+
+// Bouton secondary posé sur une carte de même teinte : liseré pour qu'il reste identifiable
+.outlined {
+  box-shadow: inset 0 0 0 var(--size-border) var(--color-border-strong);
+}

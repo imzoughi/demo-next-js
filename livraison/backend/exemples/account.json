@@ -1,8 +1,8 @@
 {
   "profile": {
-    "firstName": "Camille",
-    "lastName": "Martin",
-    "email": "camille.martin@exemple.fr",
+    "firstName": "Issam",
+    "lastName": "MZOUGHI",
+    "email": "issam.mzoughi@exemple.fr",
     "phone": "06 12 34 56 78"
   },
   "orders": [
@@ -25,7 +25,7 @@
       ],
       "shipping": 10,
       "shippingAddress": {
-        "name": "Camille Martin",
+        "name": "Issam MZOUGHI",
         "lines": [
           "12 rue des Tilleuls",
           "69003 Lyon",
@@ -53,7 +53,7 @@
       ],
       "shipping": 0,
       "shippingAddress": {
-        "name": "Camille Martin",
+        "name": "Issam MZOUGHI",
         "lines": [
           "4 quai de la Fonderie",
           "69002 Lyon",
@@ -91,7 +91,7 @@
       ],
       "shipping": 0,
       "shippingAddress": {
-        "name": "Camille Martin",
+        "name": "Issam MZOUGHI",
         "lines": [
           "12 rue des Tilleuls",
           "69003 Lyon",
@@ -105,7 +105,7 @@
     {
       "id": "domicile",
       "label": "Domicile",
-      "name": "Camille Martin",
+      "name": "Issam MZOUGHI",
       "lines": [
         "12 rue des Tilleuls",
         "69003 Lyon",
@@ -116,12 +116,35 @@
     {
       "id": "bureau",
       "label": "Bureau",
-      "name": "Camille Martin",
+      "name": "Issam MZOUGHI",
       "lines": [
         "4 quai de la Fonderie",
         "69002 Lyon",
         "France"
       ]
     }
-  ]
+  ],
+  "addressBook": {
+    "shipping": {
+      "firstName": "Issam",
+      "lastName": "MZOUGHI",
+      "address": "12 rue des Tilleuls",
+      "addressLine2": "Bâtiment B, 2e étage",
+      "postalCode": "69003",
+      "city": "Lyon",
+      "country": "France",
+      "phone": "06 12 34 56 78"
+    },
+    "billing": {
+      "firstName": "Issam",
+      "lastName": "MZOUGHI",
+      "address": "4 quai de la Fonderie",
+      "addressLine2": "",
+      "postalCode": "69002",
+      "city": "Lyon",
+      "country": "France",
+      "phone": ""
+    },
+    "billingSameAsShipping": true
+  }
 }

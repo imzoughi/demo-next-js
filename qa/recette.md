@@ -1,38 +1,34 @@
 # Recette pilote — boutique-demo
 
-QA : `qa/qa-all.md` **VERT** (7e passe, 09/10/2026) — ajout de l'espace client (5 pages).
+QA : `qa/qa-all.md` **VERT** (8e passe, tour 2, 14/10/2026) — mise à jour de l'espace client (adresses, carte des magasins, statut ouvert / fermé, icônes, boutons) et Storybook.
 Site : `npm run build` puis `npm start` (http://localhost:4000), ou la version publiée sur GitHub Pages (`/demo-next-js/<page>/`).
-Comparer chaque page à sa capture de référence : `qa/captures-passe7/<page>-<largeur>.png` (préfixe `co-` = compte connecté).
-Connexion au compte : e-mail valide et mot de passe quelconques (démo, rien n'est envoyé).
+Comparer chaque page à sa capture de référence : `qa/captures-passe12/<page>-light-<largeur>.png` (`compte-out` = compte déconnecté).
+Connexion au compte : e-mail valide et mot de passe quelconques (démo, rien n'est envoyé). Le client de démo s'appelle maintenant **Issam MZOUGHI**.
 
-## Pages déjà recettées le 06/10 (contrôle rapide, ordinateur 1440 puis téléphone 375)
-- [x] **Accueil** — `/accueil/` · regarder : bandeau, cartes produit de même hauteur, panier depuis l'en-tête · réf. `accueil-1440.png` / `accueil-375.png`
-- [x] **Liste produits** — `/liste-produits/` · regarder : filtre Catégorie (ordinateur), bouton « Filtres » puis Échap (téléphone) · réf. `liste-produits-1440.png` / `liste-produits-375.png`
-- [x] **Fiche produit** — `/fiche-produit/` · regarder : « Ajouter au panier » ouvre le tiroir, « Voir le panier » mène au panier · réf. `fiche-produit-1440.png` / `fiche-produit-375.png`
-- [x] **Panier** — `/panier/` · regarder : quantité, « Retirer », le panier reste après rechargement · réf. `panier-1440.png` / `panier-375.png`
-- [x] **Paiement** — `/paiement/` · regarder : même total que le panier, erreurs si on valide à vide · réf. `paiement-1440.png` / `paiement-375.png`
+## Nouveautés du 14/10 (à regarder en détail, ordinateur 1280 puis téléphone 375)
+- [X] **Mes informations — adresses** — `/compte/informations/` · regarder : bloc « Mes adresses » (icône camion pour la livraison, facture pour la facturation) ; case « identique à la livraison » cochée par défaut ; la décocher fait apparaître la facturation ; vider deux champs puis « Enregistrer » → « 2 champs sont à corriger » ; enregistrer → « Vos adresses ont été enregistrées. » · réf. `compte-informations-light-1280.png` / `-375.png`
+- [X] **Mon magasin — carte** — `/compte/magasin/` · regarder : carte à côté de la liste (ordinateur), au-dessus (téléphone) ; 7 repères ; le favori se distingue · réf. `compte-magasin-light-1280.png` / `-375.png`
+- [X] **Mon magasin — « Voir sur la carte »** · regarder : le repère est au centre de la carte, la bulle s'ouvre en entier (nom et adresse lisibles sur téléphone), Échap la ferme
+- [X] **Mon magasin — clic sur un repère** · regarder : le repère se centre, la fiche du magasin dans la liste se centre à l'écran ; « Choisir ce magasin » dans la bulle fonctionne
+- [X] **Mon magasin — statut** · regarder : badge « Ouvert · ferme à 19 h » ou « Fermé · ouvre … » juste à l'heure actuelle ; icônes adresse, horaires, téléphone, services
+- [X] **Mon magasin — boutons** · regarder : « Choisir ce magasin » plein, « Magasin favori » avec coche (cliquer le retire), « Voir sur la carte » à contour ; pleine largeur sur téléphone
+- [X] **Thème sombre** sur Mon magasin · regarder : bulle, croix, zoom et mention « © OpenStreetMap » lisibles
+- [X] **Nom de démo** — `/compte/` et `/compte/commandes/10530/` · regarder : « Issam MZOUGHI » partout, plus de « Camille »
+- [X] **Storybook** — `npm run storybook` puis http://localhost:6006, « Sections de page / Compte » · regarder : statut du magasin, carte, Mes adresses, page Mon magasin
 
-## Espace client (nouveau — pas de maquette, composé avec le kit)
-- [x] **Compte** — `/compte/` · regarder : erreurs en français si champs vides, puis connexion ; « Bonjour Camille », 3 cartes (dernière commande, magasin favori, informations), 2 adresses · réf. `compte-1440.png` (connexion), `co-compte-1440.png` / `co-compte-375.png`
-- [x] **Menu du compte** — sur téléphone : bouton « Menu du compte », il s'ouvre, Échap le ferme, choisir une rubrique change de page et referme le menu
-- [x] **Mes commandes** — `/compte/commandes/` · regarder : 3 commandes, statuts, lien vers chaque fiche · réf. `co-compte_commandes-1440.png`
-- [x] **Fiche de commande** — `/compte/commandes/10530/` (aussi 10517 et 10482) · regarder : suivi « Préparation, Expédition, Livraison », articles, adresse, paiement, récapitulatif, retour « Mes commandes » · réf. `co-compte_commandes_10530-1440.png` / `-375.png`
-- [x] **Mes informations** — `/compte/informations/` · regarder : modifier le nom puis « Vos informations ont été enregistrées. », nom repris sur l'accueil du compte ; mot de passe : règles affichées, erreurs · réf. `co-compte_informations-1440.png`
-- [x] **Mon magasin** — `/compte/magasin/` · regarder : recherche « Lyon » ou « 75 », recherche sans résultat, « Choisir comme favori », magasin repris sur l'accueil du compte · réf. `co-compte_magasin-1440.png`
-- [x] **Déconnexion** — retour au formulaire de connexion ; la connexion se perd à la fermeture de l'onglet (démo)
+## Pages déjà recettées (contrôle rapide, aucune régression attendue)
+- [X] **Accueil** — `/accueil/` · réf. `accueil-light-1280.png`
+- [X] **Liste produits** — `/liste-produits/` · regarder : bouton « Filtres » sur téléphone · réf. `liste-produits-light-1280.png` / `-375.png`
+- [X] **Fiche produit** — `/fiche-produit/` · réf. `fiche-produit-light-1280.png`
+- [X] **Panier** — `/panier/` · réf. `panier-light-1280.png`
+- [X] **Paiement** — `/paiement/` · réf. `paiement-light-1280.png`
+- [X] **Compte, commandes, fiche de commande** — `/compte/`, `/compte/commandes/`, `/compte/commandes/10530/` · regarder : la page ne saute plus au chargement · réf. `compte-out-light-375.png`, `compte-light-1280.png`, `compte-commandes-light-1280.png`, `compte-commande-light-1280.png`
 
-## Portail et documentation
-- [x] **Portail** — `/` · regarder : 10 pages listées, groupe « Compte » (Commandes, Fiche de commande, Informations, Magasin favori) · réf. `portail-1280.png` / `portail-375.png`
-- [x] `/docs/pages/` : les 10 aperçus s'affichent (aucune page « introuvable ») · réf. `docs-pages-1280.png`
-- [x] Une fiche composant sur téléphone (`/docs/composants/checkout-progress/`) : pas de défilement de côté · réf. `docs-checkout-progress-375.png`
-
-## À trancher (écarts acceptés par la QA, non bloquants)
-- [x] Menu du compte : léger débordement (8 px) sur un écran d'ordinateur de 768 à 782 px de large avec barre de défilement Windows.
-- [x] Vitesse des pages du compte non mesurée (l'outil de mesure ne vise pas encore les adresses `/compte/…`).
-- [x] Libellés du suivi de commande « Préparation, Expédition, Livraison ».
-
-## Publication
-- [x] Sur GitHub Pages, les erreurs 404 « __next.!… » vues en local Windows ont disparu.
+## À trancher (écarts non bloquants)
+- [X] Mon magasin : JavaScript à 302 Ko pour un budget de 300 Ko (carte Leaflet ; le poids vient surtout du socle commun du compte).
+- [X] Images de l'accueil (227 Ko) et de la liste produits (208 Ko) au-dessus du budget de 200 Ko (inchangé).
+- [X] Menu du compte : débordement de 8 px entre 768 et 782 px de large avec barre de défilement Windows (inchangé).
+- [X] Les fonds de carte viennent d'OpenStreetMap (service externe, gratuit, attribution affichée).
 
 ## Fin
-- [x] Recette validée → mettre à jour « Recette du pilote » dans `BRIEF.md` (date du jour), puis lancer `/decade-front:publish`.
+- [X] Recette validée → mettre à jour « Recette du pilote » dans `BRIEF.md` (date du jour), puis lancer `/decade-front:publish`.
