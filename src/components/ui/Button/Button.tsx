@@ -1,10 +1,10 @@
 'use client';
 
-import { AppLink } from '@/components/ui/AppLink/AppLink';
+// BANC D'ESSAI (phase 0) : implémentation retirée, à reconstruire par la boucle /decade-front:ds-component.
+// Les props et les stories sont conservées : elles servent de cahier des charges et de tests.
+
 import type { MouseEvent, ReactNode } from 'react';
-import { cx } from '@/lib/cx';
-import { Icon, type IconName } from '../Icon/Icon';
-import styles from './Button.module.scss';
+import type { IconName } from '../Icon/Icon';
 
 export type ButtonType = 'primary' | 'secondary' | 'white' | 'opaque' | 'ghost';
 
@@ -34,76 +34,10 @@ export interface ButtonProps {
 }
 
 /** Bouton d'action à angles droits : cinq types, deux tailles, états défaut, survol, focus, actif, désactivé, chargement. */
-export function Button({
-  type = 'primary',
-  size = 'md',
-  iconRight,
-  fullWidth,
-  loading = false,
-  loadingLabel,
-  disabled = false,
-  softDisabled = false,
-  href,
-  htmlType = 'button',
-  className,
-  children,
-  onClick,
-  ...rest
-}: ButtonProps) {
-  const inactive = loading || disabled || softDisabled;
-  const right = iconRight === true ? 'chevron-down' : iconRight;
-  const cls = cx(
-    styles.root,
-    'body-medium',
-    type !== 'primary' && styles[type],
-    size === 'sm' && styles.sm,
-    fullWidth === true && styles.full,
-    fullWidth === 'mobile' && styles.fullMobile,
-    loading && styles.isLoading,
-    (disabled || softDisabled) && styles.isDisabled,
-    className,
-  );
-  const content = (
-    <>
-      {loading ? <Icon name="loader-circle" size="md" spin /> : null}
-      <span>{loading && loadingLabel ? loadingLabel : children}</span>
-      {!loading && right ? <Icon name={right} size="md" /> : null}
-    </>
-  );
-  const handle = (e: MouseEvent<HTMLElement>) => {
-    if (inactive) {
-      e.preventDefault();
-      return;
-    }
-    onClick?.(e);
-  };
-  if (href) {
-    return (
-      <AppLink
-        {...rest}
-        className={cls}
-        href={inactive ? undefined : href}
-        role={inactive ? 'link' : undefined}
-        aria-disabled={inactive ? true : undefined}
-        aria-busy={loading ? true : undefined}
-        onClick={handle}
-      >
-        {content}
-      </AppLink>
-    );
-  }
-  // aria-disabled plutôt que disabled pendant le chargement : le bouton garde le focus et annonce son état.
+export function Button({ children, htmlType = 'button', disabled, onClick, className }: ButtonProps) {
   return (
-    <button
-      {...rest}
-      className={cls}
-      type={htmlType}
-      disabled={disabled && !loading ? true : undefined}
-      aria-disabled={loading || softDisabled ? true : undefined}
-      aria-busy={loading ? true : undefined}
-      onClick={handle}
-    >
-      {content}
+    <button type={htmlType} disabled={disabled} onClick={onClick} className={className} data-bench="a-reconstruire">
+      {children}
     </button>
   );
 }

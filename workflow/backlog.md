@@ -4,7 +4,7 @@
 <!-- rempli par /pack-design, une ligne par composant : - [ ] NomDuComposant — groupe -->
 - [x] Icon — Fondations et icônes
 - [x] Logo — Fondations et icônes
-- [x] Button — Actions
+- [ ] Button — Actions
 - [x] IconButton — Actions
 - [x] TextLink — Actions
 - [x] TextInput — Formulaires
@@ -13,15 +13,15 @@
 - [x] Stepper — Formulaires
 - [x] ProductCard — Cartes
 - [x] FeatureCard — Cartes
-- [x] CartItem — Cartes
+- [ ] CartItem — Cartes
 - [x] Toast — Retours et états
 - [x] Skeleton — Retours et états
 - [x] EmptyState — Retours et états
 - [x] Badge — Retours et états
 - [x] FilterChip — Retours et états
-- [x] Drawer — Couches
+- [ ] Drawer — Couches
 - [x] MiniCart — Couches
-- [x] FiltersSheet — Couches
+- [ ] FiltersSheet — Couches
 - [x] TopNav — Navigation
 - [x] Breadcrumb — Navigation
 - [x] Banner — Navigation
@@ -36,14 +36,14 @@
 - [x] ShoppingBasket — Sections de page
 - [x] CheckoutProgress — Sections de page
 - [x] OrderSummary — Sections de page
-- [x] AuthForm — Sections de page
+- [ ] AuthForm — Sections de page
 - [x] AccountMenu — Sections de page
 - [x] OrderList — Sections de page
 
 ## Pages
 <!-- Aucune frame de page dans le Figma pour l’instant : maquettes attendues de l’agence. -->
 - [x] accueil — frame Figma 114:5362 (desktop) / 114:5761 (mobile), v2
-- [x] liste-produits — frame Figma 45:684 (desktop) / 109:1661 (mobile), v3
+- [ ] liste-produits — frame Figma 45:684 (desktop) / 109:1661 (mobile), v3
 - [x] fiche-produit — frame Figma 11:123 (desktop) / 114:6398 (mobile), v2
 - [x] panier — frame Figma 119:3539 (desktop) / 119:3664 (mobile), v2
 - [x] paiement — absent du Figma, à composer avec le kit (prompt 10 du pack)
