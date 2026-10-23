@@ -19,6 +19,7 @@
     "build-storybook": "storybook build",
     "shots": "playwright test --grep @shots",
     "test:ui": "playwright test",
+    "test:stories": "playwright test tests/stories.spec.ts",
     "perf": "lhci autorun",
     "images": "node scripts/optimize-images.mjs"
   },
